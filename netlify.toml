@@ -1,0 +1,33 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[functions]
+  node_bundler = "esbuild"
+  directory = "netlify/functions"
+  # mammoth is CommonJS with dynamic requires — keep it external so it is
+  # shipped as-is in node_modules instead of being inlined by esbuild.
+  external_node_modules = ["mammoth"]
+
+# ---------------------------------------------------------------------------
+# Security headers
+# ---------------------------------------------------------------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), geolocation=(), microphone=(self)"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    # Gemini Live requires a WebSocket to generativelanguage.googleapis.com.
+    # Blob/data URLs are used for slide images and audio worklets.
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob: https://generativelanguage.googleapis.com wss://generativelanguage.googleapis.com; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+
+# ---------------------------------------------------------------------------
+# SPA fallback (API routes are handled by functions before this applies)
+# ---------------------------------------------------------------------------
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
