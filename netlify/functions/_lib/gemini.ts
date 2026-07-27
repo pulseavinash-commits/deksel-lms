@@ -132,7 +132,7 @@ export async function createEphemeralToken(
 
 /** Bump this when the narration prompt/voice pipeline changes, to bust caches. */
 export const NARRATION_PIPELINE_VERSION = 'v1';
-const TTS_MODEL = 'gemini-2.5-flash-preview-tts';
+const TTS_MODEL = 'gemini-3.1-flash-tts-preview';
 
 /**
  * Write a finished, spoken narration script for one slide, obeying the same
@@ -260,7 +260,7 @@ export async function synthesizeSpeech(text: string, voice: string): Promise<Buf
 // Assessment: question generation + answer scoring (server-side, text model)
 // ---------------------------------------------------------------------------
 
-const TEXT_MODEL = 'gemini-2.5-flash';
+const TEXT_MODEL = 'gemini-3.6-flash';
 
 export async function generateQuestions(
   slide: PublishedSlide,
