@@ -46,6 +46,7 @@ export function narrationHash(
 
 const audioKey = (slideId: string, hash: string) => `narration/${slideId}/${hash}`;
 const scriptKey = (slideId: string, hash: string) => `narration/${slideId}/${hash}.script`;
+const lockKey = (slideId: string, hash: string) => `narration/${slideId}/${hash}.lock`;
 
 /** Load this slide's frozen knowledge package (if any) from blob storage. */
 export async function loadKnowledge(
@@ -98,6 +99,43 @@ export async function ensureNarration(
     metadata: { mime: 'audio/wav', kind: 'narration' },
   });
   return { hash, script, generated: true };
+}
+
+export interface NarrationState {
+  hash: string;
+  ready: boolean;      // audio is generated and cached
+  generating: boolean; // a background job is currently rendering it
+}
+
+/**
+ * Cheap status check used by the request path and the client poller — never
+ * triggers generation itself. A lock blob younger than 3 minutes means a
+ * background render is already in flight, so we don't start a duplicate.
+ */
+export async function narrationStatus(
+  slide: PublishedSlide,
+  voice: string,
+): Promise<NarrationState> {
+  const knowledge = await loadKnowledge(slide);
+  const hash = narrationHash(slide, knowledge, voice);
+  const s = store(STORE_SLIDE_AUDIO);
+  const audio = await s.getMetadata(audioKey(slide.slide_id, hash)).catch(() => null);
+  if (audio) return { hash, ready: true, generating: false };
+  const lock = (await s.get(lockKey(slide.slide_id, hash), { type: 'text' }).catch(() => null)) as string | null;
+  const generating = !!lock && Date.now() - Number(lock) < 3 * 60 * 1000;
+  return { hash, ready: false, generating };
+}
+
+/** Mark a slide's narration as being generated right now (dedupe lock). */
+export async function markNarrationGenerating(slideId: string, hash: string): Promise<void> {
+  await store(STORE_SLIDE_AUDIO).set(lockKey(slideId, hash), String(Date.now()));
+}
+
+/** Fetch the cached narration script text for a slide (empty if absent). */
+export async function getNarrationScript(slideId: string, hash: string): Promise<string> {
+  const s = await store(STORE_SLIDE_AUDIO)
+    .get(scriptKey(slideId, hash), { type: 'text' }).catch(() => null);
+  return (s as string | null) ?? '';
 }
 
 /** Fetch cached narration audio bytes for a slide (null if not generated). */

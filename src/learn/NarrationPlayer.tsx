@@ -59,18 +59,29 @@ const NarrationPlayer = forwardRef<NarrationHandle, Props>(function NarrationPla
   async function ensureLoaded(): Promise<void> {
     if (urlRef.current) return;
     set('preparing');
+    const startedAt = Date.now();
     try {
-      const r = await api<{ audio_url: string; script: string }>('/api/learn/narration', {
-        method: 'POST', body: { slide_id: slideId },
-      });
-      urlRef.current = r.audio_url;
-      setScript(r.script || '');
-      const a = audioRef.current!;
-      a.src = r.audio_url;
+      // The first call starts a background render; we poll until the audio is
+      // cached and ready, then point the <audio> element at it.
+      // eslint-disable-next-line no-constant-condition
+      while (true) {
+        const r = await api<{ ready: boolean; audio_url?: string; script?: string }>(
+          '/api/learn/narration', { method: 'POST', body: { slide_id: slideId } });
+        if (r.ready && r.audio_url) {
+          urlRef.current = r.audio_url;
+          if (r.script) setScript(r.script);
+          audioRef.current!.src = r.audio_url;
+          return;
+        }
+        if (Date.now() - startedAt > 150000) {
+          throw new Error('The narration is taking longer than expected. Please try again in a moment.');
+        }
+        await new Promise((res) => setTimeout(res, 3000));
+      }
     } catch (e) {
       set('error');
       if (e instanceof ApiError && e.code === 'SESSION_EXPIRED') { onSessionExpired(); return; }
-      onError(e instanceof ApiError ? e.message : 'Could not prepare the narration.');
+      onError(e instanceof ApiError ? e.message : (e instanceof Error ? e.message : 'Could not prepare the narration.'));
       throw e;
     }
   }
@@ -113,7 +124,7 @@ const NarrationPlayer = forwardRef<NarrationHandle, Props>(function NarrationPla
       />
 
       {status === 'preparing' && (
-        <div className="info-banner"><span className="spinner" /> Preparing the narration… (a few seconds the first time)</div>
+        <div className="info-banner"><span className="spinner" /> Preparing the narration… the first time on a slide can take up to a minute; after that it plays instantly.</div>
       )}
 
       {(status === 'playing' || status === 'paused' || status === 'ended' || status === 'ready') && (
