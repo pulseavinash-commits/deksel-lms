@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The Leucine Threshold — Windows of Breakdown</title><style>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The Two Thresholds — Windows of Breakdown</title><style>
 :root{
   --bg:#0A1020; --bg2:#0D1526; --surface:#131D33; --surface2:#1C2947; --line:rgba(167,186,224,.26);
   --ink:#F7F9FE; --ink2:#C8D2E6; --ink3:#98A4BD;
@@ -236,6 +236,7 @@ section{position:relative}
 /* speed chart */
 .spWrap{margin-top:70px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px)}
 #speed{width:100%;height:320px;display:block}
+#hmb{width:100%;height:400px;display:block}
 .spCap{font-size:.84rem;color:var(--ink3);padding:12px 4px 2px;max-width:860px}
 .spCap b{color:var(--ink2)}
 
@@ -457,7 +458,7 @@ footer p{max-width:620px;line-height:1.6}
 .fail:hover,.lock:hover{transform:translateY(-6px);box-shadow:var(--lift3)}
 .vid{background:linear-gradient(168deg,var(--surface2),var(--surface) 62%);transition:transform .3s,box-shadow .3s}
 .vid:hover{transform:translateY(-5px);box-shadow:var(--lift3)}
-.picHero,.teamHero{box-shadow:var(--lift3)}
+.picHero{box-shadow:var(--lift3)}
 .btn.primary{box-shadow:0 14px 44px rgba(20,184,166,.5),inset 0 1px 0 rgba(255,255,255,.22)}
 .nextBar a{background:linear-gradient(168deg,var(--surface2),var(--surface) 62%);box-shadow:var(--lift2)}
 .nextBar a:hover{box-shadow:var(--lift3)}
@@ -465,8 +466,24 @@ footer p{max-width:620px;line-height:1.6}
 .chapTitle{text-shadow:0 10px 44px rgba(0,0,0,.55)}
 </style></head><body><div id="prog"></div><div id="tip"></div><nav id="nav"><div class="wrap"><a class="navBrand" href="index.html"><b>WINDOWS</b> OF BREAKDOWN</a><ul><li><a href="index.html">Home</a></li><li><a href="diabetes.html">Diabetes</a></li><li><a href="perioperative.html">Surgery</a></li><li><a href="rheumatology.html">Rheumatology</a></li><li><a href="eight-gram.html" class="cur">Threshold</a></li><li><a href="ingredients.html">Ingredients</a></li></ul></div></nav><section class="pageTop"><div class="wrap">
 <div class="crumb"><a href="index.html">Home</a> / Chapter 02</div>
-<h2 class="chapTitle rv" style="font-size:clamp(2rem,5vw,3.5rem);margin-top:18px">The Leucine Threshold<br><span class="alt">and the two protein speeds</span></h2>
-<p class="chapLead rv d1">Two pieces of physiology decide whether eaten protein ever becomes muscle. First, <b>how high the leucine bar sits</b> — muscle building fires only when blood leucine crosses a threshold, and illness raises that threshold. Second, <b>how fast the amino acids arrive</b> — a curve that rises slowly never crosses a raised bar, however many grams were on the plate.</p>
+<h2 class="chapTitle rv" style="font-size:clamp(2rem,5vw,3.5rem);margin-top:18px">The Two Thresholds<br><span class="alt">one to build · one to defend</span></h2>
+<p class="chapLead rv d1">Muscle is governed by two bars, and eaten grams clear neither one on their own. The <b>leucine threshold</b> is the level blood leucine must cross before muscle building fires at all — and illness raises it. The <b>HMB threshold</b> is the daily dose needed before muscle breakdown is actively suppressed — and food cannot reach it. Between the two sits <b>how fast the amino acids arrive</b>, because a curve that rises slowly never clears a raised bar, however many grams were on the plate.</p>
+<div class="axi rv">
+ <div class="axiTop">
+  <div class="axiHint">Pick a trigger · watch the pathway</div>
+  <h3>Whatever the trigger — cytokines, cortisol, steroids, acidosis, bed rest — the end result is the same: <b>breakdown up</b>, <i>building down</i>, intake down.</h3>
+ </div>
+ <div class="axiFlow">
+  <div class="axiTrig" id="axiTrig"></div>
+  <div class="axiPipe"><canvas id="axiC"></canvas><span>ubiquitin–<br>proteasome<br>pathway</span></div>
+  <div class="axiOut" id="axiOut">
+   <div class="o" data-k="up"><b>Breakdown up</b><span>The demolition tag goes on muscle protein.</span></div>
+   <div class="o" data-k="down"><b>Building down</b><span>The leucine threshold rises, so synthesis misfires.</span></div>
+   <div class="o" data-k="in"><b>Intake down</b><span>Appetite falls exactly when protein need is highest.</span></div>
+  </div>
+ </div>
+ <p class="axiWhy" id="axiWhy"><b>And the climb back is never complete.</b> The fall is steep and the recovery is flat: anabolic resistance raises the leucine threshold, the anabolic environment is impaired, and the next window opens before the last recovery has finished. Each tooth of the saw ends lower than the one before — hidden on the weighing scale, because fat quietly replaces the muscle.</p>
+</div>
 <div class="thWrap rv"><div class="thTop"><h3>The leucine threshold — same grams, different biology</h3>
  <div class="toggle" id="thToggle"><button class="on" data-mode="resistant">Resistant muscle</button><button data-mode="young">Young healthy muscle</button></div></div>
  <div class="chipRow" id="thChips"></div>
@@ -481,16 +498,27 @@ footer p{max-width:620px;line-height:1.6}
 </div>
 <div class="spWrap rv"><div class="thTop"><h3>The protein speed spectrum — why two proteins are needed</h3></div>
 <div class="chipRow" id="spChips"></div>
-<p class="chipHint">Same rule here: all four sources start on the chart. Take one off to see what its curve was doing, and leave whey isolate and soy isolate on together to see the spike and the plateau add up.</p>
+<p class="chipHint">Same rule here: every source starts on the chart. Take one off to see what its curve was doing, and leave whey isolate and soy isolate on together to see the spike and the plateau add up.</p>
 <canvas id="speed"></canvas>
-<p class="spCap">Whey is the fastest because it stays liquid in stomach acid, and the isolate has the fat removed. Its peak lands in the same window as the free-leucine bolus: trigger and all nine essential amino acids together. Soy isolate’s plateau then keeps blood amino acids up for hours, shortening the time the muscle spends at a net loss. <b>Spike plus plateau — two jobs, no overlap.</b> Casein can sustain but cannot spike (and it clots); whey spikes but cannot sustain; dal is slow <em>and</em> incomplete.</p></div>
+<p class="spCap">Whey is the fastest because it stays liquid in stomach acid, and the isolate has the fat removed. Its peak lands in the same window as the free-leucine bolus: trigger and all nine essential amino acids together. Soy isolate’s plateau then keeps blood amino acids up for hours, shortening the time the muscle spends at a net loss. <b>Spike plus plateau — two jobs, no overlap.</b> Whey spikes but cannot sustain; soy sustains but cannot spike; dal is slow <em>and</em> incomplete, so it does neither.</p></div>
+<div class="thWrap rv" style="margin-top:70px"><div class="thTop"><h3>The HMB threshold — the bar that food cannot clear</h3></div>
+<div class="chipRow" id="hmbChips"></div>
+<p class="chipHint">Each source is drawn as the HMB it actually delivers in a day. Stack as many food sources as you like — the combined bar on the right is the total the muscle receives.</p>
+<canvas id="hmb"></canvas>
+<p class="thCap">HMB is the metabolite of leucine that does the anti-catabolic work: it slows the ubiquitin–proteasome pathway and stabilises the muscle-cell membrane. <b>Only about 5% of dietary leucine is converted to it</b>, so the roughly 3 g daily dose used in the clinical studies would need about 60 g of pure leucine — kilograms of protein food every day. This is the one threshold that cannot be crossed by eating more; it has to be given directly. Where the leucine threshold decides whether building <em>fires</em>, the HMB threshold decides whether breakdown is <em>defended against</em> — and a patient in an open window needs both bars cleared on the same day.</p></div>
 <div class="script rv"><small>The two sentences together</small>
 <p>“The bar is higher in this patient, so the curve has to be steeper. A <b>whey-isolate spike stacked with free leucine</b> is what crosses the raised threshold and fires building. A <b>soy-isolate plateau</b> behind it keeps amino acids available through the hours when the body would otherwise drift back into net breakdown. One protein cannot do both jobs — the spike and the plateau are different pharmacology, not a bigger and a smaller dose of the same thing.”</p></div>
 <div class="nextBar rv"><a href="ingredients.html"><small>Next chapter</small><b>The Five Ingredients →</b></a>
 <a href="index.html"><small>Back to</small><b>All segments →</b></a></div>
 </div></section><footer><div class="wrap">
 <p>Scientific education for healthcare professionals. This site describes the physiology of muscle loss and the published pharmacology of nutritional ingredients (calcium β-hydroxy-β-methylbutyrate, L-leucine, whey protein isolate, soy protein isolate, vitamin D). The patients shown are illustrative composites, and the muscle character is a visual representation of muscle breakdown — not a measurement of any individual patient. This is not medical advice; nutritional support is an adjunct to disease-directed treatment, never a replacement.</p>
-<p style="text-align:right">Windows of Breakdown<br>Diabetes · Peri-operative · Rheumatology</p></div></footer><script></script><script>/* ===== access gate ===== */
+<p style="text-align:right">Windows of Breakdown<br>Diabetes · Peri-operative · Rheumatology</p></div></footer><script>const AXI=[
+['Cytokines','TNF-α and IL-6 from infection or active rheumatoid disease switch the demolition machinery on directly.',['up','down','in']],
+['Cortisol','The surgical stress response — the strongest known activator of muscle protein breakdown.',['up','down']],
+['Steroids','Prescribed glucocorticoids drive breakdown and take the type II chair-rise fibres first.',['up','down']],
+['Acidosis','Metabolic acidosis in diabetic kidney disease switches the same pathway on at rest.',['up','in']],
+['Bed rest','Unloaded muscle becomes demolition-prone within days, and building falls off with it.',['up','down']],
+['Fasting','Nil-by-mouth: muscle is broken down to make glucose, and nothing is coming in to replace it.',['up','in']]];</script><script>/* ===== access gate ===== */
 (()=>{
  let pw=null,u=null;
  try{pw=sessionStorage.getItem('wob_pw');u=JSON.parse(sessionStorage.getItem('wob_user')||'null');}catch(e){}
@@ -836,11 +864,78 @@ function chipChart(cvId,chipId,cfg){
     f:t=>.62*Math.pow(t/1.1,2)*Math.exp(-Math.pow(t/1.1,2))*Math.E,lx:1.15,ly:-12},
    {k:'spi',label:'Soy protein isolate — the plateau',col:'#C4B5FD',
     f:t=>.50*(1-Math.exp(-t/1.1))*Math.exp(-Math.max(0,t-4.2)/2.4),lx:3.2,ly:-12},
-   {k:'cas',label:'Casein — clots, 6–7 h trickle',col:'#FDBA74',
-    f:t=>.32*(1-Math.exp(-t/2.6))*Math.exp(-Math.max(0,t-6)/3),lx:4.6,ly:18},
-   {k:'dal',label:'Dal / plant meal — slow and incomplete',col:'#FCD34D',
+   {k:'dal',label:'Dal / plant meal — slow and incomplete',col:'#FDBA74',
     f:t=>.19*(1-Math.exp(-t/2.2))*Math.exp(-Math.max(0,t-3.5)/2.6),lx:1.4,ly:18}]
  });
+})();
+
+/* ===== HMB threshold (bar chart with chips) ===== */
+(()=>{
+ const c=document.getElementById('hmb');if(!c)return;
+ const row=document.getElementById('hmbChips');
+ const THR=3.0, VM=4.6;
+ const SRC=[
+  {k:'diet', label:'Normal diet — about 60 g protein', col:'#FDBA74', g:0.22, note:'~4.5 g leucine'},
+  {k:'hi',   label:'High-protein diet — about 100 g protein', col:'#FCD34D', g:0.40, note:'~8 g leucine'},
+  {k:'leu',  label:'Free L-leucine 10 g bolus', col:'#C4B5FD', g:0.50, note:'5% converts'},
+  {k:'hmb',  label:'Calcium HMB 3 g — given directly', col:'#5EEAD4', g:3.00, note:'no conversion needed'}];
+ const on=new Set(SRC.map(s=>s.k)); const grow={}; SRC.forEach(s=>grow[s.k]=0);
+ let raf=null,started=false;
+ row.innerHTML='<span class="lbl">HMB source</span>'+
+  SRC.map(s=>`<button class="chip" data-k="${s.k}" style="--c:${s.col}"><i></i>${s.label}</button>`).join('')+
+  '<button class="chipAll" data-all="1">Reset — show all</button>';
+ row.addEventListener('click',e=>{
+  if(e.target.closest('[data-all]')){SRC.forEach(s=>on.add(s.k));sync();anim();return;}
+  const b=e.target.closest('.chip');if(!b)return;
+  const k=b.dataset.k; if(on.has(k)&&on.size>1)on.delete(k); else on.add(k);
+  sync();anim();});
+ function sync(){row.querySelectorAll('.chip').forEach(b=>b.classList.toggle('off',!on.has(b.dataset.k)));}
+ function anim(){cancelAnimationFrame(raf);
+  const step=()=>{let moving=false;
+   SRC.forEach(s=>{const t=on.has(s.k)?1:0,d=t-grow[s.k];
+    if(Math.abs(d)>.004){grow[s.k]+=d*.14;moving=true;}else grow[s.k]=t;});
+   paint();if(moving)raf=requestAnimationFrame(step);};step();}
+ function paint(){const [x,W,H]=fitCanvas(c);
+  const pL=58,pR=20,pT=30,pB=64;
+  const Y=v=>pT+(H-pT-pB)*(1-Math.min(v,VM)/VM);
+  x.strokeStyle='rgba(167,186,224,.13)';x.lineWidth=1;x.beginPath();
+  for(let i=0;i<=4;i++){const gy=pT+(H-pT-pB)*i/4;x.moveTo(pL,gy);x.lineTo(W-pR,gy);}x.stroke();
+  x.fillStyle='rgba(200,210,230,.8)';x.font='11px system-ui';x.textAlign='right';
+  for(let i=0;i<=4;i++)x.fillText((VM*(4-i)/4).toFixed(1)+' g',pL-8,pT+(H-pT-pB)*i/4+4);
+  x.save();x.translate(15,(H-pB+pT)/2);x.rotate(-Math.PI/2);x.textAlign='center';
+  x.fillText('HMB delivered per day',0,0);x.restore();
+  const live=SRC.filter(s=>grow[s.k]>.01);
+  const total=live.reduce((a,s)=>a+s.g*grow[s.k],0);
+  const cols=live.length+1, band=(W-pL-pR)/cols, bw=Math.min(86,band*.52);
+  const bars=live.map((s,i)=>({...s,v:s.g*grow[s.k],cx:pL+band*(i+.5)}));
+  bars.push({k:'sum',label:'Everything selected',col:total>=THR?'#5EEAD4':'#FDBA74',v:total,cx:pL+band*(cols-.5),sum:true});
+  const base=Y(0);
+  bars.forEach(b=>{const top=Y(b.v),h=Math.max(0,base-top);
+   x.save();
+   if(b.sum){x.shadowColor=b.col;x.shadowBlur=18;}
+   const g=x.createLinearGradient(0,top,0,base);
+   g.addColorStop(0,b.col);g.addColorStop(1,b.col+'33');
+   x.fillStyle=g;
+   x.beginPath();x.roundRect(b.cx-bw/2,top,bw,h,[7,7,3,3]);x.fill();
+   x.restore();
+   x.fillStyle=b.col;x.font='700 12.5px system-ui';x.textAlign='center';
+   x.fillText(b.v.toFixed(2)+' g',b.cx,top-9);
+   x.fillStyle='rgba(200,210,230,.85)';x.font='11px system-ui';
+   const words=(b.sum?'combined total':b.label).split(' ');let line='',ln=0;
+   words.forEach(w=>{const t=line?line+' '+w:w;
+    if(x.measureText(t).width>band-8){x.fillText(line,b.cx,base+20+ln*13);line=w;ln++;}else line=t;});
+   x.fillText(line,b.cx,base+20+ln*13);});
+  const ty=Y(THR);
+  x.setLineDash([8,6]);x.strokeStyle='#C4B5FD';x.lineWidth=2;
+  x.beginPath();x.moveTo(pL,ty);x.lineTo(W-pR,ty);x.stroke();x.setLineDash([]);
+  x.fillStyle='#C4B5FD';x.textAlign='left';x.font='700 11.5px system-ui';
+  x.fillText('clinical HMB threshold — about 3 g a day',pL+6,ty-9);
+  x.textAlign='right';x.font='700 12.5px system-ui';
+  x.fillStyle=total>=THR?'#5EEAD4':'#FDBA74';
+  x.fillText(total>=THR?'threshold cleared — breakdown defended':'below the bar — breakdown runs on',W-pR,pT-10);}
+ sync();
+ new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting&&!started){started=true;anim();ob.unobserve(e.target);}}),{threshold:.25}).observe(c);
+ let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(paint,160)});
 })();
 
 /* ===== interactive axiom (home) ===== */
