@@ -505,7 +505,7 @@ footer p{max-width:620px;line-height:1.6}
 <div id="hmbChips"></div>
 <p class="chipHint">Pick the diet he actually eats — one or the other, never both. Then switch the serving’s three routes to HMB on or off, and set how many servings the day carries. The bar on the right is the whole day added up.</p>
 <canvas id="hmb"></canvas>
-<p class="thCap">HMB is the metabolite of leucine that does the anti-catabolic work: it slows the ubiquitin–proteasome pathway and stabilises the muscle-cell membrane. <b>Only about 5% of dietary leucine is converted to it</b> — which is why a whole day of eating yields a fraction of a gram, and why the clinically studied 1.5–3 g a day cannot be reached through food at all. It has to be given directly: <b>each serving delivers 1 g of calcium HMB with no conversion step</b> — the yield of about 20 g of pure leucine — on top of the small conversion trickle from its 8 g WPI + SPI blend and 1 g free leucine. One serving takes the day most of the way; <b>the second serving is what carries it inside the studied range</b>, on either diet. Where the leucine threshold decides whether building <em>fires</em>, the HMB threshold decides whether breakdown is <em>defended against</em> — and a patient in an open window needs both answered on the same day.</p></div>
+<p class="thCap">HMB is the metabolite of leucine that does the anti-catabolic work: it slows the ubiquitin–proteasome pathway and stabilises the muscle-cell membrane. <b>Only about 5% of dietary leucine is converted to it</b> — which is why a whole day of eating yields a fraction of a gram, and why the clinically studied 1.5–3 g a day cannot be reached through food at all. It has to be given directly, and <b>a single serving is already the whole argument</b>: its 1 g of calcium HMB arrives with no conversion step — the yield of about 20 g of pure leucine — with its 8 g WPI + SPI blend and 1 g free leucine adding their trickle on top. One serving lifts the day to more than <b>three times the ceiling that any diet can ever reach</b>, and stands at the doorstep of the clinically studied 1.5–3 g. A second serving simply walks through that door. Where the leucine threshold decides whether building <em>fires</em>, the HMB threshold decides whether breakdown is <em>defended against</em> — and a patient in an open window needs both answered on the same day.</p></div>
 <div class="script rv"><small>The two sentences together</small>
 <p>“The bar is higher in this patient, so the curve has to be steeper. A <b>whey-isolate spike stacked with free leucine</b> is what crosses the raised threshold and fires building. A <b>soy-isolate plateau</b> behind it keeps amino acids available through the hours when the body would otherwise drift back into net breakdown. One protein cannot do both jobs — the spike and the plateau are different pharmacology, not a bigger and a smaller dose of the same thing.”</p></div>
 <div class="nextBar rv"><a href="ingredients.html"><small>Next chapter</small><b>The Five Ingredients →</b></a>
@@ -925,7 +925,8 @@ function chipChart(cvId,chipId,cfg){
   const bars=[{label:dObj.label,col:dObj.col,v:R(dObj.g)}];
   live.forEach(z=>bars.push({label:z.label+(sv>1.5?' × '+Math.round(sv):''),col:z.col,v:R(z.g*grow[z.k]*sv),a:grow[z.k]}));
   const total=R(dObj.g+live.reduce((a,z)=>a+z.g*grow[z.k],0)*sv);
-  bars.push({label:'the whole day together',col:total>=T1?'#5EEAD4':'#FDBA74',v:total,sum:true});
+  const hasDirect=live.some(z=>z.k==='hmb'&&grow[z.k]>.6);
+  bars.push({label:'the whole day together',col:(total>=T1||hasDirect)?'#5EEAD4':'#FDBA74',v:total,sum:true});
   const cols=bars.length, band=(W-pL-pR)/cols, bw=Math.min(88,band*.5), base=Y(0);
   bars.forEach((b,i)=>{const cx=pL+band*(i+.5),top=Y(b.v),h=Math.max(0,base-top);
    x.save();if(b.sum){x.shadowColor=b.col;x.shadowBlur=18;}
@@ -947,9 +948,18 @@ function chipChart(cvId,chipId,cfg){
   x.beginPath();x.moveTo(pL,y1);x.lineTo(W-pR,y1);x.moveTo(pL,y2);x.lineTo(W-pR,y2);x.stroke();x.setLineDash([]);
   x.fillStyle='#C4B5FD';x.textAlign='left';x.font='700 11.5px system-ui';
   x.fillText('clinically studied range — 1.5 to 3 g a day',pL+6,y2-9);
+  const yF=Y(.40);
+  x.setLineDash([3,5]);x.strokeStyle='#FDBA74';x.lineWidth=1.4;
+  x.beginPath();x.moveTo(pL,yF);x.lineTo(W-pR,yF);x.stroke();x.setLineDash([]);
+  x.fillStyle='#FDBA74';x.font='700 11px system-ui';
+  x.fillText('the ceiling of food — no diet gets past this line',pL+6,yF-7);
+  const hmbLive=hasDirect;
   x.textAlign='right';x.font='700 12.5px system-ui';
-  x.fillStyle=total>=T1?'#5EEAD4':'#FDBA74';
-  x.fillText(total>=T1?'inside the studied range — breakdown defended':'below the studied range — the leak stays open',W-pR,pT-10);}
+  let msg,mc;
+  if(total>=T1){msg='inside the clinically studied range — breakdown defended';mc='#5EEAD4';}
+  else if(hmbLive){msg='one serving: '+(Math.round(total/ .40*10)/10)+'× the ceiling of food — the range is one serving away';mc='#5EEAD4';}
+  else{msg='food alone — stuck under its own ceiling';mc='#FDBA74';}
+  x.fillStyle=mc;x.fillText(msg,W-pR,pT-10);}
  sync();
  new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting&&!started){started=true;anim();ob.unobserve(e.target);}}),{threshold:.25}).observe(c);
  let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(paint,160)});
