@@ -374,13 +374,13 @@ footer p{max-width:620px;line-height:1.6}
 .picHero{border-radius:24px;overflow:hidden;border:1px solid var(--line);margin-top:40px;position:relative}
 .picHero img{width:100%;display:block}
 .picHero .cap{position:absolute;left:0;right:0;bottom:0;padding:26px 30px;background:linear-gradient(180deg,transparent,rgba(5,8,15,.92));font-family:var(--serif);font-size:clamp(1.05rem,2vw,1.45rem);color:var(--ink)}
-.homeHero{min-height:80svh;display:flex;align-items:center;overflow:hidden;padding:120px 0 30px}
-.homeHero #helix{position:absolute;top:6%;bottom:0;left:auto;right:-6%;width:60%;height:94%}
-.homeHero .heroInner{max-width:none}
+.homeHero{min-height:100svh;display:flex;align-items:center;overflow:hidden;padding:110px 0 40px}
+.homeHero #helix{position:absolute;inset:0;left:auto;right:0;width:58%;height:100%}
 .homeHero h1 .l2{color:var(--orangeHi)}
-.homeHero .heroSub{max-width:520px}
-@media(max-width:980px){.homeHero #helix{right:-18%;width:86%;opacity:.5}.homeHero .heroSub{max-width:none}}
+.homeHero .heroSub{max-width:34rem}
+@media(max-width:980px){.homeHero #helix{right:-20%;width:90%;opacity:.5}.homeHero .heroSub{max-width:none}}
 .dragHint{color:var(--ink2);background:rgba(10,16,32,.7);border:1px solid var(--line);border-radius:99px;padding:8px 15px}
+.homeHero .dragHint{bottom:86px}
 .vidWrap{margin-top:70px}
 .vidWrap h3{font-size:clamp(1.35rem,2.6vw,1.9rem)}
 .vidGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:18px;margin-top:26px}
@@ -631,13 +631,6 @@ footer p{max-width:620px;line-height:1.6}
  <p class="pxPara" id="pxPara">Rapid weight loss — but silent muscle loss. <b>The scale applauds while the account drains.</b> Every kilogram lost without muscle defence makes his next window steeper.</p>
 </div></div>
 
-<div class="recap rv"><small>Carry these into the clinic</small>
- <div class="row">
-  <div class="r"><b>1 in 2</b><span>patients of T2DM is sarcopenic — half the OPD.</span></div>
-  <div class="r"><b>80%</b><span>of insulin-stimulated glucose disposal happens in muscle — the sink he is losing.</span></div>
-  <div class="r"><b>The paradox</b><span>GLP-1 era: rapid weight loss, silent muscle loss — the scale cannot see it.</span></div>
- </div>
-</div>
  <div class="vidWrap rv"><h3>Training videos</h3>
  <p class="lead rv d1" style="margin-top:8px">Five recorded modules that walk through the same science in the trainer’s own words.</p>
  <div class="vidGrid"><div class="vid"><div class="fr"><iframe src="https://player.vimeo.com/video/1199720240?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" title="Sarcopenia — what is diabetes"></iframe></div>
@@ -833,11 +826,11 @@ function cloud(canvas,pts,opts){if(!canvas)return;
 (()=>{const c=document.getElementById('helix');if(!c)return;
  const pts=[];const C=['rgba(94,234,212,AL)','rgba(196,181,253,AL)','rgba(253,186,116,AL)'];
  for(let s=0;s<9;s++){const a0=s/9*Math.PI*2,col=C[s%3];
-  for(let i=0;i<150;i++){const t=i/150*4-2;const r=.17+.022*Math.sin(t*9+s);
-   pts.push([Math.cos(a0+t*1.35)*r,t*.28,Math.sin(a0+t*1.35)*r,col,1]);}}
- for(let i=0;i<150;i++){const th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1),R=.5+Math.random()*.4;
-  pts.push([R*Math.sin(ph)*Math.cos(th),(Math.random()*2-1)*.58,R*Math.sin(ph)*Math.sin(th)*.6,'rgba(150,170,210,AL)',.34]);}
- cloud(c,pts,{rx:.26,auto:.0045,scale:.66,drag:true});})();
+  for(let i=0;i<200;i++){const t=i/200*5.6-2.8;const r=.17+.022*Math.sin(t*9+s);
+   pts.push([Math.cos(a0+t*1.35)*r,t*.30,Math.sin(a0+t*1.35)*r,col,1]);}}
+ for(let i=0;i<170;i++){const th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1),R=.5+Math.random()*.4;
+  pts.push([R*Math.sin(ph)*Math.cos(th),(Math.random()*2-1)*.95,R*Math.sin(ph)*Math.sin(th)*.6,'rgba(150,170,210,AL)',.34]);}
+ cloud(c,pts,{rx:.22,auto:.0045,scale:.62,drag:true});})();
 
 /* 8g orbit */
 (()=>{const c=document.getElementById('orb');if(!c)return;const pts=[];
