@@ -1,7 +1,12 @@
-# Static multi-page site.
 [build]
   command = "mkdir -p dist && cp *.html dist/"
   publish = "dist"
+
+[build.environment]
+  # LEARNER_ACCESS_PASSWORD is a leftover env var from the deleted LMS project.
+  # Its value is a common word that appears in ordinary page copy, so the
+  # secrets scanner flags every build. The static site contains no secrets.
+  SECRETS_SCAN_OMIT_KEYS = "LEARNER_ACCESS_PASSWORD"
 
 [functions]
   directory = "netlify/disabled"
@@ -9,5 +14,6 @@
 [[headers]]
   for = "/*"
   [headers.values]
+    X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
