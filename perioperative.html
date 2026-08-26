@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The Surgical Journey — Windows of Breakdown</title><style>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The Surgical Journey — Windows of Breakdown</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Manrope:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"><style>
 :root{
   --bg:#0A1020; --bg2:#0D1526; --surface:#131D33; --surface2:#1C2947; --line:rgba(167,186,224,.26);
   --ink:#F7F9FE; --ink2:#C8D2E6; --ink3:#98A4BD;
@@ -10,9 +10,9 @@
   --lift2:0 10px 26px rgba(0,0,0,.48),0 2px 8px rgba(0,0,0,.4);
   --lift3:0 26px 60px rgba(0,0,0,.55),0 8px 22px rgba(0,0,0,.42);
   --sheen:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.02) 42%,rgba(255,255,255,0) 70%);
-  --serif:ui-serif,Georgia,'Times New Roman',serif;
-  --sans:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
-  --mono:ui-monospace,'SF Mono',Consolas,monospace;
+  --serif:'Fraunces',ui-serif,Georgia,'Times New Roman',serif;
+  --sans:'Manrope',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --mono:'Space Grotesk',ui-monospace,'SF Mono',Consolas,monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -466,12 +466,111 @@ footer p{max-width:620px;line-height:1.6}
 .btn.primary{box-shadow:0 14px 44px rgba(20,184,166,.5),inset 0 1px 0 rgba(255,255,255,.22)}
 .nextBar a{background:linear-gradient(168deg,var(--surface2),var(--surface) 62%);box-shadow:var(--lift2)}
 .nextBar a:hover{box-shadow:var(--lift3)}
+
+/* ===== evidence sections ===== */
+.evid{margin-top:70px;border:1px solid var(--line);border-radius:26px;overflow:hidden;position:relative;
+ background:linear-gradient(165deg,var(--surface2),var(--surface) 58%);box-shadow:var(--lift3)}
+.evid::before{content:"";position:absolute;inset:0;background:var(--sheen);pointer-events:none}
+.evid>.in{position:relative;padding:clamp(26px,4vw,44px)}
+.evid .kick{font-family:var(--mono);font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--amberHi)}
+.evid h3{font-size:clamp(1.35rem,2.6vw,1.95rem);margin-top:10px;line-height:1.25}
+.evid h3 b{color:var(--orangeHi)}.evid h3 i{color:var(--tealHi)}
+.evid .sub{color:var(--ink2);font-size:.95rem;margin-top:10px;max-width:820px}
+.evid .sub b{color:var(--ink)}
+/* sign pills */
+.pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.pills span{border:1px solid var(--line);border-radius:99px;padding:9px 16px;font-size:.86rem;font-weight:700;color:var(--ink2);
+ background:rgba(28,41,71,.55);box-shadow:var(--lift1);opacity:0;transform:translateY(12px);transition:.5s}
+.pills.on span{opacity:1;transform:none}
+.pills span:nth-child(2){transition-delay:.12s}.pills span:nth-child(3){transition-delay:.24s}.pills span:nth-child(4){transition-delay:.36s}
+/* predict & reveal */
+.guess{display:flex;gap:26px;align-items:center;flex-wrap:wrap;margin-top:26px}
+.guess .q{flex:1;min-width:260px}
+.guess .q b{font-family:var(--serif);font-size:clamp(1.1rem,2vw,1.4rem);color:var(--ink);display:block}
+.guess .opts{display:flex;gap:10px;margin-top:14px}
+.guess .opts button{border:1px solid var(--line);border-radius:14px;padding:13px 22px;font-size:1.05rem;font-weight:800;color:var(--ink2);
+ background:rgba(28,41,71,.55);transition:.22s;box-shadow:var(--lift1)}
+.guess .opts button:hover{transform:translateY(-2px);color:var(--ink);border-color:rgba(94,234,212,.5)}
+.guess .opts button.picked{color:#04140F;background:linear-gradient(135deg,#5EEAD4,#14B8A6);border-color:rgba(94,234,212,.7)}
+.guess .stage2{flex:1;min-width:280px;min-height:230px;position:relative}
+.guess canvas{width:100%;height:230px;display:block}
+.guess .verdict{font-family:var(--serif);font-size:clamp(1.2rem,2.4vw,1.7rem);color:var(--tealHi);opacity:0;transition:opacity .8s;margin-top:6px;text-align:center}
+.guess .verdict.on{opacity:1}
+/* vicious loop */
+.loopWrap{display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,3.4vw,40px);align-items:center;margin-top:24px}
+@media(max-width:820px){.loopWrap{grid-template-columns:1fr}}
+#vloop{width:min(300px,72vw);height:300px;display:block;margin:0 auto}
+.loopSide .stat{display:flex;gap:14px;align-items:baseline}
+.loopSide .stat .n{font-family:var(--serif);font-size:clamp(2.2rem,4.6vw,3.4rem);font-weight:700;color:var(--tealHi);text-shadow:0 0 30px rgba(94,234,212,.4)}
+.loopSide .stat .c{color:var(--ink2);font-size:.94rem;max-width:420px}
+.loopBtn{margin-top:18px;border:0;border-radius:13px;padding:13px 24px;font-weight:800;font-size:.92rem;color:#04140F;
+ background:linear-gradient(135deg,#FDBA74,#F97316);box-shadow:0 10px 30px rgba(249,115,22,.4);transition:.2s}
+.loopBtn:hover{transform:translateY(-2px)}
+.loopCap{margin-top:14px;color:var(--ink2);font-size:.9rem;min-height:44px;max-width:460px}
+.loopCap b{color:var(--orangeHi)}
+/* paradox */
+.pxGrid{display:grid;grid-template-columns:200px 1fr 130px;gap:clamp(16px,2.6vw,30px);margin-top:26px;align-items:stretch}
+@media(max-width:920px){.pxGrid{grid-template-columns:1fr}}
+.pxDrugs{display:flex;flex-direction:column;gap:9px}
+.pxDrugs button{text-align:left;border:1px solid var(--line);border-radius:13px;padding:12px 15px;font-size:.87rem;font-weight:700;color:var(--ink2);
+ background:rgba(28,41,71,.5);transition:.22s;box-shadow:var(--lift1)}
+.pxDrugs button.on{color:var(--ink);border-color:rgba(253,186,116,.7);background:linear-gradient(120deg,rgba(249,115,22,.3),rgba(28,41,71,.6))}
+.pxDrugs small{font-family:var(--mono);font-size:.58rem;letter-spacing:.22em;color:var(--ink3);text-transform:uppercase;margin:6px 0 2px}
+.pxPath{display:flex;flex-direction:column;gap:10px;justify-content:center}
+.pxRow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;opacity:.28;transform:translateX(6px);transition:.5s}
+.pxRow.lit{opacity:1;transform:none}
+.pxRow .st{border:1px solid var(--line);border-radius:11px;padding:9px 13px;font-size:.8rem;color:var(--ink);background:rgba(19,29,51,.75);box-shadow:var(--lift1);white-space:nowrap}
+.pxRow.lit .st{border-color:rgba(253,186,116,.5)}
+.pxRow .ar{color:var(--orangeHi);font-weight:800}
+.pxRow .end{border-color:rgba(251,113,133,.6);color:#FDA4AF;font-weight:700}
+.pxGauges{display:flex;gap:16px;align-items:flex-end;justify-content:center}
+.pxG{text-align:center}
+.pxG .tube{width:34px;height:150px;border-radius:99px;border:1px solid var(--line);background:rgba(10,16,32,.75);position:relative;overflow:hidden;margin:0 auto}
+.pxG .tube i{position:absolute;left:0;right:0;bottom:0;height:86%;transition:height 1.6s cubic-bezier(.2,.7,.2,1)}
+.pxG.w .tube i{background:linear-gradient(180deg,#93C5FD,#3B82F6)}
+.pxG.m .tube i{background:linear-gradient(180deg,#FDA4AF,#F43F5E)}
+.pxG small{display:block;font-family:var(--mono);font-size:.56rem;letter-spacing:.18em;color:var(--ink3);text-transform:uppercase;margin-top:8px;max-width:90px}
+.pxPara{margin-top:20px;font-family:var(--serif);font-style:italic;font-size:clamp(1.05rem,2vw,1.35rem);color:var(--ink);opacity:0;transition:opacity .8s}
+.pxPara.on{opacity:1}
+.pxPara b{color:var(--orangeHi);font-style:normal}
+/* radial gauges */
+.gaugeRow{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:26px}
+@media(max-width:880px){.gaugeRow{grid-template-columns:1fr}}
+.gauge{border:1px solid var(--line);border-radius:22px;padding:26px;background:linear-gradient(168deg,var(--surface2),var(--surface) 62%);box-shadow:var(--lift2);text-align:center;transition:transform .3s,box-shadow .3s}
+.gauge:hover{transform:translateY(-5px);box-shadow:var(--lift3)}
+.gauge canvas{width:190px;height:190px;display:block;margin:0 auto}
+.gauge h4{font-size:1.05rem;margin-top:12px}
+.gauge .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.gauge .chips span{font-size:.76rem;padding:7px 13px;border-radius:99px;border:1px solid var(--line);color:var(--ink2);background:rgba(28,41,71,.5)}
+/* seals */
+.seals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:24px;perspective:1200px}
+.seal{position:relative;height:170px;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,.7,.3,1);cursor:pointer}
+.seal.flip{transform:rotateY(180deg)}
+.seal .f,.seal .b{position:absolute;inset:0;border-radius:20px;border:1px solid var(--line);backface-visibility:hidden;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:18px;box-shadow:var(--lift2)}
+.seal .f{background:linear-gradient(168deg,var(--surface2),var(--surface))}
+.seal .f b{font-family:var(--serif);font-size:1.5rem;color:var(--ink)}
+.seal .f small{font-family:var(--mono);font-size:.6rem;letter-spacing:.24em;color:var(--violetHi);text-transform:uppercase}
+.seal .b{transform:rotateY(180deg);background:linear-gradient(150deg,rgba(167,139,250,.22),var(--surface));text-align:center}
+.seal .b p{font-size:.86rem;color:var(--ink);line-height:1.55}
+/* pictogram 66% */
+.picto{display:flex;gap:26px;align-items:center;justify-content:center;margin-top:26px;flex-wrap:wrap}
+.picto svg{width:74px;height:150px;opacity:.32;transition:opacity .8s,filter .8s}
+.picto svg.lit{opacity:1;filter:drop-shadow(0 0 22px rgba(94,234,212,.55))}
+/* recap */
+.recap{margin-top:70px;border-radius:26px;border:1px solid rgba(94,234,212,.35);box-shadow:var(--lift3);
+ background:linear-gradient(150deg,rgba(20,184,166,.16),var(--surface) 55%);padding:clamp(26px,4vw,42px)}
+.recap small{font-family:var(--mono);font-size:.64rem;letter-spacing:.3em;color:var(--tealHi);text-transform:uppercase}
+.recap .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:20px}
+.recap .r b{font-family:var(--serif);font-size:clamp(1.9rem,4vw,2.7rem);color:var(--ink);display:block;line-height:1}
+.recap .r span{color:var(--ink2);font-size:.88rem;display:block;margin-top:8px}
 #hero h1,.homeHero h1{text-shadow:0 8px 40px rgba(0,0,0,.6)}
 .chapTitle{text-shadow:0 10px 44px rgba(0,0,0,.55)}
 </style></head><body><div id="prog"></div><div id="tip"></div><nav id="nav"><div class="wrap"><a class="navBrand" href="index.html"><b>WINDOWS</b> OF BREAKDOWN</a><ul><li><a href="index.html">Home</a></li><li><a href="diabetes.html">Diabetes</a></li><li><a href="perioperative.html" class="cur">Surgery</a></li><li><a href="rheumatology.html">Rheumatology</a></li><li><a href="eight-gram.html">Threshold</a></li><li><a href="ingredients.html">Ingredients</a></li></ul></div></nav><section class="pageTop"><div class="wrap">
  <div class="crumb"><a href="index.html">Home</a> / The windows of breakdown · journey 2 of 3</div>
  <h2 class="chapTitle rv" style="font-size:clamp(2rem,5vw,3.5rem);margin-top:18px">One operation.<br><span class="alt">A chain of windows.</span></h2>
  <p class="chapLead rv d1">The surgical journey is a chain of breakdown windows strung across weeks to months — and it is unique in medicine: <b>it comes with a date.</b> Build before, defend during, repay after. Walk through Suresh’s journey — and watch his muscle on the right.</p>
+ 
  <p class="rv d2" style="margin-top:14px;font-family:var(--mono);font-size:.66rem;letter-spacing:.3em;color:var(--ink3);text-transform:uppercase">Scroll to walk through the windows ↓</p>
  <div id="corMount" style="margin-top:6px"></div>
  <h3 class="rv" style="margin-top:84px;font-size:clamp(1.35rem,2.6vw,1.9rem)">Every window in detail</h3>
@@ -487,6 +586,37 @@ footer p{max-width:620px;line-height:1.6}
   <div class="slNav"><div class="slDots" id="slDots"></div>
    <div class="slBtns"><button id="slPrev">←</button><button id="slNext">→</button></div></div></div>
  <div class="locks" id="lockGrid"></div>
+ <div class="evid rv"><div class="in">
+ <div class="kick">The two numbers · before the videos</div>
+ <h3>Sarcopenia is associated with an <b>increased risk of post-operative complications.</b></h3>
+ <div class="gaugeRow">
+  <div class="gauge"><canvas id="g70" data-v="70"></canvas>
+   <h4>Implant complications within one year</h4>
+   <div class="chips"><span>Periprosthetic fracture</span><span>Dislocation</span><span>Periprosthetic infection</span><span>Falls</span></div></div>
+  <div class="gauge"><canvas id="g37" data-v="37"></canvas>
+   <h4>Medical complications within 90 days</h4>
+   <div class="chips"><span>Readmission</span><span>Delayed wound healing</span><span>UTI · Pneumonia</span><span>Transfusion</span></div></div>
+ </div>
+ <p class="sub" style="margin-top:22px"><b>Thus peri-operative optimization is necessary</b> — the two videos below walk through exactly these two numbers.</p>
+</div></div>
+
+<div class="evid rv"><div class="in">
+ <div class="kick">Not our claim · the societies’ recommendation</div>
+ <h3>ERAS, ESPEN and AAOS recommend addressing sarcopenia as an <i>integral part</i> of peri-operative optimization.</h3>
+ <div class="seals">
+  <div class="seal"><div class="f"><small>Surgical recovery</small><b>ERAS</b><small>tap to flip</small></div><div class="b"><p><b>Building lean muscle mass</b> before the withdrawal — so the account is filled while it still responds.</p></div></div>
+  <div class="seal"><div class="f"><small>Clinical nutrition</small><b>ESPEN</b><small>tap to flip</small></div><div class="b"><p><b>Early mobility</b> — the muscle that was defended is the muscle that stands up on day one.</p></div></div>
+  <div class="seal"><div class="f"><small>Orthopaedics</small><b>AAOS</b><small>tap to flip</small></div><div class="b"><p><b>Early discharge and better QoL</b> — optimization pays out in bed-days and independence.</p></div></div>
+ </div>
+</div></div>
+
+<div class="recap rv"><small>Carry these into the clinic</small>
+ <div class="row">
+  <div class="r"><b>70%</b><span>implant complications within one year ride on sarcopenia.</span></div>
+  <div class="r"><b>37%</b><span>medical complications within 90 days — readmission, healing, infection.</span></div>
+  <div class="r"><b>3 societies</b><span>ERAS · ESPEN · AAOS — optimization is their recommendation, not ours.</span></div>
+ </div>
+</div>
  <div class="vidWrap rv"><h3>Training videos</h3>
  <p class="lead rv d1" style="margin-top:8px">Recorded modules on peri-operative optimization.</p>
  <div class="vidGrid"><div class="vid"><div class="fr"><iframe src="https://player.vimeo.com/video/1201323681?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" title="Peri-operative Optimization — simple"></iframe></div>
@@ -974,7 +1104,7 @@ function chipChart(cvId,chipId,cfg){
 (()=>{
  const c=document.getElementById('hmb');if(!c)return;
  const box=document.getElementById('hmbChips');
- const T1=1.5,T2=3.0,VM=3.2;
+ const VM=1.8;
  const DIETS=[
   {k:'d60', label:'Normal diet — about 60 g protein', col:'#FDBA74', g:.25},
   {k:'d100',label:'High-protein diet — about 100 g protein', col:'#FCD34D', g:.40}];
@@ -1015,14 +1145,14 @@ function chipChart(cvId,chipId,cfg){
   x.fillStyle='rgba(200,210,230,.8)';x.font='11px system-ui';x.textAlign='right';
   for(let i=0;i<=4;i++)x.fillText((VM*(4-i)/4).toFixed(1)+' g',pL-8,pT+(H-pT-pB)*i/4+4);
   x.save();x.translate(15,(H-pB+pT)/2);x.rotate(-Math.PI/2);x.textAlign='center';
-  x.fillText('HMB reaching the muscle per day',0,0);x.restore();
+  x.fillText('HMB per day',0,0);x.restore();
   const dObj=DIETS.find(d=>d.k===diet);
   const live=COMP.filter(z=>grow[z.k]>.01);
   const bars=[{label:dObj.label,col:dObj.col,v:R(dObj.g)}];
   live.forEach(z=>bars.push({label:z.label,col:z.col,v:R(z.g*grow[z.k]),a:grow[z.k]}));
   const total=R(dObj.g+live.reduce((a,z)=>a+z.g*grow[z.k],0));
   const hasDirect=live.some(z=>z.k==='hmb'&&grow[z.k]>.6);
-  bars.push({label:'the whole day — one serving',col:(total>=T1||hasDirect)?'#5EEAD4':'#FDBA74',v:total,sum:true});
+  bars.push({label:'the whole day — one serving',col:hasDirect?'#5EEAD4':'#FDBA74',v:total,sum:true});
   const cols=bars.length, band=(W-pL-pR)/cols, bw=Math.min(88,band*.5), base=Y(0);
   bars.forEach((b,i)=>{const cx=pL+band*(i+.5),top=Y(b.v),h=Math.max(0,base-top);
    x.save();if(b.sum){x.shadowColor=b.col;x.shadowBlur=18;}
@@ -1038,12 +1168,6 @@ function chipChart(cvId,chipId,cfg){
    words.forEach(w=>{const t=line?line+' '+w:w;
     if(x.measureText(t).width>band-8){x.fillText(line,cx,base+20+ln*13);line=w;ln++;}else line=t;});
    x.fillText(line,cx,base+20+ln*13);});
-  const y1=Y(T1),y2=Y(T2);
-  x.fillStyle='rgba(196,181,253,.10)';x.fillRect(pL,y2,W-pL-pR,y1-y2);
-  x.setLineDash([8,6]);x.strokeStyle='#C4B5FD';x.lineWidth=1.6;
-  x.beginPath();x.moveTo(pL,y1);x.lineTo(W-pR,y1);x.moveTo(pL,y2);x.lineTo(W-pR,y2);x.stroke();x.setLineDash([]);
-  x.fillStyle='#C4B5FD';x.textAlign='left';x.font='700 11.5px system-ui';
-  x.fillText('clinically studied range — 1.5 to 3 g a day',pL+6,y2-9);
   const yF=Y(.40);
   x.setLineDash([3,5]);x.strokeStyle='#FDBA74';x.lineWidth=1.4;
   x.beginPath();x.moveTo(pL,yF);x.lineTo(W-pR,yF);x.stroke();x.setLineDash([]);
@@ -1052,8 +1176,7 @@ function chipChart(cvId,chipId,cfg){
   const hmbLive=hasDirect;
   x.textAlign='right';x.font='700 12.5px system-ui';
   let msg,mc;
-  if(total>=T1){msg='one serving — the day reaches the clinically studied range';mc='#5EEAD4';}
-  else if(hmbLive){msg='one serving: '+(Math.round(total/ .40*10)/10)+'\u00d7 the ceiling of food \u2014 the signal food can never send';mc='#5EEAD4';}
+  if(hmbLive){msg='one serving: '+(Math.round(total/ .40*10)/10)+'\u00d7 the ceiling of food \u2014 the signal food can never send';mc='#5EEAD4';}
   else{msg='food alone \u2014 stuck under its own ceiling';mc='#FDBA74';}
   x.fillStyle=mc;x.fillText(msg,W-pR,pT-10);}
  sync();
@@ -1160,4 +1283,146 @@ ING2.forEach((n,i)=>{const panel=document.createElement('div');panel.className='
 (()=>{const b=document.getElementById('mxBody');if(!b||typeof MX==='undefined')return;
 b.innerHTML=MX.map(r=>`<tr><td><b>${r[0]}</b><small style="color:${r[2]}">${r[1]}</small></td>
  <td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td></tr>`).join('');})();
+
+/* ===== evidence interactions ===== */
+const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* --- sign pills reveal --- */
+(()=>{const el=document.getElementById('diaPills');if(!el)return;
+ new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting){el.classList.add('on');ob.unobserve(e.target);}}),{threshold:.4}).observe(el);})();
+
+/* --- 1-in-2 predict & reveal (particle dissolve) --- */
+(()=>{
+ const box=document.getElementById('diaGuess');if(!box)return;
+ const c=document.getElementById('oneInTwo'),v=document.getElementById('diaVerdict');
+ let revealed=false,parts=null,raf=null;
+ function figure(x,cx0,cy0,sc,col){ /* returns particle points of a person glyph */
+  const pts=[];
+  const put=(px,py)=>pts.push({x:cx0+px*sc,y:cy0+py*sc,ox:cx0+px*sc,oy:cy0+py*sc,vx:0,vy:0});
+  for(let a=0;a<Math.PI*2;a+=.42)put(Math.cos(a)*11,-38+Math.sin(a)*11);
+  for(let yy=-22;yy<=18;yy+=5)for(let xx=-14;xx<=14;xx+=5)put(xx,yy);
+  for(let yy=22;yy<=50;yy+=5){put(-9,yy);put(-4,yy);put(4,yy);put(9,yy);}
+  return pts;}
+ function draw(){const [x,W,H]=fitCanvas(c);
+  const cy=H/2,s=1.05;
+  x.clearRect(0,0,W,H);
+  const A={cx:W/2-70},B={cx:W/2+70};
+  if(!parts){parts={a:figure(0,A.cx,cy,s),b:figure(0,B.cx,cy,s)};}
+  const drawFig=(pp,col,alpha)=>{x.fillStyle=col;x.globalAlpha=alpha;
+   pp.forEach(pt=>{x.beginPath();x.arc(pt.x,pt.y,2.6,0,7);x.fill();});x.globalAlpha=1;};
+  drawFig(parts.a,'#5EEAD4',1);
+  drawFig(parts.b, revealed?'#FDA4AF':'#98A4BD', 1);
+  if(revealed){x.font='700 13px '+"'Space Grotesk'"+',monospace';x.textAlign='center';
+   x.fillStyle='#5EEAD4';x.fillText('PROTECT HIM',A.cx,cy+86);
+   x.fillStyle='#FDA4AF';x.fillText('ALREADY SARCOPENIC',B.cx,cy+86);}}
+ function dissolve(){let t=0;
+  const step=()=>{t+=1;let live=false;
+   const [x,W,H]=fitCanvas(c);x.clearRect(0,0,W,H);
+   x.fillStyle='#5EEAD4';parts.a.forEach(pt=>{x.beginPath();x.arc(pt.x,pt.y,2.6,0,7);x.fill();});
+   x.fillStyle='#FDA4AF';
+   parts.b.forEach(pt=>{
+    pt.vx+=(Math.random()-.42)*.5;pt.vy+=(Math.random()-.55)*.5;
+    pt.x+=pt.vx;pt.y+=pt.vy;
+    const d=1-Math.min(1,t/90);
+    if(d>0){live=true;x.globalAlpha=Math.max(0,d);x.beginPath();x.arc(pt.x,pt.y,2.6*Math.max(.3,d),0,7);x.fill();x.globalAlpha=1;}});
+   if(t<95){raf=requestAnimationFrame(step);}
+   else{ /* reform as dimmed outline */
+    parts.b.forEach(pt=>{pt.x=pt.ox;pt.y=pt.oy;pt.vx=pt.vy=0;});
+    revealed=true;draw();v.classList.add('on');}};
+  if(REDUCED){revealed=true;draw();v.classList.add('on');return;}
+  step();}
+ box.querySelectorAll('.opts button').forEach(b=>b.addEventListener('click',()=>{
+  if(revealed||raf&&!revealed&&b.classList.contains('picked'))return;
+  box.querySelectorAll('.opts button').forEach(z=>z.classList.remove('picked'));
+  b.classList.add('picked');
+  if(!revealed){cancelAnimationFrame(raf);dissolve();}}));
+ new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting){draw();ob.unobserve(e.target);}}),{threshold:.3}).observe(c);
+ addEventListener('resize',()=>{parts=null;draw();});
+})();
+
+/* --- vicious loop --- */
+(()=>{
+ const c=document.getElementById('vloop');if(!c)return;
+ const btn=document.getElementById('loopBtn'),cap=document.getElementById('loopCap'),nEl=document.getElementById('loopN');
+ let ang=0,r=1,speed=.010,cycle=0,running=true,raf=null;
+ const CAPS=['Muscle lost → glucose disposal falls → glycemia worsens → breakdown accelerates. <b>Each turn of the circle is tighter than the last.</b>',
+  '<b>Turn 1.</b> Less muscle — the glucose sink shrinks. Disposal falls.',
+  '<b>Turn 2.</b> Higher glucose and low-grade inflammation — the demolition pathway speeds up.',
+  '<b>Turn 3.</b> Weaker, slower, less active — and every step of it feeds the next turn. <b>This is why glucose control alone cannot close the circle.</b>'];
+ function paint(){const [x,W,H]=fitCanvas(c);
+  const cx=W/2,cy=H/2,R0=Math.min(W,H)*.38;
+  x.clearRect(0,0,W,H);
+  for(let k=0;k<3;k++){const rr=R0*(r+k*.09);
+   x.beginPath();x.arc(cx,cy,rr,0,7);x.strokeStyle=`rgba(167,186,224,${.10-k*.03})`;x.lineWidth=1;x.stroke();}
+  const rr=R0*r;
+  x.beginPath();x.arc(cx,cy,rr,0,7);x.strokeStyle='rgba(94,234,212,.5)';x.lineWidth=2;x.stroke();
+  const L=[['MUSCLE ↓',0],['DISPOSAL ↓',Math.PI/2],['GLUCOSE ↑',Math.PI],['BREAKDOWN ↑',Math.PI*1.5]];
+  x.font="700 10.5px 'Space Grotesk',monospace";x.textAlign='center';
+  L.forEach(([t,a])=>{const px=cx+Math.cos(a-Math.PI/2)*(rr+26),py=cy+Math.sin(a-Math.PI/2)*(rr+26);
+   x.fillStyle='rgba(200,210,230,.85)';x.fillText(t,px,py+4);});
+  const px=cx+Math.cos(ang)*rr,py=cy+Math.sin(ang)*rr;
+  const g=x.createRadialGradient(px,py,0,px,py,16);
+  g.addColorStop(0,'rgba(94,234,212,.95)');g.addColorStop(1,'rgba(94,234,212,0)');
+  x.fillStyle=g;x.beginPath();x.arc(px,py,16,0,7);x.fill();
+  x.fillStyle='#5EEAD4';x.beginPath();x.arc(px,py,4,0,7);x.fill();}
+ function frame(){ang+=REDUCED?0:speed;paint();raf=requestAnimationFrame(frame);}
+ btn&&btn.addEventListener('click',()=>{
+  cycle=Math.min(3,cycle+1);
+  r=Math.max(.5,r-.14);speed+=.008;
+  cap.innerHTML=CAPS[cycle];
+  nEl.textContent=cycle===0?'80%':['80%','−disposal','+glucose','−strength'][0];
+ });
+ new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting&&!raf)frame();}),{threshold:.2}).observe(c);
+})();
+
+/* --- paradox --- */
+(()=>{
+ const d=document.getElementById('pxDrugs');if(!d)return;
+ const rows={a:document.querySelector('.pxRow[data-b="a"]'),b:document.querySelector('.pxRow[data-b="b"]'),c:document.querySelector('.pxRow[data-b="c"]')};
+ const W=document.getElementById('pxW'),M=document.getElementById('pxM'),para=document.getElementById('pxPara');
+ function pick(k){
+  d.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.d===k));
+  const lit=k==='glp'?['a','b']:['c'];
+  Object.entries(rows).forEach(([kk,el])=>el.classList.toggle('lit',lit.includes(kk)));
+  W.style.height=k==='glp'?'34%':'62%';
+  M.style.height=k==='glp'?'38%':'52%';
+  para.classList.add('on');}
+ d.addEventListener('click',e=>{const b=e.target.closest('button');if(b)pick(b.dataset.d);});
+ new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting){pick('glp');ob.unobserve(e.target);}}),{threshold:.3}).observe(d);
+})();
+
+/* --- radial gauges --- */
+(()=>{
+ const gs=[...document.querySelectorAll('.gauge canvas')];if(!gs.length)return;
+ gs.forEach(c=>{
+  const target=+c.dataset.v;let val=0,raf=null;
+  function paint(){const [x,W,H]=fitCanvas(c);
+   const cx=W/2,cy=H/2,R=Math.min(W,H)*.4;
+   x.clearRect(0,0,W,H);
+   x.beginPath();x.arc(cx,cy,R,-Math.PI/2,Math.PI*1.5);x.strokeStyle='rgba(167,186,224,.15)';x.lineWidth=12;x.lineCap='round';x.stroke();
+   const a=-Math.PI/2+Math.PI*2*(val/100);
+   const grad=x.createLinearGradient(0,0,W,H);grad.addColorStop(0,'#FDBA74');grad.addColorStop(1,'#F97316');
+   x.beginPath();x.arc(cx,cy,R,-Math.PI/2,a);x.strokeStyle=grad;x.lineWidth=12;x.lineCap='round';
+   x.shadowColor='rgba(249,115,22,.55)';x.shadowBlur=14;x.stroke();x.shadowBlur=0;
+   x.fillStyle='#F7F9FE';x.font="700 44px 'Fraunces',Georgia,serif";x.textAlign='center';x.textBaseline='middle';
+   x.fillText(Math.round(val)+'%',cx,cy-2);x.textBaseline='alphabetic';}
+  function run(){const step=()=>{val+=Math.max(.4,(target-val)*.06);
+   if(val>=target){val=target;paint();return;}paint();raf=requestAnimationFrame(step);};
+   if(REDUCED){val=target;paint();return;}step();}
+  new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting){run();ob.unobserve(e.target);}}),{threshold:.4}).observe(c);
+  addEventListener('resize',paint);});
+})();
+
+/* --- seals flip --- */
+(()=>{const ss=[...document.querySelectorAll('.seal')];
+ ss.forEach(el=>el.addEventListener('click',()=>el.classList.toggle('flip')));})();
+
+/* --- 66% pictogram --- */
+(()=>{const w=document.getElementById('rhePicto');if(!w)return;
+ const figs=[...w.querySelectorAll('svg')];
+ new IntersectionObserver((es,ob)=>es.forEach(e=>{if(!e.isIntersecting)return;
+  setTimeout(()=>figs[0].classList.add('lit'),200);
+  setTimeout(()=>figs[1].classList.add('lit'),700);
+  ob.unobserve(e.target);}),{threshold:.4}).observe(w);})();
+
 </script></body></html>
