@@ -1,0 +1,832 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The Five Ingredients — Windows of Breakdown</title><style>
+:root{
+  --bg:#05080F; --bg2:#070B14; --surface:#0B1120; --surface2:#111A32; --line:rgba(148,163,196,.15);
+  --ink:#EDF0F7; --ink2:#A9B2C5; --ink3:#77819A;
+  --teal:#0D9488; --tealHi:#2DD4BF; --tealSoft:rgba(45,212,191,.12);
+  --orange:#EA580C; --orangeHi:#FB923C;
+  --violet:#8B5CF6; --violetHi:#A78BFA;
+  --amber:#B45309; --amberHi:#FBBF24;
+  --serif:ui-serif,Georgia,'Times New Roman',serif;
+  --sans:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono',Consolas,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(45,212,191,.28)}
+a{color:var(--tealHi);text-decoration:none} button{font-family:inherit;cursor:pointer}
+h1,h2,h3,.serif{font-family:var(--serif);font-weight:600}
+.wrap{max-width:1200px;margin:0 auto;padding:0 clamp(18px,4vw,48px)}
+section{position:relative}
+
+/* progress bar */
+#prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--violet),var(--orange));width:0;z-index:99;transition:width .1s linear}
+
+/* nav */
+#nav{position:fixed;top:3px;left:0;right:0;z-index:60;border-bottom:1px solid transparent;transition:.3s}
+#nav.solid{background:rgba(5,8,15,.85);backdrop-filter:blur(14px);border-color:var(--line)}
+#nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+.navBrand{font-family:var(--mono);font-size:.78rem;letter-spacing:.2em;color:var(--ink2)}
+.navBrand b{color:var(--tealHi)}
+#nav ul{display:flex;gap:8px;list-style:none}
+#nav ul a{color:var(--ink3);font-size:.83rem;padding:8px 14px;border-radius:99px;border:1px solid transparent;transition:.2s}
+#nav ul a:hover{color:var(--ink);border-color:var(--line)}
+#nav ul a b{color:var(--amberHi);font-family:var(--mono);font-weight:600;margin-right:6px}
+@media(max-width:820px){#nav ul{display:none}}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.2,.75,.3,1),transform .9s cubic-bezier(.2,.75,.3,1)}
+.rv.on{opacity:1;transform:none}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
+
+/* chapter headers */
+.chap{padding:clamp(90px,12vw,150px) 0 0}
+.chapNum{font-family:var(--mono);font-size:clamp(.8rem,1.4vw,1rem);letter-spacing:.5em;color:var(--amberHi);display:flex;align-items:center;gap:16px}
+.chapNum::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.chapTitle{font-size:clamp(2.5rem,7vw,5.2rem);line-height:1.02;margin:22px 0 10px;letter-spacing:-.01em}
+.chapTitle .alt{color:var(--ink3);font-style:italic}
+.chapLead{color:var(--ink2);font-size:clamp(1rem,1.5vw,1.2rem);max-width:800px;margin-top:18px}
+.chapLead b{color:var(--ink)}
+
+/* hero */
+#hero{min-height:100svh;display:flex;align-items:center;overflow:hidden;padding:90px 0 40px}
+#helix{position:absolute;inset:0;width:100%;height:100%}
+.heroGrad{position:absolute;inset:0;background:
+ radial-gradient(50% 60% at 78% 30%,rgba(139,92,246,.16),transparent 65%),
+ radial-gradient(55% 60% at 15% 75%,rgba(13,148,136,.14),transparent 60%),
+ linear-gradient(180deg,rgba(5,8,15,.1),rgba(5,8,15,.72) 75%,var(--bg))}
+.heroInner{position:relative;z-index:2;width:100%}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.34em;color:var(--tealHi);text-transform:uppercase}
+#hero h1{font-size:clamp(2.7rem,8vw,6rem);line-height:.98;margin:24px 0 0;letter-spacing:-.015em;text-transform:uppercase;font-weight:700}
+#hero h1 .l2{color:var(--orangeHi)}
+#hero h1 .l3{font-style:italic;text-transform:none;color:var(--tealHi);font-weight:600}
+.heroSub{color:var(--ink2);font-size:clamp(1rem,1.6vw,1.25rem);max-width:640px;margin-top:26px}
+.heroSub b{color:var(--ink)}
+.heroCta{margin-top:40px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.btn{border-radius:14px;padding:16px 30px;font-size:.95rem;font-weight:700;letter-spacing:.02em;border:1px solid var(--line);color:var(--ink);background:rgba(16,24,48,.6);backdrop-filter:blur(8px);transition:.25s}
+.btn:hover{transform:translateY(-2px)}
+.btn.primary{background:linear-gradient(135deg,#0F766E,#0D9488);border-color:rgba(45,212,191,.45);box-shadow:0 10px 36px rgba(13,148,136,.4)}
+.chapIndex{display:flex;gap:26px;margin-top:54px;flex-wrap:wrap}
+.chapIndex a{display:flex;gap:12px;align-items:baseline;color:var(--ink3);font-size:.9rem;transition:.2s}
+.chapIndex a b{font-family:var(--mono);color:var(--amberHi)}
+.chapIndex a:hover{color:var(--ink)}
+.dragHint{position:absolute;right:clamp(16px,4vw,60px);bottom:26px;z-index:2;font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;color:var(--ink3)}
+
+/* marquee */
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(11,17,32,.6);overflow:hidden;padding:16px 0;position:relative;z-index:3}
+.mq{display:flex;gap:0;width:max-content;animation:mq 60s linear infinite}
+.marquee:hover .mq{animation-play-state:paused}
+.mq span{font-family:var(--serif);font-style:italic;font-size:1.02rem;color:var(--ink2);white-space:nowrap;padding:0 28px;border-right:1px solid var(--line)}
+.mq span b{color:var(--amberHi);font-style:normal;font-family:var(--mono);font-size:.8rem;letter-spacing:.1em;margin-right:10px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* axiom band */
+.axiom{margin:70px 0 0;background:linear-gradient(120deg,rgba(234,88,12,.10),rgba(139,92,246,.10));border:1px solid rgba(139,92,246,.25);border-radius:24px;padding:clamp(28px,4vw,46px);display:grid;grid-template-columns:1fr 1fr;gap:30px}
+@media(max-width:900px){.axiom{grid-template-columns:1fr}}
+.axiom h3{font-size:clamp(1.2rem,2.2vw,1.6rem);line-height:1.35}
+.axiom h3 b{color:var(--orangeHi)}
+.axiom h3 i{color:var(--tealHi)}
+.axiom p{color:var(--ink2);font-size:.96rem}
+.axiom p b{color:var(--ink)}
+
+/* journey picker */
+.jTabs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:54px}
+@media(max-width:820px){.jTabs{grid-template-columns:1fr}}
+.jTab{position:relative;border:1px solid var(--line);background:var(--surface);color:var(--ink2);border-radius:18px;padding:24px 24px 20px;text-align:left;overflow:hidden;transition:.3s}
+.jTab small{display:block;font-family:var(--mono);font-size:.64rem;letter-spacing:.26em;text-transform:uppercase;margin-bottom:8px;color:var(--ink3)}
+.jTab b{font-family:var(--serif);font-size:1.35rem;font-weight:600;color:var(--ink)}
+.jTab p{font-size:.82rem;margin-top:8px;color:var(--ink3)}
+.jTab:hover{transform:translateY(-3px)}
+.jTab.active{border-color:rgba(251,191,36,.55);background:linear-gradient(160deg,rgba(180,83,9,.22),var(--surface));box-shadow:0 14px 44px rgba(180,83,9,.28)}
+.jTab.active small{color:var(--amberHi)}
+.jHook{margin-top:34px;font-family:var(--serif);font-size:clamp(1.15rem,2.3vw,1.6rem);line-height:1.45;color:var(--ink);max-width:900px;min-height:90px}
+.jHook b{color:var(--orangeHi)}
+.jHook i{color:var(--tealHi)}
+
+/* saw */
+.sawWrap{margin-top:36px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,30px) clamp(18px,3vw,30px) 12px}
+.sawHead{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
+.sawHead h3{font-size:1.05rem}
+.sawHead span{font-size:.76rem;color:var(--ink3)}
+#saw{width:100%;height:320px;display:block}
+.sawLegend{display:flex;gap:22px;padding:8px 4px 10px;font-size:.76rem;color:var(--ink3);flex-wrap:wrap}
+.sawLegend i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:7px;vertical-align:middle}
+
+/* ===== window slider ===== */
+.slider{margin-top:26px;position:relative}
+.slTrack{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 4px 22px;scrollbar-width:none}
+.slTrack::-webkit-scrollbar{display:none}
+.wCard{flex:0 0 min(500px,88vw);scroll-snap-align:start;background:linear-gradient(170deg,var(--surface2),var(--surface));border:1px solid var(--line);border-radius:22px;padding:30px 32px;position:relative;overflow:hidden;transition:border-color .3s}
+.wCard::before{content:attr(data-n);position:absolute;right:14px;top:-26px;font-family:var(--serif);font-size:8rem;line-height:1;color:rgba(251,191,36,.08);font-weight:700}
+.wCard .wTag{font-family:var(--mono);font-size:.64rem;letter-spacing:.3em;color:var(--amberHi);text-transform:uppercase}
+.wCard h4{font-family:var(--serif);font-size:1.45rem;margin:12px 0 4px;line-height:1.2}
+.wCard .wSub{color:var(--ink3);font-size:.85rem;font-style:italic;margin-bottom:16px}
+.wCard ul{list-style:none;margin-top:6px}
+.wCard li{position:relative;padding-left:20px;margin-bottom:10px;color:var(--ink2);font-size:.9rem}
+.wCard li::before{content:"▸";position:absolute;left:0;color:var(--orangeHi)}
+.wCard li b{color:var(--ink)}
+.wCard .wWhy{margin-top:16px;padding:14px 18px;border-left:3px solid var(--amberHi);background:rgba(180,83,9,.10);border-radius:0 12px 12px 0;font-family:var(--serif);font-size:.98rem;color:var(--ink)}
+.wCard .wWhy b{color:var(--amberHi)}
+.slNav{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:4px}
+.slDots{display:flex;gap:8px}
+.slDots i{width:26px;height:4px;border-radius:3px;background:var(--line);transition:.3s;cursor:pointer}
+.slDots i.on{background:var(--amberHi)}
+.slBtns{display:flex;gap:10px}
+.slBtns button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:1.15rem;transition:.2s}
+.slBtns button:hover{background:var(--surface2);transform:translateY(-2px)}
+
+/* locks */
+.locks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:30px}
+.lock{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px}
+.lock .lNum{font-family:var(--mono);font-size:.7rem;letter-spacing:.24em;color:var(--violetHi)}
+.lock h4{font-size:1.05rem;margin:10px 0 8px}
+.lock p{color:var(--ink3);font-size:.87rem}
+
+/* ===== chapter 2 : 8 grams ===== */
+#eight .stage{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;margin-top:30px}
+@media(max-width:920px){#eight .stage{grid-template-columns:1fr}}
+.eightVis{position:relative;min-height:420px}
+#orb{width:100%;height:460px;display:block}
+.eightBig{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+.eightBig .n{font-family:var(--serif);font-size:clamp(7rem,14vw,11rem);line-height:.9;font-weight:700;background:linear-gradient(160deg,#FBBF24,#EA580C);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 8px 40px rgba(234,88,12,.35))}
+.eightBig .u{font-family:var(--mono);letter-spacing:.5em;color:var(--ink2);font-size:1rem;margin-top:6px}
+.eightCopy h3{font-size:clamp(1.5rem,2.8vw,2.1rem);line-height:1.25}
+.eightCopy h3 b{color:var(--amberHi)}
+.eightCopy .p1{margin-top:16px;color:var(--ink2);font-size:1rem}
+.eightCopy .p1 b{color:var(--ink)}
+.claim{margin-top:22px;padding:20px 24px;border-radius:16px;background:linear-gradient(120deg,rgba(180,83,9,.16),rgba(11,17,32,.4));border:1px solid rgba(251,191,36,.3);font-family:var(--serif);font-size:1.12rem;color:var(--ink)}
+.claim b{color:var(--amberHi)}
+.claim small{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.26em;color:var(--ink3);margin-bottom:8px}
+
+/* budget bar */
+.budget{margin-top:60px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:clamp(22px,3.4vw,36px)}
+.budget h3{font-size:1.2rem}
+.budget .sub{color:var(--ink3);font-size:.88rem;margin-top:4px}
+.bBar{margin-top:28px;height:64px;border-radius:14px;background:var(--surface2);position:relative;overflow:hidden;border:1px solid var(--line)}
+.bSeg{position:absolute;top:0;bottom:0;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;letter-spacing:.04em;white-space:nowrap;transition:width 1.2s cubic-bezier(.2,.7,.2,1)}
+.bSeg small{font-weight:400;margin-left:8px;opacity:.85}
+.bDiet{left:0;background:linear-gradient(120deg,#123B57,#155E75);color:#A5F3FC;width:0}
+.bHead{background:linear-gradient(120deg,#B45309,#EA580C);color:#FFF7ED;width:0}
+.bScale{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--ink3);margin-top:10px}
+.bNotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:24px}
+.bNote{border:1px solid var(--line);border-radius:14px;padding:18px 20px;font-size:.86rem;color:var(--ink2)}
+.bNote b{color:var(--ink);display:block;margin-bottom:6px;font-size:.94rem}
+.bNote.bad b{color:var(--orangeHi)}.bNote.good b{color:var(--tealHi)}
+
+/* threshold + fails */
+.thWrap{margin-top:60px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px)}
+.thTop{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:6px}
+.thTop h3{font-size:1.08rem}
+.toggle{display:flex;border:1px solid var(--line);border-radius:11px;overflow:hidden}
+.toggle button{background:transparent;border:0;color:var(--ink3);padding:11px 18px;font-size:.82rem;transition:.2s}
+.toggle button.on{background:rgba(139,92,246,.16);color:var(--violetHi)}
+#thres{width:100%;height:310px;display:block}
+.thCap{font-size:.84rem;color:var(--ink3);padding:12px 4px 4px;max-width:840px}
+.failGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:40px}
+.fail{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;transition:.25s}
+.fail:hover{transform:translateY(-4px);border-color:rgba(251,146,60,.4)}
+.fail .big{font-family:var(--serif);font-size:2rem;color:var(--orangeHi);line-height:1}
+.fail h4{font-size:1rem;margin:12px 0 8px}
+.fail p{color:var(--ink3);font-size:.87rem}
+.fail p b{color:var(--ink2)}
+
+/* script quote */
+.script{margin-top:56px;border:1px solid rgba(45,212,191,.3);background:linear-gradient(140deg,rgba(13,148,136,.12),rgba(5,8,15,.2));border-radius:24px;padding:clamp(26px,4vw,44px);position:relative}
+.script small{font-family:var(--mono);font-size:.64rem;letter-spacing:.3em;color:var(--tealHi);text-transform:uppercase}
+.script p{font-family:var(--serif);font-style:italic;font-size:clamp(1.05rem,2vw,1.35rem);line-height:1.6;color:var(--ink);margin-top:14px}
+.script p b{color:var(--tealHi);font-style:normal}
+
+/* ===== chapter 3 : ingredients ===== */
+.ingPanel{margin-top:70px;border:1px solid var(--line);border-radius:26px;overflow:hidden;background:linear-gradient(175deg,var(--surface2),var(--surface) 55%)}
+.ingHero{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center;padding:clamp(24px,3.6vw,44px);position:relative}
+@media(max-width:880px){.ingHero{grid-template-columns:1fr}}
+.ingHero .vis{height:300px;position:relative}
+.ingHero canvas{width:100%;height:100%;display:block}
+.ingHead .idx{font-family:var(--mono);font-size:.68rem;letter-spacing:.3em;color:var(--ink3)}
+.ingHead h3{font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.05;margin-top:10px}
+.ingHead .role{font-family:var(--mono);font-size:.76rem;letter-spacing:.3em;text-transform:uppercase;margin-top:10px}
+.ingHead .adline{margin-top:18px;font-family:var(--serif);font-style:italic;font-size:clamp(1.05rem,1.9vw,1.3rem);color:var(--ink);line-height:1.5;border-left:3px solid;padding-left:18px}
+.ingHead .quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.ingHead .quick span{font-size:.74rem;padding:7px 13px;border-radius:99px;border:1px solid var(--line);color:var(--ink2)}
+.acc{border-top:1px solid var(--line)}
+.accItem{border-bottom:1px solid var(--line)}
+.accItem:last-child{border-bottom:0}
+.accBtn{width:100%;background:transparent;border:0;color:var(--ink);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px clamp(24px,3.6vw,44px);font-size:1rem;font-weight:600;text-align:left;transition:background .2s}
+.accBtn:hover{background:rgba(255,255,255,.025)}
+.accBtn .cue{font-family:var(--mono);font-size:1.1rem;color:var(--ink3);transition:transform .3s}
+.accItem.open .accBtn .cue{transform:rotate(45deg)}
+.accBtn small{font-family:var(--mono);font-size:.64rem;letter-spacing:.22em;color:var(--ink3);display:block;font-weight:400;margin-top:3px}
+.accPane{max-height:0;overflow:hidden;transition:max-height .55s cubic-bezier(.25,.8,.3,1)}
+.accBody{padding:4px clamp(24px,3.6vw,44px) 30px;color:var(--ink2);font-size:.94rem;max-width:900px}
+.accBody h5{color:var(--ink);font-size:.95rem;margin:16px 0 8px}
+.accBody ul,.accBody ol{margin-left:20px}
+.accBody li{margin-bottom:9px}
+.accBody li b,.accBody p b{color:var(--ink)}
+.accBody .pull{border-left:3px solid var(--tealHi);padding:14px 20px;background:var(--tealSoft);border-radius:0 12px 12px 0;margin:16px 0;font-family:var(--serif);font-size:1rem;color:var(--ink)}
+.accBody p{margin-bottom:10px}
+
+/* speed chart */
+.spWrap{margin-top:70px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px)}
+#speed{width:100%;height:320px;display:block}
+.spCap{font-size:.84rem;color:var(--ink3);padding:12px 4px 2px;max-width:860px}
+.spCap b{color:var(--ink2)}
+
+/* matrix */
+.mxWrap{margin-top:44px;overflow-x:auto;border:1px solid var(--line);border-radius:22px;background:var(--surface)}
+table.mx{border-collapse:collapse;width:100%;min-width:900px}
+.mx th,.mx td{padding:18px 22px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:.87rem}
+.mx thead th{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);background:rgba(255,255,255,.02)}
+.mx td:first-child b{color:var(--ink);font-family:var(--serif);font-size:.98rem}
+.mx td:first-child small{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;margin-top:5px}
+.mx td{color:var(--ink2)}
+.mx tbody tr:hover{background:rgba(45,212,191,.045)}
+.mx tbody tr:last-child td{border-bottom:0}
+
+/* close */
+#close{padding:clamp(90px,12vw,150px) 0;text-align:center;background:radial-gradient(60% 70% at 50% 100%,rgba(13,148,136,.14),transparent 70%)}
+#close .serifBig{font-family:var(--serif);font-size:clamp(1.6rem,4vw,2.9rem);line-height:1.3;max-width:940px;margin:26px auto 0}
+#close .serifBig b{color:var(--tealHi)}
+#close .serifBig .o{color:var(--orangeHi)}#close .serifBig .v{color:var(--violetHi)}#close .serifBig .a{color:var(--amberHi)}
+.closeStats{display:flex;gap:44px;justify-content:center;flex-wrap:wrap;margin-top:56px}
+.closeStats .n{font-family:var(--serif);font-size:2.3rem;color:var(--ink)}
+.closeStats .c{font-size:.76rem;color:var(--ink3);letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
+footer{border-top:1px solid var(--line);padding:38px 0 48px;color:var(--ink3);font-size:.79rem}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer p{max-width:620px;line-height:1.6}
+
+#tip{position:fixed;z-index:90;pointer-events:none;background:#0E1526;border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.8rem;color:var(--ink);box-shadow:0 10px 30px rgba(0,0,0,.55);opacity:0;transition:opacity .15s;max-width:260px}
+#tip b{color:var(--amberHi);display:block;font-size:.7rem;font-family:var(--mono);letter-spacing:.12em;margin-bottom:3px}
+#tip.show{opacity:1}
+
+/* ============ 3D WINDOW CORRIDOR ============ */
+.corHead{margin-top:80px;text-align:center}
+.corHead .k{font-family:var(--mono);font-size:.7rem;letter-spacing:.42em;color:var(--tealHi);text-transform:uppercase}
+.corHead h3{font-family:var(--serif);font-size:clamp(2.2rem,5.6vw,4rem);line-height:1.06;margin-top:16px}
+.corHead h3 em{font-style:italic;color:var(--amberHi)}
+.corHead p{color:var(--ink2);max-width:640px;margin:16px auto 0;font-size:1rem}
+.corHead .hint{margin-top:22px;font-family:var(--mono);font-size:.68rem;letter-spacing:.3em;color:var(--ink3);text-transform:uppercase}
+.corHead .hint::after{content:"";display:block;width:1px;height:44px;margin:12px auto 0;background:linear-gradient(180deg,var(--amberHi),transparent)}
+
+.corTrack{position:relative}
+.corStage{position:sticky;top:0;height:100svh;overflow:hidden;
+ background:
+  radial-gradient(60% 46% at 50% 108%,rgba(180,83,9,.13),transparent 60%),
+  radial-gradient(70% 60% at 50% -10%,rgba(139,92,246,.08),transparent 60%),
+  linear-gradient(180deg,#05080F 0%,#070D1A 55%,#04070D 100%)}
+.corFloor{position:absolute;left:50%;bottom:0;width:200vw;height:44%;transform:translateX(-50%) perspective(700px) rotateX(68deg);transform-origin:bottom;
+ background:
+  repeating-linear-gradient(90deg,rgba(148,163,196,.09) 0 1px,transparent 1px 90px),
+  repeating-linear-gradient(0deg,rgba(148,163,196,.08) 0 1px,transparent 1px 74px),
+  linear-gradient(180deg,transparent,rgba(13,148,136,.05));
+ mask-image:linear-gradient(180deg,transparent,#000 30%)}
+.corCam{position:absolute;inset:0;perspective:920px;perspective-origin:50% 42%}
+.corWin{position:absolute;left:50%;top:44%;width:min(46vw,520px);transform-style:preserve-3d;will-change:transform,opacity,filter}
+@media(max-width:880px){.corWin{width:min(82vw,440px);top:38%}}
+.winFrame{position:relative;border-radius:200px 200px 14px 14px;padding:14px;
+ background:linear-gradient(160deg,#2A3A57,#131E33 60%,#0C1424);
+ box-shadow:0 30px 80px rgba(0,0,0,.65), inset 0 2px 3px rgba(255,255,255,.14), inset 0 -3px 8px rgba(0,0,0,.6);
+ border:1px solid rgba(148,163,196,.25);transition:box-shadow .5s}
+.winFrame::after{content:"";position:absolute;left:-6%;right:-6%;bottom:-20px;height:20px;border-radius:6px;
+ background:linear-gradient(180deg,#2A3A57,#0C1424);box-shadow:0 12px 30px rgba(0,0,0,.55);border:1px solid rgba(148,163,196,.2)}
+.winGlass{position:relative;border-radius:190px 190px 6px 6px;overflow:hidden;background:#0B1120}
+.winGlass img{width:100%;display:block;transform:scale(1.04);transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.winGlass::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+ background:
+  linear-gradient(90deg,transparent calc(50% - 3px),rgba(19,30,51,.96) calc(50% - 3px) calc(50% + 3px),transparent calc(50% + 3px)),
+  linear-gradient(0deg,transparent calc(38% - 3px),rgba(19,30,51,.96) calc(38% - 3px) calc(38% + 3px),transparent calc(38% + 3px));
+ opacity:1;transition:opacity .8s}
+.winGlass::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+ background:linear-gradient(115deg,rgba(255,255,255,.14) 0%,transparent 28%,transparent 68%,rgba(255,255,255,.05) 100%)}
+.corWin.lit .winFrame{box-shadow:0 34px 100px rgba(0,0,0,.7),0 0 70px rgba(251,191,36,.22), inset 0 2px 3px rgba(255,255,255,.18)}
+.corWin.lit .winGlass::before{opacity:0}
+.corWin.lit .winGlass img{transform:scale(1.0)}
+.winPlq{position:absolute;left:50%;bottom:-64px;transform:translateX(-50%);white-space:nowrap;
+ font-family:var(--mono);font-size:.66rem;letter-spacing:.34em;color:var(--amberHi);text-transform:uppercase;
+ background:rgba(11,17,32,.75);border:1px solid rgba(251,191,36,.35);border-radius:99px;padding:8px 18px;backdrop-filter:blur(6px)}
+
+/* narration card */
+.corCard{position:absolute;left:clamp(16px,4vw,64px);bottom:clamp(18px,4vh,44px);z-index:2000;max-width:min(480px,62vw);
+ background:rgba(9,14,26,.78);backdrop-filter:blur(14px);border:1px solid var(--line);border-left:3px solid var(--amberHi);
+ border-radius:18px;padding:22px 26px;transition:opacity .45s,transform .45s}
+.corCard.swap{opacity:0;transform:translateY(14px)}
+.corCard .cTag{font-family:var(--mono);font-size:.62rem;letter-spacing:.3em;color:var(--amberHi);text-transform:uppercase}
+.corCard h4{font-family:var(--serif);font-size:clamp(1.15rem,2.2vw,1.6rem);margin:8px 0 2px}
+.corCard .cSub{color:var(--ink3);font-size:.8rem;font-style:italic}
+.corCard p{color:var(--ink2);font-size:.9rem;margin-top:10px;line-height:1.55}
+.corCard p b{color:var(--ink)}
+@media(max-width:880px){.corCard{left:12px;right:12px;max-width:none;bottom:12px;padding:16px 18px}}
+
+/* muscle HUD */
+.musHud{position:absolute;right:clamp(14px,3vw,50px);top:50%;transform:translateY(-50%);z-index:2000;text-align:center;
+ background:rgba(9,14,26,.78);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:20px;padding:18px 18px 16px;width:172px}
+.musHud .mTag{font-family:var(--mono);font-size:.6rem;letter-spacing:.26em;color:var(--ink3);text-transform:uppercase}
+.musStack{position:relative;width:134px;height:184px;margin:10px auto 0}
+.musStack img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .6s,filter .6s}
+.musPct{font-family:var(--serif);font-size:2rem;font-weight:700;line-height:1;margin-top:10px;transition:color .5s}
+.musCap{font-size:.62rem;color:var(--ink3);letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
+.musBar{height:5px;border-radius:3px;background:var(--surface2);margin-top:10px;overflow:hidden}
+.musBar i{display:block;height:100%;border-radius:3px;background:#2DD4BF;width:100%;transition:width .5s,background .5s}
+.musDelta{position:absolute;top:-12px;right:-6px;font-weight:800;font-size:.95rem;color:var(--orangeHi);opacity:0;transform:translateY(8px);transition:.5s}
+.musDelta.pop{opacity:1;transform:none}
+@media(max-width:880px){.musHud{top:74px;right:10px;transform:none;width:126px;padding:12px}
+ .musStack{width:78px;height:104px;margin-top:6px}.musPct{font-size:1.4rem}}
+
+/* progress rail */
+.corRail{position:absolute;left:clamp(10px,2vw,30px);top:50%;transform:translateY(-50%);z-index:2001;display:flex;flex-direction:column;gap:10px}
+.corRail i{width:9px;height:9px;border-radius:50%;background:rgba(148,163,196,.25);border:1px solid transparent;cursor:pointer;transition:.3s}
+.corRail i.on{background:var(--amberHi);box-shadow:0 0 12px rgba(251,191,36,.6)}
+@media(max-width:880px){.corRail{display:none}}
+.corVin{position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(3,5,10,.55) 100%)}
+
+.pageTop{padding-top:104px}
+.segGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-top:50px}
+.seg{border:1px solid var(--line);border-radius:22px;overflow:hidden;background:var(--surface);display:block;transition:transform .3s,border-color .3s}
+.seg:hover{transform:translateY(-5px);border-color:rgba(45,212,191,.5)}
+.seg .ph{height:186px;overflow:hidden}
+.seg img{width:100%;height:100%;object-fit:cover;display:block}
+.seg .sb{padding:20px 22px 24px}
+.seg small{font-family:var(--mono);font-size:.62rem;letter-spacing:.26em;color:var(--amberHi);text-transform:uppercase}
+.seg h3{font-family:var(--serif);font-size:1.28rem;margin:8px 0 6px;color:var(--ink)}
+.seg p{color:var(--ink3);font-size:.86rem}
+.seg .go{margin-top:12px;color:var(--tealHi);font-size:.85rem;font-weight:700}
+.crumb{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;color:var(--ink3);text-transform:uppercase}
+.crumb a{color:var(--tealHi)}
+.nextBar{margin:66px 0 0;display:flex;gap:14px;flex-wrap:wrap}
+.nextBar a{flex:1;min-width:230px;border:1px solid var(--line);border-radius:16px;padding:20px 22px;background:var(--surface);transition:.25s;display:block}
+.nextBar a:hover{transform:translateY(-3px);border-color:rgba(45,212,191,.45)}
+.nextBar small{font-family:var(--mono);font-size:.58rem;letter-spacing:.24em;color:var(--ink3);text-transform:uppercase}
+.nextBar b{display:block;font-family:var(--serif);font-size:1.05rem;color:var(--ink);margin-top:6px}
+.picHero{border-radius:24px;overflow:hidden;border:1px solid var(--line);margin-top:40px;position:relative}
+.picHero img{width:100%;display:block}
+.picHero .cap{position:absolute;left:0;right:0;bottom:0;padding:26px 30px;background:linear-gradient(180deg,transparent,rgba(5,8,15,.92));font-family:var(--serif);font-size:clamp(1.05rem,2vw,1.45rem);color:var(--ink)}
+.homeHero{min-height:88svh;display:flex;align-items:center;overflow:hidden;padding:100px 0 40px}
+@media(max-width:880px){#nav ul{display:flex;gap:2px;overflow-x:auto;max-width:58vw}#nav ul a{padding:6px 9px;font-size:.7rem}}
+</style></head><body><div id="prog"></div><div id="tip"></div><nav id="nav"><div class="wrap"><a class="navBrand" href="index.html"><b>WINDOWS</b> OF BREAKDOWN</a><ul><li><a href="index.html">Home</a></li><li><a href="diabetes.html">Diabetes</a></li><li><a href="perioperative.html">Surgery</a></li><li><a href="rheumatology.html">Rheumatology</a></li><li><a href="eight-gram.html">8-Gram</a></li><li><a href="ingredients.html" style="color:var(--ink);border-color:var(--line)">Ingredients</a></li></ul></div></nav><section class="pageTop"><div class="wrap">
+<div class="crumb"><a href="index.html">Home</a> / Chapter 03</div>
+<h2 class="chapTitle rv" style="font-size:clamp(2rem,5vw,3.5rem);margin-top:18px">The Ingredients<br><span class="alt">in depth</span></h2>
+<p class="chapLead rv d1">One shield. One trigger. Two speeds of bricks. One wiring system. <b>Five different jobs, with no overlap.</b> Each panel below carries the full pharmacology: what it does, why food cannot supply it, and its role in each therapy area.</p>
+<div class="teamHero rv d1"><img src="data:image/jpeg;base64,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" alt="The five ingredient characters"></div>
+<div id="ingPanels"></div>
+<div class="spWrap rv"><div class="thTop"><h3>The protein speed spectrum — why two proteins are in the tin</h3></div>
+<canvas id="speed"></canvas>
+<p class="spCap">Whey is the fastest because it stays liquid in stomach acid, and the isolate has the fat removed. Its peak lands in the same window as the free-leucine bolus: trigger and all nine essential amino acids together. Soy isolate’s plateau then keeps blood amino acids up for hours, shortening the time the muscle spends at a net loss. <b>Spike plus plateau — two jobs, no overlap.</b> Casein can sustain but cannot spike (and it clots); whey spikes but cannot sustain; dal is slow <em>and</em> incomplete.</p></div>
+<h3 class="rv" style="margin-top:66px;font-size:clamp(1.35rem,2.6vw,1.9rem)">Five roles across three therapy areas</h3>
+<div class="mxWrap rv d1"><table class="mx">
+<thead><tr><th>Ingredient</th><th>Diabetes</th><th>Peri-operative</th><th>Rheumatology</th></tr></thead>
+<tbody id="mxBody"></tbody></table></div>
+<div class="nextBar rv"><a href="diabetes.html"><small>Revisit</small><b>The Journeys →</b></a>
+<a href="index.html"><small>Back to</small><b>All segments →</b></a></div>
+</div></section><footer><div class="wrap">
+<p>Scientific education for healthcare professionals. This site describes the physiology of muscle loss and the published pharmacology of nutritional ingredients (calcium β-hydroxy-β-methylbutyrate, L-leucine, whey protein isolate, soy protein isolate, vitamin D). The patients shown are illustrative composites, and the muscle character is a visual representation of muscle breakdown — not a measurement of any individual patient. This is not medical advice; nutritional support is an adjunct to disease-directed treatment, never a replacement.</p>
+<p style="text-align:right">Windows of Breakdown<br>Diabetes · Peri-operative · Rheumatology</p></div></footer><script>
+const HOOKS={
+ dia:'A diabetic enters every window <b>already handicapped</b> — insulin normally restrains the demolition pathway, and insulin-resistant muscle has partially lost that brake. <i>The same crisis strips more muscle from a diabetic than from anyone else.</i>',
+ op:'The surgical journey is a chain of breakdown windows — and it is unique in all of medicine: <b>this is the only crisis that comes with a date on it.</b> <i>A predictable withdrawal is the strongest possible argument for depositing beforehand.</i>',
+ rheu:'She loses muscle twice — <b>slowly every day</b> (TNF-α and IL-6 never stop), and <b>steeply</b> with every flare, steroid course and infection. <i>Her weight stays stable, so nobody notices — the weighing scale lies to this patient.</i>'};
+
+const LINES=[
+ ['THE PRINCIPLE','Muscle is not passively lost — it is actively harvested.'],
+ ['RHEUMATOLOGY','The weighing scale lies — fat quietly replaces muscle.'],
+ ['THE KITCHEN','Grams served, nothing built.'],
+ ['THE TRIGGER','Protein without the trigger is expensive calories.'],
+ ['FASTING','Breakdown does not pause when eating pauses.'],
+ ['SURGERY','The only crisis in medicine that arrives with a date.'],
+ ['THE WOUND','Every wound heals at the muscle’s expense.'],
+ ['HMB','Success is measured in what doesn’t happen.'],
+ ['SPEED','Against a raised threshold, speed is a medical property.'],
+ ['VITAMIN D','One prevented fall justifies the entire program.'],
+ ['BED REST','Ten days in bed. One kilogram of leg muscle. Ten percent of strength.'],
+ ['THE CLOSE','Protect the joint’s best friend — the muscle around it.']];
+
+const ING2=[
+{name:'Calcium HMB',role:'The Shield',color:'#FB923C',line:'Leucine shouts “BUILD.” HMB issues the second order: “STOP DEMOLISHING.”',
+ quick:['Attenuates the demolition pathway','Stabilizes the muscle-cell membrane','Supports mTOR','Works when the patient cannot move'],
+ secs:[
+ ['The pharmacology','tagging machinery · membrane · mTOR',`<p>Dietary protein → leucine → (via α-ketoisocaproate, KIC) → <b>HMB — β-hydroxy-β-methylbutyrate</b>. Supplied as the <b>calcium salt</b> for powder stability and reliable absorption.</p>
+ <h5>Three documented actions</h5><ol>
+ <li><b>Attenuates the ubiquitin–proteasome pathway</b> — fewer proteins tagged and shredded per day. The headline, unique role.</li>
+ <li><b>Stabilizes the muscle-cell membrane</b> — HMB is a precursor for membrane cholesterol synthesis; stressed muscle cells get repair material and become more resilient.</li>
+ <li><b>Supports mTOR</b> — a stimulatory effect on the synthesis side; defensive first, but fighting on both fronts.</li></ol>
+ <div class="pull">The bucket law: net muscle = synthesis − breakdown. If demolition outpaces construction, a perfect anabolic program shows zero net result. HMB seals the leak so every other ingredient’s work appears as <b>net</b> gain.</div>`],
+ ['Why food can’t supply it','the 5% arithmetic',`<p>Only <b>~5% of leucine converts to HMB</b>. The ~3 g used clinically would require ~60 g of pure leucine — several kilograms of protein food daily. Physically impossible.</p>
+ <div class="pull">A therapeutic anti-catabolic dose can only come from direct supplementation — no protein powder, however premium, can deliver it. This is the complete answer to “why not just protein?”</div>
+ <p><b>Expectation-setting:</b> HMB’s success is measured in what <em>doesn’t</em> happen — grip and circumference holding steady across months, illnesses and crises. And it is the one ingredient that works <b>on the days the patient cannot move</b> — bed rest, flare, post-op — when losses are steepest and every activity-dependent strategy is disabled.</p>`],
+ ['Role in diabetes','sealing the over-active pathway',`<p>Targets precisely the pathway diabetes over-activates — the demolition machinery runs harder than age alone would drive it, because insulin’s brake is partially lost. HMB seals the bucket so the program shows net gain, and defends the sawtooth crises — infection, admission, bed rest — on the days the patient cannot move.</p><p><b>Observable:</b> the absence of loss across months and fevers.</p>`],
+ ['Role peri-operatively','the shield before the surge',`<p>Cortisol — surgery’s own hormone — is the strongest known activator of the demolition pathway, amplified by bed rest and wound inflammation. Three-phase case: <b>pre-op</b> — the shield must be up <em>before</em> the surge (protection cannot be retrofitted); <b>post-op</b> — the only agent working while the patient cannot move, through the steepest-loss window; <b>rehab</b> — a shallower trough means physiotherapy starts from a higher floor.</p><p><b>Observable:</b> day-7 grip resembling day-0; the thigh that didn’t waste.</p>`],
+ ['Role in rheumatology','double-anchored',`<p>The two strongest known activators of the demolition pathway — inflammatory cytokines and glucocorticoids — are <em>both</em> permanently present in this patient’s life. Three scenarios: the <b>daily smoulder</b> (standing guard through remission’s low-grade cytokine activity), the <b>steroid course</b> (anti-catabolic cover running underneath the prescription, not against it — research models show HMB protecting muscle specifically against steroid-induced atrophy), and the <b>flare</b> (triple demolition + enforced rest).</p><p><b>Observable:</b> grip holding across steroid courses; flares without the usual step-down.</p>`]]},
+{name:'L-Leucine',role:'The Trigger',color:'#A78BFA',line:'The build command that gets through when the insulin channel is jammed — needing zero digestion and no help from the liver.',
+ quick:['Fires mTOR — the master build switch','Insulin-independent route','Bypasses the liver (BCAA)','Zero digestion, guaranteed bolus'],
+ secs:[
+ ['The pharmacology','mTOR and the raised threshold',`<p>Leucine is one of the three branch-chain essential amino acids and the <b>signal</b> of muscle protein synthesis: rising blood leucine is sensed inside the muscle cell → <b>mTOR</b> activates → ribosomes begin assembling new protein. No leucine signal → no firing → dietary protein is burned as fuel or stored as fat. <b>Protein without the trigger is expensive calories.</b></p>
+ <h5>Two properties complete it</h5><ul>
+ <li>Leucine fires mTOR through a route <b>independent of insulin</b> — a build command that gets through when the insulin channel is jammed.</li>
+ <li>Free-form leucine needs <b>zero digestion</b> — the bolus is guaranteed, even into a stunned gut.</li></ul>
+ <div class="pull">Exercise and leucine converge on the same mTOR pathway — each amplifies the other. That is the pharmacological case for <b>early</b> use, while activity is still possible.</div>`],
+ ['The liver-bypass dossier','a diplomatic pass',`<p>Everything absorbed from the gut travels the portal vein to the liver for first-pass processing — <b>except the BCAAs</b>. The liver barely possesses BCAA aminotransferase, so leucine passes through almost untouched and is metabolized directly in muscle. Ordinary amino acids clear a customs office; BCAAs carry a diplomatic pass.</p>
+ <h5>Four consequences</h5><ol>
+ <li><b>Zero hepatic workload</b> — BCAAs nourish muscle without asking the liver first.</li>
+ <li><b>The BCAA:AAA ratio</b> — liver dysfunction drains BCAAs while aromatic amino acids accumulate and win the blood–brain-barrier entry gate (the mechanism of hepatic encephalopathy); supplementing BCAAs re-crowds the gate and restores the ratio.</li>
+ <li><b>Muscle is the backup detox organ</b> — skeletal muscle locks circulating ammonia into glutamine; every preserved kilogram partially covers a failing liver’s duty.</li>
+ <li><b>The trigger survives</b> — leucine’s mTOR action happens inside the muscle cell, requiring neither liver processing nor insulin. Where liver and insulin channels are both compromised, leucine is the last clear channel.</li></ol>`],
+ ['Role in diabetes','the last reliable build channel',`<p>The supra-threshold bolus against the chronically raised threshold; the insulin-independent route as <b>the last reliable build channel</b> in an insulin-resistant patient; the full liver dossier for the NAFLD-carrying majority; the exercise synergy as the case for treating the still-active early patient.</p><p><b>Observable:</b> responsiveness — easier stairs, firmer chair-rise as the post-meal switch finally flips.</p>`],
+ ['Role peri-operatively','the guideline’s own molecule',`<p>Surgical nutrition guidance itself names a ~3 g free-leucine serving the <b>“Anabolic Trigger”</b>. Surgical stress raises the threshold acutely, exactly when protein demand peaks at 1.5 g/kg. Free-form matters doubly: zero digestion for the anesthesia-stunned, ileus-prone gut, and an insulin-independent command through stress hyperglycemia — the command that still gets through on day two. The post-op liver is busy; leucine adds anabolic benefit at near-zero additional hepatic workload.</p><p><b>Observable:</b> wounds on schedule; physio sessions converting to tissue.</p>`],
+ ['Role in rheumatology','three channels down at once',`<p>The threshold is raised by the disease itself (TNF/IL-6 blunt the anabolic response); glucocorticoids suppress synthesis; and inflammation + steroids induce insulin resistance. “Eat more protein” fails by mechanism, triply. The bolus fires mTOR through the one channel still open. The methotrexate edge: this liver is a <em>monitored organ</em> — BCAAs deliver their entire anabolic benefit at near-zero hepatic workload: <b>muscle therapy that never appears on the LFT chart.</b> Rheumatology prescribes movement; leucine converts each session into tissue — while joints still permit it.</p><p><b>Observable:</b> physiotherapy that finally “takes”.</p>`]]},
+{name:'Whey Protein Isolate',role:'The Fast Bricks',color:'#2DD4BF',line:'For a normal muscle, protein speed is a detail. For an anabolic-resistant muscle, speed is the therapy.',
+ quick:['Fastest protein in existence','Peak ~60–90 min — carries the trigger','Biological Value 104 · PDCAAS 1.00','Lactose-free · sugar-free'],
+ secs:[
+ ['The pharmacology','why the spike crosses the bar',`<p><b>Why whey is fastest:</b> it is soluble — it stays liquid in stomach acid (casein curdles into a clot that must dissolve slowly), and the isolate has the fat removed (fat slows gastric emptying). Blood amino acids rise in ~15–30 min, peak ~60–90 min. Nothing edible delivers amino acids to blood faster.</p>
+ <h5>Speed as efficacy</h5>
+ <p>A slow protein produces a low flat curve — a soft knock that never crosses the threshold at any moment; synthesis never fires though the grams were eaten. WPI produces a sharp high spike — a loud knock that punches through. <b>Same grams, different biology.</b> This is also why dal, “despite being protein,” has protected no one’s muscle: slow + incomplete = a signal that never reaches trigger height.</p>
+ <div class="pull">The WPI spike carries the trigger: whey is the naturally leucine-richest common protein, so its peak lands in the same window as the free-leucine bolus — trigger + all nine essential amino acids together, the documented condition for maximal synthesis.</div>
+ <h5>Quality profile</h5><ul>
+ <li><b>Biological Value 104</b> — above egg’s 100; the most muscle built per gram eaten; PDCAAS 1.00.</li>
+ <li><b>Lactose-free</b> — no gas, bloating or loose motions in the lactase-declined elderly gut; no silent non-compliance at week three.</li>
+ <li>Virtually fat- and sugar-free. <b>The glycemic bonus:</b> whey pre-loaded before meals stimulated the T2DM patient’s own incretin/insulin response and lowered post-meal glucose (Diabetologia 2014) — glycemically active <em>in the patient’s favour</em>.</li></ul>`],
+ ['Role in diabetes','the spike dal never makes',`<p>The spike that crosses the raised threshold where dal never will; lactose-free for the elderly gut; sugar-free substrate; and the pre-meal effect that actively softens the post-prandial spike the diabetologist is fighting. Detailing line: prescribe the protein <b>before the meal</b>.</p><p><b>Observable:</b> tolerability plus friendlier post-prandial readings with pre-meal timing.</p>`],
+ ['Role peri-operatively','the protein shaped like the protocol',`<p>Early feeding demands nutrition within 24 h into a stunned, nauseated stomach, toward a ~75 g/day target. WPI is built for all three at once: <b>liquid in acid</b> so it empties fast and stays down (less nausea, lower residual and aspiration risk), <b>the sharpest spike</b> so it crosses the stress-raised threshold, and <b>BV 104</b> so every swallowed gram becomes healing. The kitchen arithmetic: 75 g/day is ten to twelve eggs’ worth, at volumes the patient cannot eat. Lactose-free where distension is painful and clinically confusing; sugar-free with stress hyperglycemia.</p><p><b>Observable:</b> early feeds kept down; targets met by day 3–4; fewer infections, earlier discharge.</p>`],
+ ['Role in rheumatology','stir-a-glass nutrition',`<p>The spike against the cytokine-raised threshold. The practical fit: <b>RA hands with morning stiffness cannot cook elaborate protein meals</b> — a stirred glass is arthritis-friendly nutrition; small volume suits an appetite suppressed by chronic IL-6 (inflammation is itself an appetite suppressant); lactose-free for the gut already managing NSAIDs and methotrexate days; fat- and sugar-free for steroid glycemia and for the highest-cardiovascular-risk population in medicine. Whey’s bioactive fractions (immunoglobulins, lactoferrin) travel along as a benign bonus.</p><p><b>Observable:</b> a supplement continued — no gut protest, no cooking burden.</p>`]]},
+{name:'Soy Protein Isolate',role:'The Steady Bricks',color:'#FBBF24',line:'Whey wins the first hour. Soy defends the next several — and the years.',
+ quick:['Complete plant protein — 9 EAAs, PDCAAS 1.00','3–5 h sustained plateau','Cholesterol-free · lipid-friendly','Built for years of daily use'],
+ secs:[
+ ['The pharmacology','the plateau and the long day',`<p>Synthesis is not a single event and the day is long. After the whey spike is spent (~hour 3), blood amino acids fall and the body drifts to net breakdown — and the elderly patient with small, spaced meals spends most of the day in these unprotected hours. <b>SPI’s plateau extends aminoacidemia</b>, shortening the daily hours the muscle runs at a net loss.</p>
+ <div class="pull">No single protein does both jobs: casein could sustain but cannot spike (and clots, and carries lactose-context); whey spikes but cannot sustain. <b>Spike + plateau = two jobs, zero redundancy.</b></div>
+ <h5>Profile</h5><ul>
+ <li>A genuine rarity — a <b>complete plant protein</b>: all nine EAAs, PDCAAS 1.00, egg-class, BV 74; gentle rise, sustained 3–5 h plateau.</li>
+ <li><b>Cholesterol-free and classically lipid-friendly</b> — the responsible choice for months-to-years daily use in cardiovascular-risk populations.</li>
+ <li>Zero sugar; protein satiety that blunts between-meal snacking; culturally seamless in the vegetarian-leaning elderly diet — sustainable for the long-term daily use this therapy requires; a second, independent complete-EAA and BCAA stream backing the whey.</li></ul>`],
+ ['Role in diabetes','the plateau between small meals',`<p>The plateau against the small-spaced-meal pattern; lipid-friendliness for the patient whose #1 killer is cardiovascular; satiety against the snacking that drives hidden glucose excursions; cultural and hepatic fit for years of use.</p><p><b>Observable:</b> steadier days, less snacking, lipid neutrality.</p>`],
+ ['Role peri-operatively','feeding the wound at night',`<p>The wound is fed all night: collagen building and immune defence run continuously — including overnight, the longest fasting gap of the hospital day, and between the six small servings of the post-op diet (small spaced intake = maximal unprotected gaps = SPI’s exact brief). Cardiac-risk compatibility for the comorbid elective list; cultural fit for the home phase — where convalescence targets of 150% calories and 2.0–2.5 g/kg protein mean the family must sustain the nutrition for months after the discharge summary.</p><p><b>Observable:</b> overnight cover; a discharge plan the family actually continues.</p>`],
+ ['Role in rheumatology','the years-long companion',`<p><b>Three briefs:</b> (1) the unprotected hours — cytokines do not observe mealtimes; an evening serving’s soy tail carries amino-acid cover into the early-morning hours when both stiffness and catabolism peak (morning-stiffness logic); (2) the accelerated heart — a years-long companion in the population whose leading killer is inflammation-accelerated atherosclerosis must be cholesterol-free and lipid-friendly — plus the steroid-weight brief: soy’s satiety resists steroid-driven snacking while the disease steals muscle (the worst body-composition trade in medicine); (3) the years — a vegetarian-friendly fit for the duration this disease demands.</p><p><b>Observable:</b> steadier days; less steroid weight creep; still being taken at year two.</p>`]]},
+{name:'Vitamin D',role:'The Wiring',color:'#5EEAD4',line:'The other four build the tissue. Vitamin D turns tissue into strength — and its other name is fall-prevention.',
+ quick:['Muscle is a vitamin D target organ (VDR)','Type II fibre defence','Excitation–contraction coupling','Deficiency is near-default in the elderly'],
+ secs:[
+ ['The pharmacology','VDR · type II fibres · coupling',`<h5>Three documented actions</h5><ol>
+ <li><b>Type II fibre defence</b> — vitamin D signalling supports the fast-twitch power fibres (chair-rise, stair-climb, stumble-catch). Type II fibres are preferentially lost in sarcopenia <em>and</em> preferentially wasted in D deficiency — and by bed rest, and by steroids: the safety-critical fibres are attacked from multiple directions at once.</li>
+ <li><b>Excitation–contraction coupling</b> — contraction is electricity converted to force via intracellular calcium release; vitamin D supports this calcium handling — the machinery that turns command into movement.</li>
+ <li><b>Neuromuscular coordination</b> — adequate D status is clinically linked with better strength performance and reduced fall risk in the elderly.</li></ol>
+ <p><b>The population fact:</b> deficiency is near-default in the indoor-living elderly — indoor lifestyles, covered skin, polluted-city light, age-reduced skin synthesis. An anabolic formula without vitamin D would run its program on a deficient substrate, blunting every other ingredient. <b>Mass without wiring does not lift the patient off the chair or catch the stumble.</b> Side-benefit: D adequacy is linked with better insulin sensitivity. Precision note: vitamin D is activated partly in the liver — in significant hepatic compromise, monitor status; in routine patients supplementation is standard and needed.</p>`],
+ ['Role in diabetes','the neuropathy convergence',`<p>The diabetic is already losing balance from the <b>nerve side</b> (peripheral neuropathy erodes sensation and position-sense); vitamin D defends the neuromuscular junction and coordination from the <b>muscle side</b>. The consequence chain: fall → fracture → surgery + bed rest → the catastrophic sawtooth drop → often the end of independence. <b>One prevented fall justifies the entire program.</b></p><p><b>Observable:</b> steadier gait — and the fall that never happens.</p>`],
+ ['Role peri-operatively','the day-one standing instrument',`<p>Early mobilization is the protocol’s second pillar, and <b>standing on post-op day one is a type II fibre event</b> — the exact fibres bed rest and deficiency waste first, in patients mostly wheeled into theatre already deficient. The post-op ward is a fall factory — weakness, drains, sedative tails, night toilet trips — and an inpatient fall on a fresh wound or new joint is the complication that undoes the operation. Orthopedic bonus: in bone surgery D’s classical calcium-and-bone role runs alongside its muscle role — one ingredient serves the fusion, the fracture, and the muscle moving them.</p><p><b>Observable:</b> day-one standing that succeeds; no ward fall.</p>`],
+ ['Role in rheumatology','both sides of the fracture equation',`<p><b>The triple jeopardy:</b> type II fibres are wasted by sarcopenia, by D deficiency, <em>and</em> by steroid myopathy — three attacks on the same safety-critical fibres. Steroids thin the bone while disease weakens the muscle: a fall here is a fragility fracture waiting to happen. Vitamin D stands on both sides of the equation — classically essential for the bone, and via the VDR essential for the muscle and balance that prevent the fall from ever testing the bone. Claim discipline: D adequacy is <b>status correction, never disease treatment</b> — the DMARDs treat the disease.</p><p><b>Observable:</b> steadier gait and chair-rise; no fracture-triggered admission and its sawtooth drop.</p>`]]}];
+
+const MX=[
+['Calcium HMB','The Shield','#FB923C',
+ 'Seals the bucket so the program shows <b>net</b> gain; defends the sawtooth crises — infection, admission, bed rest — on the days the patient cannot move.',
+ 'Shield raised <b>before</b> the cortisol surge; holds demolition through the bed-rest days; a higher floor to start the climb.',
+ 'Standing guard over the daily smoulder; anti-catabolic cover <b>underneath</b> the prednisolone; holds through cytokine surge + enforced rest.'],
+['L-Leucine','The Trigger','#A78BFA',
+ 'Fires synthesis through the <b>insulin-independent, liver-bypassing</b> route — the last reliable build channel; converts activity into tissue while it is still possible.',
+ 'The guideline’s own ~3 g “Anabolic Trigger”; fires synthesis through stress-deafened, insulin-jammed, liver-busy days; converts every physio session into tissue.',
+ 'Keeps a build channel open when three are jammed (cytokines, steroids, insulin resistance); muscle therapy that never appears on the LFT chart.'],
+['Whey Protein Isolate','The Fast Bricks','#2DD4BF',
+ 'The spike that crosses the raised threshold where dal never will; lactose-free, sugar-free — and the pre-meal glycemic effect works in the patient’s favour.',
+ 'Makes 24-hour early feeding actually succeed: fast-emptying, stays down, crosses the threshold; BV 104 — every swallowed gram becomes healing.',
+ 'Small-volume, stir-a-glass nutrition through flare anorexia and stiff morning hands; zero sugar for steroid glycemia; heart-clean.'],
+['Soy Protein Isolate','The Steady Bricks','#FBBF24',
+ 'Sustained substrate for the hours between small, spaced meals; satiety against hidden snacking; cholesterol-free for the #1 comorbidity.',
+ 'Feeds the wound at 3 a.m. — overnight and between six small servings; the months-long home-diet backbone after discharge.',
+ 'Defends the overnight hours where morning stiffness peaks; satiety against steroid appetite and fat gain; built for years of daily use.'],
+['Vitamin D','The Wiring','#5EEAD4',
+ 'Fall-prevention physiology in the clinic’s highest fall-risk population — nerve side already failing, muscle side defended.',
+ 'Powers day-one standing (a type II fibre event); ward fall-prevention; in bone surgery, serves the fusion and the muscle moving it at once.',
+ 'Both sides of the fall–fracture equation: the bone the steroids thin, and the muscle and balance that keep it from ever being tested.']];
+</script><script>/* ===== shared engine: runs only where mounts exist ===== */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const tip=document.getElementById('tip');
+function showTip(x,y,html){if(!tip)return;tip.innerHTML=html;tip.classList.add('show');
+  const r=tip.getBoundingClientRect();
+  tip.style.left=Math.min(innerWidth-r.width-12,x+16)+'px';
+  tip.style.top=(y-r.height-14<8?y+18:y-r.height-14)+'px';}
+function hideTip(){if(tip)tip.classList.remove('show')}
+function fitCanvas(c){const d=Math.min(devicePixelRatio||1,2),r=c.getBoundingClientRect();
+  c.width=r.width*d;c.height=r.height*d;const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);return [x,r.width,r.height];}
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.1});
+$$('.rv').forEach(el=>io.observe(el));
+addEventListener('scroll',()=>{const n=$('#nav');if(n)n.classList.toggle('solid',scrollY>40);
+  const p=$('#prog');if(p){const h=document.documentElement;p.style.width=(scrollY/(h.scrollHeight-innerHeight)*100)+'%';}},{passive:true});
+
+/* marquee */
+if(typeof LINES!=='undefined'){$$('.mq').forEach(mq=>{const h=LINES.map(l=>`<span><b>${l[0]}</b>${l[1]}</span>`).join('');mq.innerHTML=h+h;});}
+
+/* 3D point cloud */
+function cloud(canvas,pts,opts){if(!canvas)return;
+  const o=Object.assign({rx:.4,ry:0,auto:.006,scale:1,persp:520,drag:false},opts||{});
+  let x,W,H,run=false,dragging=false,lx=0,ly=0,vx=0;
+  function setup(){[x,W,H]=fitCanvas(canvas)}
+  function frame(){if(!run)return;
+    x.clearRect(0,0,W,H);o.ry+=o.auto+vx;vx*=.95;
+    const cx=W/2,cy=H/2,s=Math.min(W,H)*o.scale;
+    const sy=Math.sin(o.rx),cyy=Math.cos(o.rx),sr=Math.sin(o.ry),cr=Math.cos(o.ry);
+    const proj=[];
+    for(const p of pts){let X=p[0],Y=p[1],Z=p[2];
+      let X1=X*cr+Z*sr, Z1=-X*sr+Z*cr;
+      let Y1=Y*cyy-Z1*sy, Z2=Y*sy+Z1*cyy;
+      const f=o.persp/(o.persp+Z2*s);
+      proj.push([cx+X1*s*f,cy+Y1*s*f,f,p[3],Z2]);}
+    proj.sort((a,b)=>b[4]-a[4]);
+    for(const q of proj){const [px,py,f,col]=q;
+      x.beginPath();x.arc(px,py,Math.max(.6,2.6*f*f),0,7);
+      x.fillStyle=col.replace('AL',(.22+.6*Math.max(0,f-.55)).toFixed(2));x.fill();}
+    requestAnimationFrame(frame);}
+  new IntersectionObserver(es=>es.forEach(e=>{const was=run;run=e.isIntersecting;if(run&&!was){setup();frame();}}),{threshold:.05}).observe(canvas);
+  addEventListener('resize',()=>{if(run)setup()});
+  if(o.drag){canvas.style.touchAction='pan-y';
+    canvas.addEventListener('pointerdown',e=>{dragging=true;lx=e.clientX;ly=e.clientY;canvas.setPointerCapture(e.pointerId)});
+    canvas.addEventListener('pointermove',e=>{if(!dragging)return;vx=(e.clientX-lx)*.0004;o.rx=Math.max(-1.2,Math.min(1.2,o.rx+(e.clientY-ly)*.003));lx=e.clientX;ly=e.clientY;});
+    canvas.addEventListener('pointerup',()=>dragging=false);canvas.addEventListener('pointercancel',()=>dragging=false);}
+  return o;}
+
+/* hero helix */
+(()=>{const c=document.getElementById('helix');if(!c)return;
+ const pts=[];const C=['rgba(45,212,191,AL)','rgba(167,139,250,AL)','rgba(251,146,60,AL)'];
+ for(let s=0;s<7;s++){const a0=s/7*Math.PI*2,col=C[s%3];
+  for(let i=0;i<130;i++){const t=i/130*4-2;const r=.16+.02*Math.sin(t*9+s);
+   pts.push([Math.cos(a0+t*1.35)*r,t*.28,Math.sin(a0+t*1.35)*r,col]);}}
+ for(let i=0;i<180;i++){const th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1),R=.55+Math.random()*.45;
+  pts.push([R*Math.sin(ph)*Math.cos(th),(Math.random()*2-1)*.62,R*Math.sin(ph)*Math.sin(th)*.6,'rgba(148,163,196,AL)']);}
+ cloud(c,pts,{rx:.28,auto:.0045,scale:.62,drag:true});})();
+
+/* 8g orbit */
+(()=>{const c=document.getElementById('orb');if(!c)return;const pts=[];
+ for(let i=0;i<260;i++){const a=i/260*Math.PI*2,r=.42+(Math.random()-.5)*.05;
+  pts.push([Math.cos(a)*r,Math.sin(a)*r*.34,Math.sin(a)*r,i%5?'rgba(251,191,36,AL)':'rgba(234,88,12,AL)']);}
+ for(let i=0;i<90;i++){const a=Math.random()*Math.PI*2,r=.12+Math.random()*.55;
+  pts.push([Math.cos(a)*r,(Math.random()-.5)*.5,Math.sin(a)*r,'rgba(148,163,196,AL)']);}
+ cloud(c,pts,{rx:.5,auto:.008,scale:.85});})();
+
+/* ===== corridor (window.STOPS + window.MUS4 + window.MUSLBL) ===== */
+(()=>{
+const mount=document.getElementById('corMount');
+if(!mount||typeof STOPS==='undefined')return;
+const N=STOPS.length,D=760;
+mount.innerHTML=`
+ <div class="corTrack" id="corTrack" style="height:${(N+1)*105}vh">
+  <div class="corStage" id="corStage">
+    <div class="corFloor"></div>
+    <div class="corCam" id="corCam">
+      ${STOPS.map((s,i)=>`<div class="corWin" data-i="${i}">
+        <div class="winFrame"><div class="winGlass"><img src="${s.img}" alt="${s.t}"></div></div>
+        <div class="winPlq">${s.plq}</div>
+      </div>`).join('')}
+    </div>
+    <div class="corVin"></div>
+    <div class="corCard" id="corCard"></div>
+    <div class="musHud"><div class="musDelta" id="musDelta">breakdown ▾</div>
+      <div class="mTag">${typeof MUSLBL!=='undefined'?MUSLBL:'The muscle'}</div>
+      <div class="musStack" id="musStack">
+        ${MUS4.map((m,i)=>`<img src="${m}" style="opacity:${i===0?1:0}">`).join('')}
+      </div>
+      <div class="musCap" id="musCap">strong &amp; full</div>
+    </div>
+    <div class="corRail" id="corRail">${STOPS.map((_,i)=>`<i data-i="${i}"></i>`).join('')}</div>
+  </div>
+ </div>`;
+const track=document.getElementById('corTrack');
+const wins=[...mount.querySelectorAll('.corWin')],card=document.getElementById('corCard');
+const rail=[...mount.querySelectorAll('.corRail i')];
+const stackImgs=[...mount.querySelectorAll('#musStack img')];
+const CAPS=['strong & full','holding on','shrinking','depleted'];
+let active=-1;
+function setCard(i){const s=STOPS[i];card.classList.add('swap');
+ setTimeout(()=>{card.innerHTML=`<div class="cTag">${s.tag}</div><h4>${s.t}</h4><div class="cSub">${s.s}</div><p>${s.p}</p>`;
+  card.classList.remove('swap');},220);}
+function setMuscle(frac,fin){
+ const sf=frac*(MUS4.length-1);
+ stackImgs.forEach((im,i)=>{const w=Math.max(0,1-Math.abs(sf-i));im.style.opacity=w.toFixed(2);
+  im.style.filter=fin?'grayscale(.7) brightness(.75)':'none';
+  im.style.transform=`scale(${(1-frac*.16).toFixed(3)})`;});
+ const cap=document.getElementById('musCap');
+ cap.textContent=fin?'the account is spent':CAPS[Math.min(3,Math.round(sf))];}
+function popDelta(){const d=document.getElementById('musDelta');d.classList.add('pop');
+ clearTimeout(d._t);d._t=setTimeout(()=>d.classList.remove('pop'),1500);}
+function frame(){
+ const r=track.getBoundingClientRect(),total=r.height-innerHeight;
+ const p=Math.min(1,Math.max(0,-r.top/total)),t=p*(N-1);
+ for(let i=0;i<N;i++){const w=wins[i];
+  const z=(t-i)*D,depth=-z;
+  const vis=depth<420&&depth>-(D*1.6);
+  w.style.display=vis?'block':'none';if(!vis)continue;
+  const centered=STOPS[i].fin||i===0;
+  const side=centered?0:(i%2?1:-1);
+  const xOff=side*Math.min(22,8+Math.abs(depth)/70);
+  const op=depth>0?Math.max(0,1-depth/380):Math.max(0,1-(-depth)/(D*1.5));
+  const bl=Math.max(0,(-depth-200)/420);
+  w.style.transform=`translate3d(calc(-50% + ${xOff}%), -50%, ${depth}px)`;
+  w.style.opacity=op.toFixed(3);
+  w.style.filter=bl>0.06?`blur(${Math.min(5,bl*4).toFixed(1)}px)`:'none';
+  w.style.zIndex=String(1000-Math.round(Math.abs(depth)));
+  w.classList.toggle('lit',Math.abs(z)<D*.42);}
+ const ai=Math.min(N-1,Math.max(0,Math.round(t)));
+ if(ai!==active){const first=active<0;active=ai;setCard(ai);
+  rail.forEach((d,k)=>d.classList.toggle('on',k===ai));
+  if(!first&&ai>0)popDelta();}
+ setMuscle(Math.min(1,t/(N-1)),t>N-1.5&&STOPS[N-1].fin);
+ requestAnimationFrame(frame);}
+rail.forEach(d=>d.addEventListener('click',()=>{
+ const i=+d.dataset.i,r=track.getBoundingClientRect(),total=r.height-innerHeight;
+ scrollTo({top:scrollY+r.top+(i/(N-1))*total+2,behavior:'smooth'});}));
+setCard(0);setMuscle(0,false);requestAnimationFrame(frame);
+})();
+
+/* ===== explorer: single-journey saw + cards + locks (window.JD) ===== */
+(()=>{
+if(typeof JD==='undefined'||!document.getElementById('saw'))return;
+let winSel=0,sawGeom=null,sawAnim=0,sawRAF=null;
+const tr=document.getElementById('slTrack');
+JD.windows.forEach((w,i)=>{const d=document.createElement('div');d.className='wCard';d.dataset.n=i+1;
+ d.innerHTML=`<div class="wTag">Window ${String(i+1).padStart(2,'0')} / ${JD.windows.length}</div>
+  <h4>${w.t}</h4><div class="wSub">${w.s}</div>
+  <ul>${w.m.map(m=>`<li>${m}</li>`).join('')}</ul>
+  <div class="wWhy"><b>Why it matters —</b> ${w.w}</div>`;
+ tr.appendChild(d);});
+const dots=document.getElementById('slDots');
+JD.windows.forEach((_,i)=>{const s=document.createElement('i');if(i===0)s.className='on';
+ s.onclick=()=>slGo(i);dots.appendChild(s);});
+document.getElementById('lockGrid').innerHTML=JD.locks.map(l=>`<div class="lock"><div class="lNum">${l[0]}</div><h4>${l[1]}</h4><p>${l[2]}</p></div>`).join('');
+function slGo(i){const c=tr.children[i];if(c)tr.scrollTo({left:c.offsetLeft-tr.offsetLeft-4,behavior:'smooth'});}
+function slIndex(){if(!tr.children.length)return 0;
+ const w=tr.children[0].offsetWidth+16;return Math.min(tr.children.length-1,Math.round(tr.scrollLeft/w));}
+tr.addEventListener('scroll',()=>{const i=slIndex();
+ $$('#slDots i').forEach((d,k)=>d.classList.toggle('on',k===i));
+ if(i!==winSel){winSel=i;paintSaw();}},{passive:true});
+document.getElementById('slPrev').onclick=()=>slGo(Math.max(0,slIndex()-1));
+document.getElementById('slNext').onclick=()=>slGo(Math.min(tr.children.length-1,slIndex()+1));
+function sawPoints(){const pts=JD.saw,c=document.getElementById('saw');
+ const [x,W,H]=fitCanvas(c);
+ const padL=64,padR=18,padT=16,padB=32;
+ const maxX=pts[pts.length-1][0],ys=pts.map(p=>p[1]);
+ const yMin=Math.min(...ys)-8,yMax=Math.max(...ys)+8;
+ return {x,W,H,pts,X:v=>padL+(W-padL-padR)*v/maxX,Y:v=>padT+(H-padT-padB)*(1-(v-yMin)/(yMax-yMin)),padL,padR,padT,padB};}
+function drawSaw(a){cancelAnimationFrame(sawRAF);sawGeom=sawPoints();sawAnim=a?0:1;
+ const step=()=>{sawAnim=Math.min(1,sawAnim+.02);paintSaw();if(sawAnim<1)sawRAF=requestAnimationFrame(step);};step();}
+function paintSaw(hover){const g=sawGeom;if(!g)return;const {x,W,H,pts,X,Y}=g;
+ x.clearRect(0,0,W,H);
+ x.strokeStyle='rgba(148,163,196,.10)';x.lineWidth=1;x.beginPath();
+ for(let i=0;i<=4;i++){const gy=g.padT+(H-g.padT-g.padB)*i/4;x.moveTo(g.padL,gy);x.lineTo(W-g.padR,gy);}x.stroke();
+ x.fillStyle='rgba(167,176,195,.75)';x.font='11px system-ui';x.textAlign='right';
+ x.fillText('full',g.padL-10,g.padT+4);x.fillText('reserve',g.padL-10,g.padT+16);
+ x.fillText('depleted',g.padL-10,H-g.padB+4);
+ x.textAlign='left';x.fillText('the journey →',g.padL,H-6);
+ const n=Math.max(2,Math.floor(pts.length*sawAnim));
+ x.beginPath();x.moveTo(X(pts[0][0]),Y(pts[0][1]));
+ for(let i=1;i<n;i++)x.lineTo(X(pts[i][0]),Y(pts[i][1]));
+ x.lineTo(X(pts[n-1][0]),H-g.padB);x.lineTo(X(pts[0][0]),H-g.padB);x.closePath();
+ const grad=x.createLinearGradient(0,g.padT,0,H-g.padB);
+ grad.addColorStop(0,'rgba(234,88,12,.15)');grad.addColorStop(1,'rgba(234,88,12,0)');
+ x.fillStyle=grad;x.fill();
+ x.lineWidth=2.5;x.lineCap='round';
+ for(let i=1;i<n;i++){x.beginPath();x.moveTo(X(pts[i-1][0]),Y(pts[i-1][1]));x.lineTo(X(pts[i][0]),Y(pts[i][1]));
+  x.strokeStyle=pts[i][1]<pts[i-1][1]?'#EA580C':'#0D9488';x.stroke();}
+ let wi=0;
+ for(let i=0;i<n;i++){if(pts[i][2]!=='w')continue;
+  const sel=wi===winSel,hov=hover&&hover.wi===wi;
+  x.beginPath();x.arc(X(pts[i][0]),Y(pts[i][1]),sel?9:hov?8:6,0,7);
+  x.fillStyle=sel?'#FBBF24':'#B45309';x.fill();
+  x.lineWidth=2;x.strokeStyle='#05080F';x.stroke();
+  x.fillStyle=sel?'#05080F':'rgba(237,240,247,.92)';x.font='bold 9px system-ui';x.textAlign='center';x.textBaseline='middle';
+  x.fillText(String(wi+1),X(pts[i][0]),Y(pts[i][1])+.5);x.textBaseline='alphabetic';wi++;}}
+function sawHit(e){const g=sawGeom;if(!g)return null;const r=document.getElementById('saw').getBoundingClientRect();
+ const px=e.clientX-r.left,py=e.clientY-r.top;let wi=0;
+ for(const p of g.pts){if(p[2]!=='w')continue;
+  if(Math.hypot(px-g.X(p[0]),py-g.Y(p[1]))<15)return {wi,p};wi++;}
+ return null;}
+const sawEl=document.getElementById('saw');
+sawEl.addEventListener('mousemove',e=>{const h=sawHit(e);paintSaw(h);
+ if(h){sawEl.style.cursor='pointer';showTip(e.clientX,e.clientY,`<b>WINDOW ${h.wi+1}</b>${JD.windows[h.wi].t}`);}
+ else{sawEl.style.cursor='default';hideTip();}});
+sawEl.addEventListener('mouseleave',()=>{hideTip();paintSaw();});
+sawEl.addEventListener('click',e=>{const h=sawHit(e);if(h){winSel=h.wi;paintSaw();slGo(h.wi);}});
+new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting){drawSaw(true);ob.unobserve(e.target);}}),{threshold:.3}).observe(sawEl);
+let rzT;addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>drawSaw(false),160)});
+})();
+
+/* ===== threshold chart ===== */
+(()=>{
+const c=document.getElementById('thres');if(!c)return;
+let thMode='resistant',thAnim=1,thRAF=null;
+document.getElementById('thToggle').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+ thMode=b.dataset.mode;$$('#thToggle button').forEach(x=>x.classList.toggle('on',x===b));
+ document.getElementById('thCap').innerHTML=thMode==='resistant'
+  ?'In anabolic-resistant muscle the threshold is raised. Slow mixed-meal protein gives a low flat leucine curve that never crosses the bar, so synthesis never fires even though the grams were eaten. A whey-isolate spike stacked with a free-leucine bolus crosses it.'
+  :'Young healthy muscle fires on a normal meal (~1.5–2 g leucine): the threshold sits low, so even the slow curve reaches it. Ordinary diet protects the young — and the same advice fails the aged, insulin-resistant, inflamed or post-surgical patient because of the raised threshold, not because of non-compliance.';
+ draw(true);});
+function draw(a){cancelAnimationFrame(thRAF);thAnim=a?0:1;
+ const step=()=>{thAnim=Math.min(1,thAnim+.03);paint();if(thAnim<1)thRAF=requestAnimationFrame(step);};step();}
+function paint(){const [x,W,H]=fitCanvas(c);
+ const pL=52,pR=16,pT=24,pB=36;
+ const X=t=>pL+(W-pL-pR)*t/6, Y=v=>pT+(H-pT-pB)*(1-v);
+ const thr=thMode==='resistant'?.62:.34;
+ const slow=t=>.30*Math.exp(-Math.pow((t-2.4)/1.9,2));
+ const spike=t=>.92*Math.pow(t/.9,2.2)*Math.exp(-Math.pow(t/.9,2.2))*2.718;
+ x.strokeStyle='rgba(148,163,196,.10)';x.lineWidth=1;x.beginPath();
+ for(let i=0;i<=4;i++){const gy=pT+(H-pT-pB)*i/4;x.moveTo(pL,gy);x.lineTo(W-pR,gy);}x.stroke();
+ x.fillStyle='rgba(167,176,195,.75)';x.font='11px system-ui';x.textAlign='center';
+ for(let t=0;t<=6;t++)x.fillText(t+'h',X(t),H-pB+18);
+ x.save();x.translate(14,(H-pB+pT)/2);x.rotate(-Math.PI/2);x.textAlign='center';x.fillText('blood leucine',0,0);x.restore();
+ const ty=Y(thr);x.setLineDash([7,6]);x.strokeStyle='#A78BFA';x.lineWidth=2;
+ x.beginPath();x.moveTo(pL,ty);x.lineTo(pL+(W-pL-pR)*thAnim,ty);x.stroke();x.setLineDash([]);
+ x.fillStyle='#A78BFA';x.textAlign='left';x.font='600 11px system-ui';
+ x.fillText(thMode==='resistant'?'mTOR firing threshold — RAISED':'mTOR firing threshold — normal',pL+6,ty-8);
+ x.beginPath();let started=false;
+ for(let t=0;t<=6*thAnim;t+=.03){const v=spike(t);if(v>thr){const px=X(t),py=Y(v);
+  if(!started){x.moveTo(px,ty);started=true;}x.lineTo(px,py);}else if(started){x.lineTo(X(t),ty);}}
+ if(started){x.closePath();x.fillStyle='rgba(45,212,191,.18)';x.fill();}
+ const dc=(f,col)=>{x.beginPath();
+  for(let t=0;t<=6*thAnim;t+=.03){const px=X(t),py=Y(f(t));t===0?x.moveTo(px,py):x.lineTo(px,py);}
+  x.strokeStyle=col;x.lineWidth=2.5;x.lineCap='round';x.stroke();};
+ dc(slow,'#EA580C');dc(spike,'#0D9488');
+ if(thAnim>=1){x.font='600 11.5px system-ui';
+  x.fillStyle='#EA580C';x.fillText('slow mixed-meal protein — the soft knock',X(2.35),Y(slow(2.4))-12);
+  x.fillStyle='#0D9488';x.fillText('whey spike + free-leucine bolus',X(1.35)+10,Y(spike(1.35))-4);
+  if(spike(0.9)>thr){x.fillStyle='#2DD4BF';x.textAlign='right';x.fillText('→ synthesis fires',X(0.62)-4,Y(.8));x.textAlign='left';}
+  if(thMode==='resistant'){x.fillStyle='rgba(237,240,247,.65)';
+   x.fillText('grams eaten — nothing built',X(4.35),Y(slow(4.35))-14);}}}
+new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting){draw(true);ob.unobserve(e.target);}}),{threshold:.3}).observe(c);
+let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>paint(),160)});
+})();
+
+/* ===== speed chart ===== */
+(()=>{
+const c=document.getElementById('speed');if(!c)return;
+function paint(){const [x,W,H]=fitCanvas(c);
+ const pL=52,pR=16,pT=18,pB=36;
+ const X=t=>pL+(W-pL-pR)*t/7, Y=v=>pT+(H-pT-pB)*(1-v);
+ const wpi=t=>.95*Math.pow(t/1.1,2)*Math.exp(-Math.pow(t/1.1,2))*2.718*.68;
+ const spi=t=>.52*(1-Math.exp(-t/1.1))*Math.exp(-Math.max(0,t-4.2)/2.4);
+ const cas=t=>.34*(1-Math.exp(-t/2.6))*Math.exp(-Math.max(0,t-6)/3);
+ const dal=t=>.20*(1-Math.exp(-t/2.2))*Math.exp(-Math.max(0,t-3.5)/2.6);
+ x.strokeStyle='rgba(148,163,196,.10)';x.lineWidth=1;x.beginPath();
+ for(let i=0;i<=4;i++){const gy=pT+(H-pT-pB)*i/4;x.moveTo(pL,gy);x.lineTo(W-pR,gy);}x.stroke();
+ x.fillStyle='rgba(167,176,195,.75)';x.font='11px system-ui';x.textAlign='center';
+ for(let t=0;t<=7;t++)x.fillText(t+'h',X(t),H-pB+18);
+ x.save();x.translate(14,(H-pB+pT)/2);x.rotate(-Math.PI/2);x.textAlign='center';x.fillText('blood amino acids',0,0);x.restore();
+ const dc=(f,col,w)=>{x.beginPath();for(let t=0;t<=7;t+=.04){const px=X(t),py=Y(f(t));t===0?x.moveTo(px,py):x.lineTo(px,py);}
+  x.strokeStyle=col;x.lineWidth=w||2.5;x.lineCap='round';x.stroke();};
+ dc(dal,'#B45309',2);dc(cas,'#EA580C',2);dc(spi,'#8B5CF6',2.5);dc(wpi,'#0D9488',2.5);
+ x.font='600 11.5px system-ui';
+ x.fillStyle='#0D9488';x.fillText('Whey Protein Isolate — the spike',X(1.2),Y(wpi(1.1))-10);
+ x.fillStyle='#8B5CF6';x.fillText('Soy Protein Isolate — the plateau',X(3.3),Y(spi(3.3))-10);
+ x.fillStyle='#EA580C';x.fillText('casein — clots, 6–7 h trickle',X(4.75),Y(cas(4.75))+18);
+ x.fillStyle='#B45309';x.fillText('dal / plant meal — slow + incomplete',X(1.5),Y(dal(1.5))+18);}
+new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting){paint();ob.unobserve(e.target);}}),{threshold:.3}).observe(c);
+let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>paint(),160)});
+})();
+
+/* ===== budget bar ===== */
+(()=>{const b=document.getElementById('bBar');if(!b)return;
+new IntersectionObserver((es,ob)=>es.forEach(e=>{if(!e.isIntersecting)return;
+ document.getElementById('bDiet').style.width=(42.5/48*100)+'%';
+ const h=document.getElementById('bHead');h.style.left=(42.5/48*100)+'%';h.style.width=(5.5/48*100)+'%';
+ ob.unobserve(e.target);}),{threshold:.4}).observe(b);})();
+
+/* ===== ingredients panels ===== */
+(()=>{
+const host=document.getElementById('ingPanels');if(!host||typeof ING2==='undefined')return;
+const shapes=[
+ n=>{const p=[];for(let i=0;i<300;i++){const a=i/300*Math.PI*2,b=Math.random()*Math.PI*2,R=.4,r=.13;
+  p.push([(R+r*Math.cos(b))*Math.cos(a),r*Math.sin(b),(R+r*Math.cos(b))*Math.sin(a),`rgba(251,146,60,AL)`]);}return p;},
+ n=>{const p=[];for(let i=0;i<280;i++){const t=i/280*6-3;
+  p.push([Math.cos(t*2.4)*.3,t*.16,Math.sin(t*2.4)*.3,i%6?'rgba(167,139,250,AL)':'rgba(237,240,247,AL)']);}
+  for(let i=0;i<60;i++){p.push([(Math.random()-.5)*.2,(Math.random()-.5)*1,(Math.random()-.5)*.2,'rgba(167,139,250,AL)']);}return p;},
+ n=>{const p=[];for(let i=0;i<320;i++){const h=Math.random(),r=.36*(1-h)*(.3+Math.random()*.7);const a=Math.random()*Math.PI*2;
+  p.push([Math.cos(a)*r,.5-h,Math.sin(a)*r,'rgba(45,212,191,AL)']);}return p;},
+ n=>{const p=[];for(let i=0;i<330;i++){const X=(Math.random()*2-1)*.55,Z=(Math.random()*2-1)*.55;
+  p.push([X,-Math.sin((X+.6)*2.4)*.16+Math.cos(Z*2.2)*.08,Z,'rgba(251,191,36,AL)']);}return p;},
+ n=>{const p=[];for(let i=0;i<130;i++){const th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1);
+  p.push([.2*Math.sin(ph)*Math.cos(th),.2*Math.cos(ph),.2*Math.sin(ph)*Math.sin(th),'rgba(94,234,212,AL)']);}
+  for(let i=0;i<28;i++){const th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1);
+   for(let k=0;k<9;k++){const R=.25+k*.045;
+    p.push([R*Math.sin(ph)*Math.cos(th),R*Math.cos(ph),R*Math.sin(ph)*Math.sin(th),'rgba(94,234,212,AL)']);}}return p;}];
+ING2.forEach((n,i)=>{const panel=document.createElement('div');panel.className='ingPanel rv';
+ const visLeft=i%2===0;
+ panel.innerHTML=`<div class="ingHero">
+  ${visLeft?`<div class="vis"><canvas id="ic${i}"></canvas></div>`:''}
+  <div class="ingHead">
+   <div class="idx">INGREDIENT ${String(i+1).padStart(2,'0')} / 05</div>
+   <h3>${n.name}</h3>
+   <div class="role" style="color:${n.color}">${n.role}</div>
+   <div class="adline" style="border-color:${n.color}">${n.line}</div>
+   <div class="quick">${n.quick.map(q=>`<span>${q}</span>`).join('')}</div>
+  </div>
+  ${visLeft?'':`<div class="vis"><canvas id="ic${i}"></canvas></div>`}
+ </div>
+ <div class="acc">${n.secs.map((s,k)=>`<div class="accItem${k===0?' open':''}">
+   <button class="accBtn"><span>${s[0]}<small>${s[1]}</small></span><span class="cue">+</span></button>
+   <div class="accPane"><div class="accBody">${s[2]}</div></div></div>`).join('')}
+ </div>`;
+ host.appendChild(panel);io.observe(panel);
+ cloud(panel.querySelector(`#ic${i}`),shapes[i](),{rx:.42,auto:.007,scale:.8});
+ panel.querySelectorAll('.accItem').forEach(item=>{
+  const pane=item.querySelector('.accPane');
+  if(item.classList.contains('open'))requestAnimationFrame(()=>pane.style.maxHeight=pane.scrollHeight+'px');
+  item.querySelector('.accBtn').addEventListener('click',()=>{
+   const open=item.classList.contains('open');
+   item.parentElement.querySelectorAll('.accItem.open').forEach(o=>{o.classList.remove('open');o.querySelector('.accPane').style.maxHeight=0;});
+   if(!open){item.classList.add('open');pane.style.maxHeight=pane.scrollHeight+'px';}});});});
+})();
+
+/* matrix */
+(()=>{const b=document.getElementById('mxBody');if(!b||typeof MX==='undefined')return;
+b.innerHTML=MX.map(r=>`<tr><td><b>${r[0]}</b><small style="color:${r[2]}">${r[1]}</small></td>
+ <td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td></tr>`).join('');})();
+</script></body></html>

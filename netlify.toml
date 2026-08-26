@@ -1,9 +1,8 @@
-# Static deploy of the single-page site. The old Vite/functions build is bypassed.
+# Static multi-page site.
 [build]
-  command = "mkdir -p dist && cp index.html dist/index.html"
+  command = "mkdir -p dist && cp *.html dist/"
   publish = "dist"
 
-# Point functions at an empty folder so the legacy LMS functions are not deployed.
 [functions]
   directory = "netlify/disabled"
 
@@ -12,4 +11,3 @@
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    X-Frame-Options = "DENY"
