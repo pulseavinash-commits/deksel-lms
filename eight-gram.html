@@ -497,7 +497,7 @@ footer p{max-width:620px;line-height:1.6}
 <div class="failGrid">
  <div class="fail rv"><div class="big">↑</div><h4>The raised bar</h4><p>Young muscle fires on a normal meal (~1.5–2 g leucine). Resistant muscle needs a <b>bigger, faster bolus</b> to fire mTOR at all. “Eat more protein” fails <b>because of the mechanism, not because the patient did not comply</b>.</p></div>
  <div class="fail rv d1"><div class="big">✂</div><h4>The unsealed leak</h4><p>Net muscle = synthesis − breakdown. While breakdown runs faster than building, a perfect anabolic program still shows <b>zero net result</b>. Grams cannot switch the demolition pathway off.</p></div>
- <div class="fail rv d2"><div class="big">5%</div><h4>The HMB arithmetic</h4><p>Only ~5% of leucine converts, so the clinically studied 1.5–3 g of HMB a day would need <b>30–60 g of pure leucine</b> — kilograms of protein food. Even the 1 g given directly in a serving equals the yield of <b>about 20 g of pure leucine</b>. No meal comes close.</p></div>
+ <div class="fail rv d2"><div class="big">5%</div><h4>The HMB arithmetic</h4><p>Only ~5% of leucine converts to HMB, so <b>the 1 g given directly in each serving equals the yield of about 20 g of pure leucine</b> — several plates of protein food in a day. No meal, and no protein powder, comes close.</p></div>
  <div class="fail rv d3"><div class="big">◑</div><h4>The unprotected hours</h4><p>Once a spike is spent, the body drifts back to <b>net breakdown</b> — and a small-appetite patient spends most of the day there. The day needs a plateau as well as a peak.</p></div>
 </div>
 <div class="spWrap rv"><div class="thTop"><h3>Bar 01 · the proof of speed — why the 8 g is split into WPI and SPI</h3></div>
@@ -509,7 +509,7 @@ footer p{max-width:620px;line-height:1.6}
 <div id="hmbChips"></div>
 <p class="chipHint">Pick the diet he actually eats — one or the other, never both. Beside it stand the single serving’s three routes to HMB; switch any of them off to see what it was carrying. The bar on the right is the whole day, with one serving.</p>
 <canvas id="hmb"></canvas>
-<p class="thCap">HMB is the metabolite of leucine that does the anti-catabolic work: it slows the ubiquitin–proteasome pathway and stabilises the muscle-cell membrane. <b>Only about 5% of dietary leucine is converted to it</b> — which is why a whole day of eating yields a fraction of a gram, and why the clinically studied 1.5–3 g a day cannot be reached through food at all. It has to be given directly, and <b>a single serving is the whole argument</b>: its 1 g of calcium HMB arrives with no conversion step — the yield of about 20 g of pure leucine — with its 8 g WPI + SPI blend and 1 g free leucine adding their trickle on top. One serving lifts the day to more than <b>three times the ceiling that any diet can ever reach</b> — the anti-catabolic signal food can never send, at the doorstep of the clinically studied 1.5–3 g. Where the building bar decides whether muscle is <em>added</em>, this bar decides whether muscle <em>stops being lost</em> — and one serving answers both on the same day.</p></div>
+<p class="thCap">HMB is the metabolite of leucine that does the anti-catabolic work: it slows the ubiquitin–proteasome pathway and stabilises the muscle-cell membrane. <b>Only about 5% of dietary leucine is converted to it</b> — which is why a whole day of eating yields a fraction of a gram, and why an anti-catabolic dose can never come from the plate. It has to be given directly, and <b>a single serving is the whole argument</b>: its 1 g of calcium HMB arrives with no conversion step — the yield of about 20 g of pure leucine — with its 8 g WPI + SPI blend and 1 g free leucine adding their trickle on top. One serving lifts the day to more than <b>three times the ceiling that any diet can ever reach</b> — the anti-catabolic signal food can never send. Where the building bar decides whether muscle is <em>added</em>, this bar decides whether muscle <em>stops being lost</em> — and one serving answers both on the same day.</p></div>
 <div class="thWrap rv" style="margin-top:70px"><div class="thTop"><h3>Bar 03 · Functioning — the bar vitamin D3 holds down</h3></div>
 <p class="thCap" style="padding-top:4px">Saved muscle still has to answer when it is called. The windows erode exactly that: steroids and disuse waste the <b>type II chair-rise fibres</b> first, and inflammation degrades the nerve–muscle control that keeps an older patient on their feet. Vitamin D acts on both sides of that wire — through the <b>VDR on the muscle fibre</b> for type II fibre function, and on <b>balance and neuromuscular coordination</b> — which is why deficiency shows up as weakness and falls before it ever shows on an X-ray. The serving carries <b>600 IU of vitamin D3</b> so the functioning bar is answered daily, at zero protein cost.</p>
 <div class="failGrid" style="margin-top:18px">
@@ -884,7 +884,7 @@ function chipChart(cvId,chipId,cfg){
 (()=>{
  const c=document.getElementById('hmb');if(!c)return;
  const box=document.getElementById('hmbChips');
- const T1=1.5,T2=3.0,VM=3.2;
+ const VM=1.8;
  const DIETS=[
   {k:'d60', label:'Normal diet — about 60 g protein', col:'#FDBA74', g:.25},
   {k:'d100',label:'High-protein diet — about 100 g protein', col:'#FCD34D', g:.40}];
@@ -925,14 +925,14 @@ function chipChart(cvId,chipId,cfg){
   x.fillStyle='rgba(200,210,230,.8)';x.font='11px system-ui';x.textAlign='right';
   for(let i=0;i<=4;i++)x.fillText((VM*(4-i)/4).toFixed(1)+' g',pL-8,pT+(H-pT-pB)*i/4+4);
   x.save();x.translate(15,(H-pB+pT)/2);x.rotate(-Math.PI/2);x.textAlign='center';
-  x.fillText('HMB reaching the muscle per day',0,0);x.restore();
+  x.fillText('HMB per day',0,0);x.restore();
   const dObj=DIETS.find(d=>d.k===diet);
   const live=COMP.filter(z=>grow[z.k]>.01);
   const bars=[{label:dObj.label,col:dObj.col,v:R(dObj.g)}];
   live.forEach(z=>bars.push({label:z.label,col:z.col,v:R(z.g*grow[z.k]),a:grow[z.k]}));
   const total=R(dObj.g+live.reduce((a,z)=>a+z.g*grow[z.k],0));
   const hasDirect=live.some(z=>z.k==='hmb'&&grow[z.k]>.6);
-  bars.push({label:'the whole day — one serving',col:(total>=T1||hasDirect)?'#5EEAD4':'#FDBA74',v:total,sum:true});
+  bars.push({label:'the whole day — one serving',col:hasDirect?'#5EEAD4':'#FDBA74',v:total,sum:true});
   const cols=bars.length, band=(W-pL-pR)/cols, bw=Math.min(88,band*.5), base=Y(0);
   bars.forEach((b,i)=>{const cx=pL+band*(i+.5),top=Y(b.v),h=Math.max(0,base-top);
    x.save();if(b.sum){x.shadowColor=b.col;x.shadowBlur=18;}
@@ -948,12 +948,6 @@ function chipChart(cvId,chipId,cfg){
    words.forEach(w=>{const t=line?line+' '+w:w;
     if(x.measureText(t).width>band-8){x.fillText(line,cx,base+20+ln*13);line=w;ln++;}else line=t;});
    x.fillText(line,cx,base+20+ln*13);});
-  const y1=Y(T1),y2=Y(T2);
-  x.fillStyle='rgba(196,181,253,.10)';x.fillRect(pL,y2,W-pL-pR,y1-y2);
-  x.setLineDash([8,6]);x.strokeStyle='#C4B5FD';x.lineWidth=1.6;
-  x.beginPath();x.moveTo(pL,y1);x.lineTo(W-pR,y1);x.moveTo(pL,y2);x.lineTo(W-pR,y2);x.stroke();x.setLineDash([]);
-  x.fillStyle='#C4B5FD';x.textAlign='left';x.font='700 11.5px system-ui';
-  x.fillText('clinically studied range — 1.5 to 3 g a day',pL+6,y2-9);
   const yF=Y(.40);
   x.setLineDash([3,5]);x.strokeStyle='#FDBA74';x.lineWidth=1.4;
   x.beginPath();x.moveTo(pL,yF);x.lineTo(W-pR,yF);x.stroke();x.setLineDash([]);
@@ -962,8 +956,7 @@ function chipChart(cvId,chipId,cfg){
   const hmbLive=hasDirect;
   x.textAlign='right';x.font='700 12.5px system-ui';
   let msg,mc;
-  if(total>=T1){msg='one serving — the day reaches the clinically studied range';mc='#5EEAD4';}
-  else if(hmbLive){msg='one serving: '+(Math.round(total/ .40*10)/10)+'\u00d7 the ceiling of food \u2014 the signal food can never send';mc='#5EEAD4';}
+  if(hmbLive){msg='one serving: '+(Math.round(total/ .40*10)/10)+'\u00d7 the ceiling of food \u2014 the signal food can never send';mc='#5EEAD4';}
   else{msg='food alone \u2014 stuck under its own ceiling';mc='#FDBA74';}
   x.fillStyle=mc;x.fillText(msg,W-pR,pT-10);}
  sync();

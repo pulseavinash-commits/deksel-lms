@@ -444,8 +444,12 @@ footer p{max-width:620px;line-height:1.6}
 .axiOut .o{border:1px solid var(--line);border-radius:14px;padding:13px 17px;background:rgba(19,29,51,.6);box-shadow:var(--lift1);
  opacity:.32;transform:translateY(4px);transition:.4s cubic-bezier(.2,.7,.2,1)}
 .axiOut .o.lit{opacity:1;transform:none;border-color:rgba(94,234,212,.5);background:linear-gradient(120deg,rgba(20,184,166,.22),rgba(19,29,51,.7))}
+.axiOut .o{display:flex;gap:14px;align-items:center}
 .axiOut .o b{display:block;font-size:.92rem;color:var(--ink)}
 .axiOut .o span{font-size:.8rem;color:var(--ink2)}
+.axiOut .o .mini{flex:0 0 auto;width:13px;height:56px;border-radius:7px;background:rgba(10,16,32,.75);border:1px solid var(--line);position:relative;overflow:hidden}
+.axiOut .o .mini i{position:absolute;left:0;right:0;bottom:0;height:26%;background:linear-gradient(180deg,#5EEAD4,#14B8A6);transition:height .9s cubic-bezier(.2,.7,.2,1),background .9s}
+.axiOut .o.lit .mini i{height:88%;background:linear-gradient(180deg,#FDBA74,#F97316)}
 .axiWhy{padding:0 clamp(24px,3.6vw,40px) clamp(24px,3.6vw,38px);color:var(--ink2);font-size:.95rem;max-width:900px}
 .axiWhy b{color:var(--ink)}
 
@@ -507,7 +511,7 @@ const ING2=[
  <li><b>Stabilizes the muscle-cell membrane</b> — HMB is a precursor for membrane cholesterol synthesis; stressed muscle cells get repair material and become more resilient.</li>
  <li><b>Supports mTOR</b> — a stimulatory effect on the synthesis side; defensive first, but fighting on both fronts.</li></ol>
  <div class="pull">The bucket law: net muscle = synthesis − breakdown. If demolition outpaces construction, a perfect anabolic program shows zero net result. HMB seals the leak so every other ingredient’s work appears as <b>net</b> gain.</div>`],
- ['Why food can’t supply it','the 5% arithmetic',`<p>Only <b>~5% of leucine converts to HMB</b>. The ~3 g used clinically would require ~60 g of pure leucine — several kilograms of protein food daily. Physically impossible.</p>
+ ['Why food can’t supply it','the 5% arithmetic',`<p>Only <b>~5% of leucine converts to HMB</b>. Even the 1 g given directly in each serving would require the conversion of <b>~20 g of pure leucine</b> — several plates of protein food in a single day. Physically impossible.</p>
  <div class="pull">A therapeutic anti-catabolic dose can only come from direct supplementation — no protein powder, however premium, can deliver it. This is the complete answer to “why not just protein?”</div>
  <p><b>Expectation-setting:</b> HMB’s success is measured in what <em>doesn’t</em> happen — grip and circumference holding steady across months, illnesses and crises. And it is the one ingredient that works <b>on the days the patient cannot move</b> — bed rest, flare, post-op — when losses are steepest and every activity-dependent strategy is disabled.</p>`],
  ['Role in diabetes','sealing the over-active pathway',`<p>Targets precisely the pathway diabetes over-activates — the demolition machinery runs harder than age alone would drive it, because insulin’s brake is partially lost. HMB seals the bucket so the program shows net gain, and defends the sawtooth crises — infection, admission, bed rest — on the days the patient cannot move.</p><p><b>Observable:</b> the absence of loss across months and fevers.</p>`],
@@ -904,7 +908,7 @@ function chipChart(cvId,chipId,cfg){
    {k:'meal',label:'Mixed meal protein',col:'#FDBA74',f:bell(.30,2.5,1.9),lx:3.15,ly:22},
    {k:'spi', label:'Soy protein isolate',col:'#C4B5FD',f:bell(.38,1.9,1.35),lx:2.15,ly:-14},
    {k:'wpi', label:'Whey protein isolate',col:'#5EEAD4',f:rise(.52,1.0,2.2),lx:1.28,ly:-26},
-   {k:'leu', label:'Free L-leucine bolus',col:'#FCD34D',f:rise(.46,.6,2.6),lx:.2,ly:-14}],
+   {k:'leu', label:'Free L-leucine 1 g bolus',col:'#FCD34D',f:rise(.46,.6,2.6),lx:.2,ly:-14}],
   after:(x,X,Y,total)=>{
    const thr=mode==='resistant'?.62:.26;let peak=0;
    for(let t=0;t<=6;t+=.02)peak=Math.max(peak,total(t));
@@ -940,32 +944,43 @@ function chipChart(cvId,chipId,cfg){
  });
 })();
 
-/* ===== HMB threshold (bar chart with chips) ===== */
+/* ===== HMB threshold (diet choice + serving components + servings/day) ===== */
 (()=>{
  const c=document.getElementById('hmb');if(!c)return;
- const row=document.getElementById('hmbChips');
- const THR=3.0, VM=4.6;
- const SRC=[
-  {k:'diet', label:'Normal diet — about 60 g protein', col:'#FDBA74', g:0.22, note:'~4.5 g leucine'},
-  {k:'hi',   label:'High-protein diet — about 100 g protein', col:'#FCD34D', g:0.40, note:'~8 g leucine'},
-  {k:'leu',  label:'Free L-leucine 10 g bolus', col:'#C4B5FD', g:0.50, note:'5% converts'},
-  {k:'hmb',  label:'Calcium HMB 3 g — given directly', col:'#5EEAD4', g:3.00, note:'no conversion needed'}];
- const on=new Set(SRC.map(s=>s.k)); const grow={}; SRC.forEach(s=>grow[s.k]=0);
+ const box=document.getElementById('hmbChips');
+ const VM=1.8;
+ const DIETS=[
+  {k:'d60', label:'Normal diet — about 60 g protein', col:'#FDBA74', g:.25},
+  {k:'d100',label:'High-protein diet — about 100 g protein', col:'#FCD34D', g:.40}];
+ const COMP=[
+  {k:'blend',label:'WPI + SPI blend 8 g', col:'#93C5FD', g:.05},
+  {k:'leu',  label:'Free L-leucine 1 g', col:'#C4B5FD', g:.05},
+  {k:'hmb',  label:'Calcium HMB 1 g — direct', col:'#5EEAD4', g:1.00}];
+ let diet='d60';
+ const on=new Set(COMP.map(x=>x.k));
+ const grow={d:1}; COMP.forEach(x=>grow[x.k]=1); const sv=1;
  let raf=null,started=false;
- row.innerHTML='<span class="lbl">HMB source</span>'+
-  SRC.map(s=>`<button class="chip" data-k="${s.k}" style="--c:${s.col}"><i></i>${s.label}</button>`).join('')+
-  '<button class="chipAll" data-all="1">Reset — show all</button>';
- row.addEventListener('click',e=>{
-  if(e.target.closest('[data-all]')){SRC.forEach(s=>on.add(s.k));sync();anim();return;}
-  const b=e.target.closest('.chip');if(!b)return;
+ box.innerHTML=
+  '<div class="chipRow"><span class="lbl">His diet — one or the other</span>'+
+   DIETS.map(d=>`<button class="chip" data-diet="${d.k}" style="--c:${d.col}"><i></i>${d.label}</button>`).join('')+'</div>'+
+  '<div class="chipRow"><span class="lbl">Inside each serving</span>'+
+   COMP.map(x=>`<button class="chip" data-k="${x.k}" style="--c:${x.col}"><i></i>${x.label}</button>`).join('')+
+   '<button class="chipAll" data-all="1">Reset</button></div>';
+ box.addEventListener('click',e=>{
+  if(e.target.closest('[data-all]')){diet='d60';COMP.forEach(x=>on.add(x.k));sync();anim();return;}
+  const bd=e.target.closest('[data-diet]');if(bd){diet=bd.dataset.diet;sync();anim();return;}
+  const b=e.target.closest('.chip[data-k]');if(!b)return;
   const k=b.dataset.k; if(on.has(k)&&on.size>1)on.delete(k); else on.add(k);
   sync();anim();});
- function sync(){row.querySelectorAll('.chip').forEach(b=>b.classList.toggle('off',!on.has(b.dataset.k)));}
+ function sync(){
+  box.querySelectorAll('[data-diet]').forEach(b=>b.classList.toggle('off',b.dataset.diet!==diet));
+  box.querySelectorAll('.chip[data-k]').forEach(b=>b.classList.toggle('off',!on.has(b.dataset.k)));}
  function anim(){cancelAnimationFrame(raf);
-  const step=()=>{let moving=false;
-   SRC.forEach(s=>{const t=on.has(s.k)?1:0,d=t-grow[s.k];
-    if(Math.abs(d)>.004){grow[s.k]+=d*.14;moving=true;}else grow[s.k]=t;});
-   paint();if(moving)raf=requestAnimationFrame(step);};step();}
+  const step=()=>{let mv=false;
+   COMP.forEach(x=>{const t=on.has(x.k)?1:0,d=t-grow[x.k];
+    if(Math.abs(d)>.004){grow[x.k]+=d*.14;mv=true;}else grow[x.k]=t;});
+   paint();if(mv)raf=requestAnimationFrame(step);};step();}
+ const R=v=>Math.round(v*20)/20;              /* snap to .05 steps */
  function paint(){const [x,W,H]=fitCanvas(c);
   const pL=58,pR=20,pT=30,pB=64;
   const Y=v=>pT+(H-pT-pB)*(1-Math.min(v,VM)/VM);
@@ -974,36 +989,40 @@ function chipChart(cvId,chipId,cfg){
   x.fillStyle='rgba(200,210,230,.8)';x.font='11px system-ui';x.textAlign='right';
   for(let i=0;i<=4;i++)x.fillText((VM*(4-i)/4).toFixed(1)+' g',pL-8,pT+(H-pT-pB)*i/4+4);
   x.save();x.translate(15,(H-pB+pT)/2);x.rotate(-Math.PI/2);x.textAlign='center';
-  x.fillText('HMB delivered per day',0,0);x.restore();
-  const live=SRC.filter(s=>grow[s.k]>.01);
-  const total=live.reduce((a,s)=>a+s.g*grow[s.k],0);
-  const cols=live.length+1, band=(W-pL-pR)/cols, bw=Math.min(86,band*.52);
-  const bars=live.map((s,i)=>({...s,v:s.g*grow[s.k],cx:pL+band*(i+.5)}));
-  bars.push({k:'sum',label:'Everything selected',col:total>=THR?'#5EEAD4':'#FDBA74',v:total,cx:pL+band*(cols-.5),sum:true});
-  const base=Y(0);
-  bars.forEach(b=>{const top=Y(b.v),h=Math.max(0,base-top);
-   x.save();
-   if(b.sum){x.shadowColor=b.col;x.shadowBlur=18;}
+  x.fillText('HMB per day',0,0);x.restore();
+  const dObj=DIETS.find(d=>d.k===diet);
+  const live=COMP.filter(z=>grow[z.k]>.01);
+  const bars=[{label:dObj.label,col:dObj.col,v:R(dObj.g)}];
+  live.forEach(z=>bars.push({label:z.label,col:z.col,v:R(z.g*grow[z.k]),a:grow[z.k]}));
+  const total=R(dObj.g+live.reduce((a,z)=>a+z.g*grow[z.k],0));
+  const hasDirect=live.some(z=>z.k==='hmb'&&grow[z.k]>.6);
+  bars.push({label:'the whole day — one serving',col:hasDirect?'#5EEAD4':'#FDBA74',v:total,sum:true});
+  const cols=bars.length, band=(W-pL-pR)/cols, bw=Math.min(88,band*.5), base=Y(0);
+  bars.forEach((b,i)=>{const cx=pL+band*(i+.5),top=Y(b.v),h=Math.max(0,base-top);
+   x.save();if(b.sum){x.shadowColor=b.col;x.shadowBlur=18;}
+   x.globalAlpha=b.a!=null?Math.max(.15,b.a):1;
    const g=x.createLinearGradient(0,top,0,base);
    g.addColorStop(0,b.col);g.addColorStop(1,b.col+'33');
-   x.fillStyle=g;
-   x.beginPath();x.roundRect(b.cx-bw/2,top,bw,h,[7,7,3,3]);x.fill();
+   x.fillStyle=g;x.beginPath();x.roundRect(cx-bw/2,top,bw,h,[7,7,3,3]);x.fill();
    x.restore();
    x.fillStyle=b.col;x.font='700 12.5px system-ui';x.textAlign='center';
-   x.fillText(b.v.toFixed(2)+' g',b.cx,top-9);
+   x.fillText(b.v.toFixed(2)+' g',cx,top-9);
    x.fillStyle='rgba(200,210,230,.85)';x.font='11px system-ui';
-   const words=(b.sum?'combined total':b.label).split(' ');let line='',ln=0;
+   const words=b.label.split(' ');let line='',ln=0;
    words.forEach(w=>{const t=line?line+' '+w:w;
-    if(x.measureText(t).width>band-8){x.fillText(line,b.cx,base+20+ln*13);line=w;ln++;}else line=t;});
-   x.fillText(line,b.cx,base+20+ln*13);});
-  const ty=Y(THR);
-  x.setLineDash([8,6]);x.strokeStyle='#C4B5FD';x.lineWidth=2;
-  x.beginPath();x.moveTo(pL,ty);x.lineTo(W-pR,ty);x.stroke();x.setLineDash([]);
-  x.fillStyle='#C4B5FD';x.textAlign='left';x.font='700 11.5px system-ui';
-  x.fillText('clinical HMB threshold — about 3 g a day',pL+6,ty-9);
+    if(x.measureText(t).width>band-8){x.fillText(line,cx,base+20+ln*13);line=w;ln++;}else line=t;});
+   x.fillText(line,cx,base+20+ln*13);});
+  const yF=Y(.40);
+  x.setLineDash([3,5]);x.strokeStyle='#FDBA74';x.lineWidth=1.4;
+  x.beginPath();x.moveTo(pL,yF);x.lineTo(W-pR,yF);x.stroke();x.setLineDash([]);
+  x.fillStyle='#FDBA74';x.font='700 11px system-ui';
+  x.fillText('the ceiling of food — no diet gets past this line',pL+6,yF-7);
+  const hmbLive=hasDirect;
   x.textAlign='right';x.font='700 12.5px system-ui';
-  x.fillStyle=total>=THR?'#5EEAD4':'#FDBA74';
-  x.fillText(total>=THR?'threshold cleared — breakdown defended':'below the bar — breakdown runs on',W-pR,pT-10);}
+  let msg,mc;
+  if(hmbLive){msg='one serving: '+(Math.round(total/ .40*10)/10)+'\u00d7 the ceiling of food \u2014 the signal food can never send';mc='#5EEAD4';}
+  else{msg='food alone \u2014 stuck under its own ceiling';mc='#FDBA74';}
+  x.fillStyle=mc;x.fillText(msg,W-pR,pT-10);}
  sync();
  new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting&&!started){started=true;anim();ob.unobserve(e.target);}}),{threshold:.25}).observe(c);
  let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(paint,160)});
