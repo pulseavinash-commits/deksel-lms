@@ -74,51 +74,11 @@ section{position:relative}
 .btn{border-radius:14px;padding:16px 30px;font-size:.95rem;font-weight:700;letter-spacing:.02em;border:1px solid var(--line);color:var(--ink);background:rgba(16,24,48,.6);backdrop-filter:blur(8px);transition:.25s}
 .btn:hover{transform:translateY(-2px)}
 .btn.primary{background:linear-gradient(135deg,#0F766E,#0D9488);border-color:rgba(45,212,191,.45);box-shadow:0 10px 36px rgba(13,148,136,.4)}
-.chapIndex{display:flex;gap:26px;margin-top:54px;flex-wrap:wrap}
-.chapIndex a{display:flex;gap:12px;align-items:baseline;color:var(--ink3);font-size:.9rem;transition:.2s}
-.chapIndex a b{font-family:var(--mono);color:var(--amberHi)}
-.chapIndex a:hover{color:var(--ink)}
+
 .dragHint{position:absolute;right:clamp(16px,4vw,60px);bottom:26px;z-index:2;font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;color:var(--ink3)}
 
-/* marquee */
-.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(11,17,32,.6);overflow:hidden;padding:16px 0;position:relative;z-index:3}
-.mq{display:flex;gap:0;width:max-content;animation:mq 60s linear infinite}
-.marquee:hover .mq{animation-play-state:paused}
-.mq span{font-family:var(--serif);font-style:italic;font-size:1.02rem;color:var(--ink2);white-space:nowrap;padding:0 28px;border-right:1px solid var(--line)}
-.mq span b{color:var(--amberHi);font-style:normal;font-family:var(--mono);font-size:.8rem;letter-spacing:.1em;margin-right:10px}
-@keyframes mq{to{transform:translateX(-50%)}}
-
-/* axiom band */
-.axiom{margin:70px 0 0;background:linear-gradient(120deg,rgba(234,88,12,.10),rgba(139,92,246,.10));border:1px solid rgba(139,92,246,.25);border-radius:24px;padding:clamp(28px,4vw,46px);display:grid;grid-template-columns:1fr 1fr;gap:30px}
-@media(max-width:900px){.axiom{grid-template-columns:1fr}}
-.axiom h3{font-size:clamp(1.2rem,2.2vw,1.6rem);line-height:1.35}
-.axiom h3 b{color:var(--orangeHi)}
-.axiom h3 i{color:var(--tealHi)}
-.axiom p{color:var(--ink2);font-size:.96rem}
-.axiom p b{color:var(--ink)}
-
-/* journey picker */
-.jTabs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:54px}
-@media(max-width:820px){.jTabs{grid-template-columns:1fr}}
-.jTab{position:relative;border:1px solid var(--line);background:var(--surface);color:var(--ink2);border-radius:18px;padding:24px 24px 20px;text-align:left;overflow:hidden;transition:.3s}
-.jTab small{display:block;font-family:var(--mono);font-size:.64rem;letter-spacing:.26em;text-transform:uppercase;margin-bottom:8px;color:var(--ink3)}
-.jTab b{font-family:var(--serif);font-size:1.35rem;font-weight:600;color:var(--ink)}
-.jTab p{font-size:.82rem;margin-top:8px;color:var(--ink3)}
-.jTab:hover{transform:translateY(-3px)}
-.jTab.active{border-color:rgba(251,191,36,.55);background:linear-gradient(160deg,rgba(180,83,9,.22),var(--surface));box-shadow:0 14px 44px rgba(180,83,9,.28)}
-.jTab.active small{color:var(--amberHi)}
-.jHook{margin-top:34px;font-family:var(--serif);font-size:clamp(1.15rem,2.3vw,1.6rem);line-height:1.45;color:var(--ink);max-width:900px;min-height:90px}
-.jHook b{color:var(--orangeHi)}
-.jHook i{color:var(--tealHi)}
-
-/* saw */
-.sawWrap{margin-top:36px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,30px) clamp(18px,3vw,30px) 12px}
-.sawHead{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
-.sawHead h3{font-size:1.05rem}
-.sawHead span{font-size:.76rem;color:var(--ink3)}
 #saw{width:100%;height:320px;display:block}
-.sawLegend{display:flex;gap:22px;padding:8px 4px 10px;font-size:.76rem;color:var(--ink3);flex-wrap:wrap}
-.sawLegend i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:7px;vertical-align:middle}
+
 
 /* ===== window slider ===== */
 .slider{margin-top:26px;position:relative}
@@ -149,37 +109,6 @@ section{position:relative}
 .lock .lNum{font-family:var(--mono);font-size:.7rem;letter-spacing:.24em;color:var(--violetHi)}
 .lock h4{font-size:1.05rem;margin:10px 0 8px}
 .lock p{color:var(--ink3);font-size:.87rem}
-
-/* ===== chapter 2 : 8 grams ===== */
-#eight .stage{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;margin-top:30px}
-@media(max-width:920px){#eight .stage{grid-template-columns:1fr}}
-.eightVis{position:relative;min-height:420px}
-#orb{width:100%;height:460px;display:block}
-.eightBig{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
-.eightBig .n{font-family:var(--serif);font-size:clamp(7rem,14vw,11rem);line-height:.9;font-weight:700;background:linear-gradient(160deg,#FBBF24,#EA580C);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 8px 40px rgba(234,88,12,.35))}
-.eightBig .u{font-family:var(--mono);letter-spacing:.5em;color:var(--ink2);font-size:1rem;margin-top:6px}
-.eightCopy h3{font-size:clamp(1.5rem,2.8vw,2.1rem);line-height:1.25}
-.eightCopy h3 b{color:var(--amberHi)}
-.eightCopy .p1{margin-top:16px;color:var(--ink2);font-size:1rem}
-.eightCopy .p1 b{color:var(--ink)}
-.claim{margin-top:22px;padding:20px 24px;border-radius:16px;background:linear-gradient(120deg,rgba(180,83,9,.16),rgba(11,17,32,.4));border:1px solid rgba(251,191,36,.3);font-family:var(--serif);font-size:1.12rem;color:var(--ink)}
-.claim b{color:var(--amberHi)}
-.claim small{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.26em;color:var(--ink3);margin-bottom:8px}
-
-/* budget bar */
-.budget{margin-top:60px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:clamp(22px,3.4vw,36px)}
-.budget h3{font-size:1.2rem}
-.budget .sub{color:var(--ink3);font-size:.88rem;margin-top:4px}
-.bBar{margin-top:28px;height:64px;border-radius:14px;background:var(--surface2);position:relative;overflow:hidden;border:1px solid var(--line)}
-.bSeg{position:absolute;top:0;bottom:0;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;letter-spacing:.04em;white-space:nowrap;transition:width 1.2s cubic-bezier(.2,.7,.2,1)}
-.bSeg small{font-weight:400;margin-left:8px;opacity:.85}
-.bDiet{left:0;background:linear-gradient(120deg,#123B57,#155E75);color:#A5F3FC;width:0}
-.bHead{background:linear-gradient(120deg,#B45309,#EA580C);color:#FFF7ED;width:0}
-.bScale{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--ink3);margin-top:10px}
-.bNotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:24px}
-.bNote{border:1px solid var(--line);border-radius:14px;padding:18px 20px;font-size:.86rem;color:var(--ink2)}
-.bNote b{color:var(--ink);display:block;margin-bottom:6px;font-size:.94rem}
-.bNote.bad b{color:var(--orangeHi)}.bNote.good b{color:var(--tealHi)}
 
 /* threshold + fails */
 .thWrap{margin-top:60px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px)}
@@ -240,25 +169,6 @@ section{position:relative}
 .spCap{font-size:.84rem;color:var(--ink3);padding:12px 4px 2px;max-width:860px}
 .spCap b{color:var(--ink2)}
 
-/* matrix */
-.mxWrap{margin-top:44px;overflow-x:auto;border:1px solid var(--line);border-radius:22px;background:var(--surface)}
-table.mx{border-collapse:collapse;width:100%;min-width:900px}
-.mx th,.mx td{padding:18px 22px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:.87rem}
-.mx thead th{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);background:rgba(255,255,255,.02)}
-.mx td:first-child b{color:var(--ink);font-family:var(--serif);font-size:.98rem}
-.mx td:first-child small{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;margin-top:5px}
-.mx td{color:var(--ink2)}
-.mx tbody tr:hover{background:rgba(45,212,191,.045)}
-.mx tbody tr:last-child td{border-bottom:0}
-
-/* close */
-#close{padding:clamp(90px,12vw,150px) 0;text-align:center;background:radial-gradient(60% 70% at 50% 100%,rgba(13,148,136,.14),transparent 70%)}
-#close .serifBig{font-family:var(--serif);font-size:clamp(1.6rem,4vw,2.9rem);line-height:1.3;max-width:940px;margin:26px auto 0}
-#close .serifBig b{color:var(--tealHi)}
-#close .serifBig .o{color:var(--orangeHi)}#close .serifBig .v{color:var(--violetHi)}#close .serifBig .a{color:var(--amberHi)}
-.closeStats{display:flex;gap:44px;justify-content:center;flex-wrap:wrap;margin-top:56px}
-.closeStats .n{font-family:var(--serif);font-size:2.3rem;color:var(--ink)}
-.closeStats .c{font-size:.76rem;color:var(--ink3);letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
 footer{border-top:1px solid var(--line);padding:38px 0 48px;color:var(--ink3);font-size:.79rem}
 footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 footer p{max-width:620px;line-height:1.6}
@@ -500,6 +410,20 @@ footer p{max-width:620px;line-height:1.6}
 .pxWrap2{display:grid;grid-template-columns:1fr auto;gap:clamp(20px,3.4vw,44px);align-items:center}
 @media(max-width:820px){.pxWrap2{grid-template-columns:1fr}}
 .pxGauges .tube{height:110px;width:28px}
+.cscCtl{display:flex;gap:10px;margin-top:20px;align-items:center;flex-wrap:wrap}
+.cscRows{display:flex;flex-direction:column;gap:16px;margin-top:20px}
+.cscRow{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.cscTag{flex:0 0 auto;font-family:var(--mono);font-size:.56rem;letter-spacing:.22em;color:var(--ink3);text-transform:uppercase;width:104px}
+.csc{position:relative;border:1px solid var(--line);border-radius:13px;padding:10px 14px;font-size:.87rem;font-weight:600;color:var(--ink3);
+ background:rgba(19,29,51,.55);transition:.35s;cursor:pointer}
+.csc.done{color:var(--ink);border-color:rgba(253,186,116,.5);background:rgba(249,115,22,.10)}
+.csc.now{color:var(--ink);border-color:#FDBA74;box-shadow:0 0 26px rgba(249,115,22,.4);transform:translateY(-2px)}
+.csc.endN.done{border-color:rgba(251,113,133,.65);color:#FDA4AF;background:rgba(244,63,94,.10)}
+.cn{width:30px;height:2px;background:rgba(167,186,224,.18);position:relative;overflow:hidden;flex:0 0 auto;border-radius:2px}
+.cn i{position:absolute;inset:0;background:linear-gradient(90deg,#FDBA74,#F97316);transform:scaleX(0);transform-origin:left;transition:transform .55s}
+.cn.done i{transform:scaleX(1)}
+.ghostBtn{background:transparent;border:1px solid var(--line);border-radius:13px;padding:12px 20px;font-size:.88rem;font-weight:700;color:var(--ink2);transition:.2s}
+.ghostBtn:hover{color:var(--ink);border-color:rgba(94,234,212,.5)}
 /* ===== evidence sections ===== */
 .evid{margin-top:70px;border:1px solid var(--line);border-radius:26px;overflow:hidden;position:relative;
  background:linear-gradient(165deg,var(--surface2),var(--surface) 58%);box-shadow:var(--lift3)}
@@ -686,27 +610,7 @@ const ING2=[
  ['Role peri-operatively','the day-one standing instrument',`<p>Early mobilization is the protocol’s second pillar, and <b>standing on post-op day one is a type II fibre event</b> — the exact fibres bed rest and deficiency waste first, in patients mostly wheeled into theatre already deficient. The post-op ward is a fall factory — weakness, drains, sedative tails, night toilet trips — and an inpatient fall on a fresh wound or new joint is the complication that undoes the operation. Orthopedic bonus: in bone surgery D’s classical calcium-and-bone role runs alongside its muscle role — one ingredient serves the fusion, the fracture, and the muscle moving them.</p><p><b>Observable:</b> day-one standing that succeeds; no ward fall.</p>`],
  ['Role in rheumatology','both sides of the fracture equation',`<p><b>The triple jeopardy:</b> type II fibres are wasted by sarcopenia, by D deficiency, <em>and</em> by steroid myopathy — three attacks on the same safety-critical fibres. Steroids thin the bone while disease weakens the muscle: a fall here is a fragility fracture waiting to happen. Vitamin D stands on both sides of the equation — classically essential for the bone, and via the VDR essential for the muscle and balance that prevent the fall from ever testing the bone. Claim discipline: D adequacy is <b>status correction, never disease treatment</b> — the DMARDs treat the disease.</p><p><b>Observable:</b> steadier gait and chair-rise; no fracture-triggered admission and its sawtooth drop.</p>`]]}];
 
-const MX=[
-['Calcium HMB','The Shield','#FB923C',
- 'Seals the bucket so the program shows <b>net</b> gain; defends the sawtooth crises — infection, admission, bed rest — on the days the patient cannot move.',
- 'Shield raised <b>before</b> the cortisol surge; holds demolition through the bed-rest days; a higher floor to start the climb.',
- 'Standing guard over the daily smoulder; anti-catabolic cover <b>underneath</b> the prednisolone; holds through cytokine surge + enforced rest.'],
-['L-Leucine','The Trigger','#A78BFA',
- 'Fires synthesis through the <b>insulin-independent, liver-bypassing</b> route — the last reliable build channel; converts activity into tissue while it is still possible.',
- 'The guideline’s own ~3 g “Anabolic Trigger”; fires synthesis through stress-deafened, insulin-jammed, liver-busy days; converts every physio session into tissue.',
- 'Keeps a build channel open when three are jammed (cytokines, steroids, insulin resistance); muscle therapy that never appears on the LFT chart.'],
-['Whey Protein Isolate','The Fast Bricks','#2DD4BF',
- 'The spike that crosses the raised threshold where dal never will; lactose-free, sugar-free — and the pre-meal glycemic effect works in the patient’s favour.',
- 'Makes 24-hour early feeding actually succeed: fast-emptying, stays down, crosses the threshold; BV 104 — every swallowed gram becomes healing.',
- 'Small-volume, stir-a-glass nutrition through flare anorexia and stiff morning hands; zero sugar for steroid glycemia; heart-clean.'],
-['Soy Protein Isolate','The Steady Bricks','#FBBF24',
- 'Sustained substrate for the hours between small, spaced meals; satiety against hidden snacking; cholesterol-free for the #1 comorbidity.',
- 'Feeds the wound at 3 a.m. — overnight and between six small servings; the months-long home-diet backbone after discharge.',
- 'Defends the overnight hours where morning stiffness peaks; satiety against steroid appetite and fat gain; built for years of daily use.'],
-['Vitamin D','The Wiring','#5EEAD4',
- 'Fall-prevention physiology in the clinic’s highest fall-risk population — nerve side already failing, muscle side defended.',
- 'Powers day-one standing (a type II fibre event); ward fall-prevention; in bone surgery, serves the fusion and the muscle moving it at once.',
- 'Both sides of the fall–fracture equation: the bone the steroids thin, and the muscle and balance that keep it from ever being tested.']];
+
 </script><script>/* ===== access gate ===== */
 (()=>{
  let pw=null,u=null;
@@ -773,14 +677,6 @@ function cloud(canvas,pts,opts){if(!canvas)return;
  for(let i=0;i<170;i++){const th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1),R=.5+Math.random()*.4;
   pts.push([R*Math.sin(ph)*Math.cos(th),(Math.random()*2-1)*.95,R*Math.sin(ph)*Math.sin(th)*.6,'rgba(150,170,210,AL)',.34]);}
  cloud(c,pts,{rx:.22,auto:.0045,scale:.62,drag:true});})();
-
-/* 8g orbit */
-(()=>{const c=document.getElementById('orb');if(!c)return;const pts=[];
- for(let i=0;i<260;i++){const a=i/260*Math.PI*2,r=.42+(Math.random()-.5)*.05;
-  pts.push([Math.cos(a)*r,Math.sin(a)*r*.34,Math.sin(a)*r,i%5?'rgba(251,191,36,AL)':'rgba(234,88,12,AL)']);}
- for(let i=0;i<90;i++){const a=Math.random()*Math.PI*2,r=.12+Math.random()*.55;
-  pts.push([Math.cos(a)*r,(Math.random()-.5)*.5,Math.sin(a)*r,'rgba(148,163,196,AL)']);}
- cloud(c,pts,{rx:.5,auto:.008,scale:.85});})();
 
 /* ===== corridor (window.STOPS + window.MUS4 + window.MUSLBL) ===== */
 (()=>{
@@ -1184,12 +1080,7 @@ function chipChart(cvId,chipId,cfg){
  });
 })();
 
-/* ===== budget bar ===== */
-(()=>{const b=document.getElementById('bBar');if(!b)return;
-new IntersectionObserver((es,ob)=>es.forEach(e=>{if(!e.isIntersecting)return;
- document.getElementById('bDiet').style.width=(42.5/48*100)+'%';
- const h=document.getElementById('bHead');h.style.left=(42.5/48*100)+'%';h.style.width=(5.5/48*100)+'%';
- ob.unobserve(e.target);}),{threshold:.4}).observe(b);})();
+
 
 /* ===== ingredients panels ===== */
 (()=>{
@@ -1238,9 +1129,7 @@ ING2.forEach((n,i)=>{const panel=document.createElement('div');panel.className='
 })();
 
 /* matrix */
-(()=>{const b=document.getElementById('mxBody');if(!b||typeof MX==='undefined')return;
-b.innerHTML=MX.map(r=>`<tr><td><b>${r[0]}</b><small style="color:${r[2]}">${r[1]}</small></td>
- <td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td></tr>`).join('');})();
+
 
 /* ===== evidence interactions ===== */
 const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1333,20 +1222,63 @@ const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
  new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting&&!raf)frame();}),{threshold:.2}).observe(c);
 })();
 
-/* --- paradox --- */
+/* --- paradox cascade --- */
 (()=>{
- const d=document.getElementById('pxDrugs');if(!d)return;
- const rows={a:document.querySelector('.pxRow[data-b="a"]'),b:document.querySelector('.pxRow[data-b="b"]'),c:document.querySelector('.pxRow[data-b="c"]')};
+ const tabs=document.getElementById('pxDrugs');if(!tabs||!document.getElementById('cscFlow'))return;
+ const flow=document.getElementById('cscFlow'),cap=document.getElementById('cscCap');
  const W=document.getElementById('pxW'),M=document.getElementById('pxM'),para=document.getElementById('pxPara');
- function pick(k){
-  d.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.d===k));
-  const lit=k==='glp'?['a','b']:['c'];
-  Object.entries(rows).forEach(([kk,el])=>el.classList.toggle('lit',lit.includes(kk)));
-  W.style.height=k==='glp'?'34%':'62%';
-  M.style.height=k==='glp'?'38%':'52%';
-  para.classList.add('on');}
- d.addEventListener('click',e=>{const b=e.target.closest('button');if(b)pick(b.dataset.d);});
- new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting){pick('glp');ob.unobserve(e.target);}}),{threshold:.3}).observe(d);
+ const playB=document.getElementById('cscPlay'),reB=document.getElementById('cscRe');
+ const D={
+  glp:{wg:[86,34],mg:[86,38],rows:[
+   {tag:'Building side',steps:[
+    ['Food intake ↓','GLP-1 suppresses appetite — less food comes in.'],
+    ['Insulin & IGF-1 ↓','Less food means less insulin and IGF-1 — the body’s build signals.'],
+    ['mTOR suppressed','With the build signals low, mTOR — the building switch — stays off.'],
+    ['Muscle protein synthesis ↓','So new muscle protein is not made.',1]]},
+   {tag:'Breakdown side',steps:[
+    ['Cortisol ↑','At the same time, rapid weight loss raises cortisol.'],
+    ['Ubiquitin–proteasome pathway','Cortisol switches on the muscle-breakdown pathway.'],
+    ['Lean muscle mass ↓','Existing muscle is broken down — lean mass falls.',1]]}]},
+  oth:{wg:[86,62],mg:[86,52],rows:[
+   {tag:'One pathway',steps:[
+    ['Gluconeogenesis activated','These drugs push the body to make its own glucose — and muscle amino acids are the raw material.'],
+    ['Muscle atrophy ↑','Muscle is drawn down — atrophy increases.'],
+    ['Muscular weakness ↑','Less muscle means less strength.'],
+    ['Motor function ↓','Walking, rising and balance decline.',1]]}]}};
+ let mode='glp',N=0,timer=null,played=false;
+ const steps=()=>D[mode].rows.flatMap(r=>r.steps);
+ function build(){
+  const d=D[mode];let idx=0;
+  flow.innerHTML=d.rows.map(r=>'<div class="cscRow"><span class="cscTag">'+r.tag+'</span>'+
+   r.steps.map((st,i)=>((i?'<span class="cn"><i></i></span>':'')+
+    '<button class="csc'+(st[2]?' endN':'')+'" data-i="'+(idx++)+'">'+st[0]+'</button>')).join('')+'</div>').join('');
+  N=idx;
+  W.style.height=d.wg[0]+'%';M.style.height=d.mg[0]+'%';
+  para.classList.remove('on');
+  cap.innerHTML='Press play — each step triggers the next. Tap any step to jump to it.';
+  flow.querySelectorAll('.csc').forEach(b=>b.addEventListener('click',()=>{stop();seek(+b.dataset.i);}));}
+ function seek(i){const d=D[mode];
+  const ns=[...flow.querySelectorAll('.csc')];
+  ns.forEach((n,k)=>{n.classList.toggle('done',k<=i);n.classList.toggle('now',k===i);});
+  flow.querySelectorAll('.cn').forEach(c=>{const nb=c.nextElementSibling;
+   c.classList.toggle('done',!!(nb&&nb.classList.contains('done')));});
+  const st=steps()[i];cap.innerHTML='<b>'+st[0].replace(/ [↓↑]$/,'')+'.</b> '+st[1];
+  const f=(i+1)/N;
+  W.style.height=(d.wg[0]+(d.wg[1]-d.wg[0])*f).toFixed(1)+'%';
+  M.style.height=(d.mg[0]+(d.mg[1]-d.mg[0])*f).toFixed(1)+'%';
+  if(i===N-1)para.classList.add('on');}
+ function stop(){clearInterval(timer);timer=null;}
+ function play(){stop();build();
+  if(REDUCED){seek(N-1);return;}
+  let i=0;seek(0);
+  timer=setInterval(()=>{i++;if(i>=N){stop();return;}seek(i);},1000);}
+ playB.addEventListener('click',play);
+ reB.addEventListener('click',play);
+ tabs.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  mode=b.dataset.d;tabs.querySelectorAll('button').forEach(z=>z.classList.toggle('on',z===b));
+  stop();build();play();});
+ build();
+ new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting&&!played){played=true;play();ob.unobserve(e.target);}}),{threshold:.35}).observe(flow);
 })();
 
 /* --- radial gauges --- */
