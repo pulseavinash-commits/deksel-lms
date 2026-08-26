@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The Raised Thresholds — Windows of Breakdown</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Manrope:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"><style>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The Raised Thresholds — Windows of Breakdown</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"><style>
 :root{
   --bg:#0A1020; --bg2:#0D1526; --surface:#131D33; --surface2:#1C2947; --line:rgba(167,186,224,.26);
   --ink:#F7F9FE; --ink2:#C8D2E6; --ink3:#98A4BD;
@@ -10,7 +10,7 @@
   --lift2:0 10px 26px rgba(0,0,0,.48),0 2px 8px rgba(0,0,0,.4);
   --lift3:0 26px 60px rgba(0,0,0,.55),0 8px 22px rgba(0,0,0,.42);
   --sheen:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.02) 42%,rgba(255,255,255,0) 70%);
-  --serif:'Fraunces',ui-serif,Georgia,'Times New Roman',serif;
+  --serif:'Sora',ui-sans-serif,system-ui,'Segoe UI',Arial,sans-serif;
   --sans:'Manrope',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
   --mono:'Space Grotesk',ui-monospace,'SF Mono',Consolas,monospace;
 }
@@ -374,13 +374,13 @@ footer p{max-width:620px;line-height:1.6}
 .picHero{border-radius:24px;overflow:hidden;border:1px solid var(--line);margin-top:40px;position:relative}
 .picHero img{width:100%;display:block}
 .picHero .cap{position:absolute;left:0;right:0;bottom:0;padding:26px 30px;background:linear-gradient(180deg,transparent,rgba(5,8,15,.92));font-family:var(--serif);font-size:clamp(1.05rem,2vw,1.45rem);color:var(--ink)}
-.homeHero{min-height:80svh;display:flex;align-items:center;overflow:hidden;padding:120px 0 30px}
-.homeHero #helix{position:absolute;top:6%;bottom:0;left:auto;right:-6%;width:60%;height:94%}
-.homeHero .heroInner{max-width:none}
+.homeHero{min-height:100svh;display:flex;align-items:center;overflow:hidden;padding:110px 0 40px}
+.homeHero #helix{position:absolute;inset:0;left:auto;right:0;width:58%;height:100%}
 .homeHero h1 .l2{color:var(--orangeHi)}
-.homeHero .heroSub{max-width:520px}
-@media(max-width:980px){.homeHero #helix{right:-18%;width:86%;opacity:.5}.homeHero .heroSub{max-width:none}}
+.homeHero .heroSub{max-width:34rem}
+@media(max-width:980px){.homeHero #helix{right:-20%;width:90%;opacity:.5}.homeHero .heroSub{max-width:none}}
 .dragHint{color:var(--ink2);background:rgba(10,16,32,.7);border:1px solid var(--line);border-radius:99px;padding:8px 15px}
+.homeHero .dragHint{bottom:86px}
 .vidWrap{margin-top:70px}
 .vidWrap h3{font-size:clamp(1.35rem,2.6vw,1.9rem)}
 .vidGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:18px;margin-top:26px}
@@ -467,6 +467,39 @@ footer p{max-width:620px;line-height:1.6}
 .nextBar a{background:linear-gradient(168deg,var(--surface2),var(--surface) 62%);box-shadow:var(--lift2)}
 .nextBar a:hover{box-shadow:var(--lift3)}
 
+/* ===== quiet bands + hook ===== */
+.band{margin-top:80px;padding-top:46px;border-top:1px solid var(--line)}
+.band .kick{font-family:var(--mono);font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--amberHi)}
+.band h3{font-size:clamp(1.3rem,2.5vw,1.85rem);margin-top:10px;line-height:1.3}
+.band h3 b{color:var(--orangeHi)}
+.band .sub{color:var(--ink2);font-size:.95rem;margin-top:10px;max-width:820px}
+.band .sub b{color:var(--ink)}
+.hook{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,54px);align-items:center;margin-top:36px}
+@media(max-width:900px){.hook{grid-template-columns:1fr}}
+.hookLine{font-size:clamp(1.02rem,1.7vw,1.22rem);color:var(--ink2);line-height:1.6}
+.hookLine b{color:var(--ink)}
+.gCard{border:1px solid var(--line);border-radius:24px;padding:clamp(20px,3vw,30px);
+ background:linear-gradient(168deg,var(--surface2),var(--surface) 60%);box-shadow:var(--lift2)}
+.gCard .guess{flex-direction:column;align-items:stretch;margin-top:0;gap:8px}
+.sawSlim{margin-top:64px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0 4px}
+.sawSlim #saw{height:180px}
+.sawCap{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;color:var(--ink3);text-transform:uppercase;text-align:center;padding:8px 4px 10px}
+.slider{position:relative}
+#slPrev,#slNext{position:absolute;top:42%;z-index:6;width:54px;height:54px;border-radius:50%;font-size:1.35rem;
+ background:rgba(19,29,51,.9);backdrop-filter:blur(10px);border:1px solid var(--line);color:var(--ink);box-shadow:var(--lift2);transition:.2s}
+#slPrev:hover,#slNext:hover{transform:translateY(-2px);border-color:rgba(94,234,212,.5)}
+#slPrev{left:-8px}#slNext{right:-8px}
+.slNav{justify-content:center}
+.pxTabs{margin-top:20px}
+.pxFlow2{margin-top:22px;display:flex;flex-direction:column;gap:12px;min-height:96px}
+.pxRow{display:none;gap:8px;align-items:center;flex-wrap:wrap}
+.pxRow.lit{display:flex;opacity:1;transform:none}
+.pxRow .st{border:0;background:none;box-shadow:none;padding:2px 0;font-size:.96rem;color:var(--ink);white-space:normal}
+.pxRow .ar{color:var(--orangeHi);font-weight:800;padding:0 2px}
+.pxRow .end{border:0;color:#FDA4AF;font-weight:700}
+.pxWrap2{display:grid;grid-template-columns:1fr auto;gap:clamp(20px,3.4vw,44px);align-items:center}
+@media(max-width:820px){.pxWrap2{grid-template-columns:1fr}}
+.pxGauges .tube{height:110px;width:28px}
 /* ===== evidence sections ===== */
 .evid{margin-top:70px;border:1px solid var(--line);border-radius:26px;overflow:hidden;position:relative;
  background:linear-gradient(165deg,var(--surface2),var(--surface) 58%);box-shadow:var(--lift3)}
@@ -509,20 +542,6 @@ footer p{max-width:620px;line-height:1.6}
 .loopCap{margin-top:14px;color:var(--ink2);font-size:.9rem;min-height:44px;max-width:460px}
 .loopCap b{color:var(--orangeHi)}
 /* paradox */
-.pxGrid{display:grid;grid-template-columns:200px 1fr 130px;gap:clamp(16px,2.6vw,30px);margin-top:26px;align-items:stretch}
-@media(max-width:920px){.pxGrid{grid-template-columns:1fr}}
-.pxDrugs{display:flex;flex-direction:column;gap:9px}
-.pxDrugs button{text-align:left;border:1px solid var(--line);border-radius:13px;padding:12px 15px;font-size:.87rem;font-weight:700;color:var(--ink2);
- background:rgba(28,41,71,.5);transition:.22s;box-shadow:var(--lift1)}
-.pxDrugs button.on{color:var(--ink);border-color:rgba(253,186,116,.7);background:linear-gradient(120deg,rgba(249,115,22,.3),rgba(28,41,71,.6))}
-.pxDrugs small{font-family:var(--mono);font-size:.58rem;letter-spacing:.22em;color:var(--ink3);text-transform:uppercase;margin:6px 0 2px}
-.pxPath{display:flex;flex-direction:column;gap:10px;justify-content:center}
-.pxRow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;opacity:.28;transform:translateX(6px);transition:.5s}
-.pxRow.lit{opacity:1;transform:none}
-.pxRow .st{border:1px solid var(--line);border-radius:11px;padding:9px 13px;font-size:.8rem;color:var(--ink);background:rgba(19,29,51,.75);box-shadow:var(--lift1);white-space:nowrap}
-.pxRow.lit .st{border-color:rgba(253,186,116,.5)}
-.pxRow .ar{color:var(--orangeHi);font-weight:800}
-.pxRow .end{border-color:rgba(251,113,133,.6);color:#FDA4AF;font-weight:700}
 .pxGauges{display:flex;gap:16px;align-items:flex-end;justify-content:center}
 .pxG{text-align:center}
 .pxG .tube{width:34px;height:150px;border-radius:99px;border:1px solid var(--line);background:rgba(10,16,32,.75);position:relative;overflow:hidden;margin:0 auto}
@@ -568,8 +587,8 @@ footer p{max-width:620px;line-height:1.6}
 .chapTitle{text-shadow:0 10px 44px rgba(0,0,0,.55)}
 </style></head><body><div id="prog"></div><div id="tip"></div><nav id="nav"><div class="wrap"><a class="navBrand" href="index.html"><b>WINDOWS</b> OF BREAKDOWN</a><ul><li><a href="index.html">Home</a></li><li><a href="diabetes.html">Diabetes</a></li><li><a href="perioperative.html">Surgery</a></li><li><a href="rheumatology.html">Rheumatology</a></li><li><a href="eight-gram.html" class="cur">Threshold</a></li><li><a href="ingredients.html">Ingredients</a></li></ul></div></nav><section class="pageTop"><div class="wrap">
 <div class="crumb"><a href="index.html">Home</a> / Chapter 02</div>
-<h2 class="chapTitle rv" style="font-size:clamp(2rem,5vw,3.5rem);margin-top:18px">The Raised Thresholds<br><span class="alt">three bars · one serving</span></h2>
-<p class="chapLead rv d1">The windows you just walked through — in <a href="diabetes.html">diabetes</a>, <a href="perioperative.html">around surgery</a> and <a href="rheumatology.html">in rheumatoid disease</a> — do more than drain the account. <b>They raise the bars.</b> Every window lifts the threshold for <b>building</b> muscle, lifts the threshold for <b>stopping its breakdown</b>, and lifts the threshold for <b>normal functioning</b> — while intake falls at exactly the same time, so food gets weaker just as the bars get higher. That is why breakdown up, building down and intake down always arrive together. And it is why one serving is composed the way it is: <b>1 g of free leucine with 8 g of WPI + SPI</b> to break the building bar, <b>1 g of calcium HMB</b> to break the stopping bar, and <b>600 IU of vitamin D3</b> to hold the functioning bar down.</p>
+<h2 class="chapTitle rv" style="font-size:clamp(2rem,5vw,3.5rem);margin-top:18px">The Raised Thresholds<br><span class="alt">how illness raises them · how one serving answers them</span></h2>
+<p class="chapLead rv d1">The windows you just walked through — in <a href="diabetes.html">diabetes</a>, <a href="perioperative.html">around surgery</a> and <a href="rheumatology.html">in rheumatoid disease</a> — do more than use up muscle. <b>They raise three thresholds.</b> The threshold for <b>building</b> muscle goes up, the threshold for <b>stopping its breakdown</b> goes up, and <b>normal functioning</b> needs more support — while food intake falls at exactly the same time. That is why breakdown up, building down and intake down always arrive together. And it is why one serving is composed the way it is: <b>1 g of free leucine with 8 g of WPI + SPI</b> to cross the building threshold, <b>1 g of calcium HMB</b> to answer the breakdown threshold, and <b>600 IU of vitamin D3</b> for the type II fibres and coordination.</p>
 <div class="axi rv">
  <div class="axiTop">
   <div class="axiHint">Pick a trigger · watch the bars rise</div>
@@ -581,12 +600,12 @@ footer p{max-width:620px;line-height:1.6}
   <div class="axiOut" id="axiOut">
    <div class="o" data-k="build"><div class="mini"><i></i></div><div><b>The building bar rises</b><span>The leucine threshold climbs — an ordinary meal no longer fires synthesis. Building down.</span></div></div>
    <div class="o" data-k="stop"><div class="mini"><i></i></div><div><b>The stopping bar rises</b><span>The demolition pathway runs harder — food's trickle of HMB cannot restrain it. Breakdown up.</span></div></div>
-   <div class="o" data-k="fn"><div class="mini"><i></i></div><div><b>The functioning bar rises</b><span>Type II fibres and nerve–muscle control weaken — the chair, the stairs, the fall. And intake drops just as every bar goes up.</span></div></div>
+   <div class="o" data-k="fn"><div class="mini"><i></i></div><div><b>The functioning bar rises</b><span>Type II fibres and nerve–muscle control weaken — chair rise, stairs, balance. And food intake drops at the same time.</span></div></div>
   </div>
  </div>
  <p class="axiWhy" id="axiWhy"><b>And the climb back is never complete.</b> The fall is steep and the recovery is flat: anabolic resistance raises the leucine threshold, the anabolic environment is impaired, and the next window opens before the last recovery has finished. Each tooth of the saw ends lower than the one before — hidden on the weighing scale, because fat quietly replaces the muscle.</p>
 </div>
-<div class="thWrap rv"><div class="thTop"><h3>Bar 01 · Building — the leucine threshold: same grams, different biology</h3>
+<div class="thWrap rv"><div class="thTop"><h3>Threshold 1 · Building — the leucine threshold</h3>
  <div class="toggle" id="thToggle"><button class="on" data-mode="resistant">Resistant muscle</button><button data-mode="young">Young healthy muscle</button></div></div>
  <div class="chipRow" id="thChips"></div>
  <p class="chipHint">Every source is drawn to begin with. Click one to take it off the chart, click again to bring it back — the bold line is the blood leucine curve the muscle actually sees from everything you have left on.</p>
@@ -598,25 +617,25 @@ footer p{max-width:620px;line-height:1.6}
  <div class="fail rv d2"><div class="big">5%</div><h4>The HMB arithmetic</h4><p>Only ~5% of leucine converts to HMB, so <b>the 1 g given directly in each serving equals the yield of about 20 g of pure leucine</b> — several plates of protein food in a day. No meal, and no protein powder, comes close.</p></div>
  <div class="fail rv d3"><div class="big">◑</div><h4>The unprotected hours</h4><p>Once a spike is spent, the body drifts back to <b>net breakdown</b> — and a small-appetite patient spends most of the day there. The day needs a plateau as well as a peak.</p></div>
 </div>
-<div class="spWrap rv"><div class="thTop"><h3>Bar 01 · the proof of speed — why the 8 g is split into WPI and SPI</h3></div>
+<div class="spWrap rv"><div class="thTop"><h3>Why the 8 g is split into WPI and SPI — the two speeds</h3></div>
 <div class="chipRow" id="spChips"></div>
 <p class="chipHint">Same rule here: every source starts on the chart. Take one off to see what its curve was doing, and leave whey isolate and soy isolate on together to see the spike and the plateau add up.</p>
 <canvas id="speed"></canvas>
 <p class="spCap">Whey is the fastest because it stays liquid in stomach acid, and the isolate has the fat removed. Its peak lands in the same window as the free-leucine bolus: trigger and all nine essential amino acids together. Soy isolate’s plateau then keeps blood amino acids up for hours, shortening the time the muscle spends at a net loss. <b>Spike plus plateau — two jobs, no overlap.</b> Whey spikes but cannot sustain; soy sustains but cannot spike; dal is slow <em>and</em> incomplete, so it does neither.</p></div>
-<div class="thWrap rv" style="margin-top:70px"><div class="thTop"><h3>Bar 02 · Stopping the breakdown — the HMB threshold food cannot clear</h3></div>
+<div class="thWrap rv" style="margin-top:70px"><div class="thTop"><h3>Threshold 2 · Stopping breakdown — the HMB threshold</h3></div>
 <div id="hmbChips"></div>
 <p class="chipHint">Pick the diet he actually eats — one or the other, never both. Beside it stand the single serving’s three routes to HMB; switch any of them off to see what it was carrying. The bar on the right is the whole day, with one serving.</p>
 <canvas id="hmb"></canvas>
-<p class="thCap">HMB is the metabolite of leucine that does the anti-catabolic work: it slows the ubiquitin–proteasome pathway and stabilises the muscle-cell membrane. <b>Only about 5% of dietary leucine is converted to it</b> — which is why a whole day of eating yields a fraction of a gram, and why an anti-catabolic dose can never come from the plate. It has to be given directly, and <b>a single serving is the whole argument</b>: its 1 g of calcium HMB arrives with no conversion step — the yield of about 20 g of pure leucine — with its 8 g WPI + SPI blend and 1 g free leucine adding their trickle on top. One serving lifts the day to more than <b>three times the ceiling that any diet can ever reach</b> — the anti-catabolic signal food can never send. Where the building bar decides whether muscle is <em>added</em>, this bar decides whether muscle <em>stops being lost</em> — and one serving answers both on the same day.</p></div>
-<div class="thWrap rv" style="margin-top:70px"><div class="thTop"><h3>Bar 03 · Functioning — the bar vitamin D3 holds down</h3></div>
-<p class="thCap" style="padding-top:4px">Saved muscle still has to answer when it is called. The windows erode exactly that: steroids and disuse waste the <b>type II chair-rise fibres</b> first, and inflammation degrades the nerve–muscle control that keeps an older patient on their feet. Vitamin D acts on both sides of that wire — through the <b>VDR on the muscle fibre</b> for type II fibre function, and on <b>balance and neuromuscular coordination</b> — which is why deficiency shows up as weakness and falls before it ever shows on an X-ray. The serving carries <b>600 IU of vitamin D3</b> so the functioning bar is answered daily, at zero protein cost.</p>
+<p class="thCap">HMB is the metabolite of leucine that does the anti-catabolic work: it slows the ubiquitin–proteasome pathway and stabilises the muscle-cell membrane. <b>Only about 5% of dietary leucine is converted to it</b> — which is why a whole day of eating yields a fraction of a gram, and why an anti-catabolic dose can never come from the plate. It has to be given directly, and <b>a single serving settles the question</b>: its 1 g of calcium HMB arrives ready-made — equal to the conversion yield of about 20 g of pure leucine — and its 8 g WPI + SPI blend and 1 g free leucine add a little more. One serving supplies more than <b>three times what any diet can provide in a day</b>. The leucine threshold decides whether muscle is <em>built</em>; this one decides whether muscle <em>stops being lost</em> — and one serving answers both on the same day.</p></div>
+<div class="thWrap rv" style="margin-top:70px"><div class="thTop"><h3>Threshold 3 · Functioning — vitamin D3</h3></div>
+<p class="thCap" style="padding-top:4px">Kept muscle still has to work when it is needed. The windows damage exactly that: steroids and disuse waste the <b>type II chair-rise fibres</b> first, and inflammation degrades the nerve–muscle control that keeps an older patient on their feet. Vitamin D acts on both sides of that wire — through the <b>VDR on the muscle fibre</b> for type II fibre function, and on <b>balance and neuromuscular coordination</b> — which is why deficiency shows up as weakness and falls before it ever shows on an X-ray. The serving carries <b>600 IU of vitamin D3</b> so the functioning bar is answered daily, at zero protein cost.</p>
 <div class="failGrid" style="margin-top:18px">
  <div class="fail rv"><div class="big">Ⅱ</div><h4>The chair-rise fibres</h4><p>Type II fibres are the ones that push a patient off a chair and catch a stumble — and they are the first casualties of steroids, disuse and age. <b>The VDR on the fibre makes vitamin D part of their upkeep.</b></p></div>
  <div class="fail rv d1"><div class="big">⌁</div><h4>The wiring</h4><p>Strength is nerve <em>and</em> muscle. Vitamin D supports <b>the neuromuscular junction, balance and coordination</b> — the difference between a wobble and a fall.</p></div>
  <div class="fail rv d2"><div class="big">↯</div><h4>The fall chain</h4><p>Fall → fracture → surgery and bed rest → a new window of breakdown. <b>One prevented fall closes the loop the other windows keep opening</b> — at zero nitrogen cost, inside any prescription.</p></div>
 </div></div>
-<div class="script rv"><small>The lineup — one serving against three raised bars</small>
-<p>“Every window raises three bars, Doctor — and one serving answers all three. <b>1 g of free leucine riding the 8 g whey-isolate spike</b> crosses the raised building bar, and the <b>soy-isolate plateau</b> behind it holds the muscle out of net loss through the empty hours. <b>1 g of calcium HMB, given directly,</b> does what no diet’s 5% conversion ever can — it restrains the demolition pathway itself. And <b>600 IU of vitamin D3</b> keeps the type II fibres and their wiring answering, so the muscle we save is strength he can actually use. Three raised bars. Five ingredients. One 8-gram serving.”</p></div>
+<div class="script rv"><small>The lineup — one serving against three raised thresholds</small>
+<p>“Every window raises three thresholds, Doctor — and one serving answers all three. <b>1 g of free leucine with the 8 g whey-isolate spike</b> crosses the raised building threshold, and the <b>soy-isolate plateau</b> keeps amino acids available through the hours that follow. <b>1 g of calcium HMB, given directly,</b> slows the breakdown pathway itself — the 5% conversion from food can never supply it. And <b>600 IU of vitamin D3</b> supports the type II fibres and coordination, so the muscle that is kept is muscle he can use. Three thresholds. Five ingredients. One 8-gram serving.”</p></div>
 <div class="nextBar rv"><a href="ingredients.html"><small>Next chapter</small><b>The Five Ingredients →</b></a>
 <a href="index.html"><small>Back to</small><b>All segments →</b></a></div>
 </div></section><footer><div class="wrap">
@@ -688,11 +707,11 @@ function cloud(canvas,pts,opts){if(!canvas)return;
 (()=>{const c=document.getElementById('helix');if(!c)return;
  const pts=[];const C=['rgba(94,234,212,AL)','rgba(196,181,253,AL)','rgba(253,186,116,AL)'];
  for(let s=0;s<9;s++){const a0=s/9*Math.PI*2,col=C[s%3];
-  for(let i=0;i<150;i++){const t=i/150*4-2;const r=.17+.022*Math.sin(t*9+s);
-   pts.push([Math.cos(a0+t*1.35)*r,t*.28,Math.sin(a0+t*1.35)*r,col,1]);}}
- for(let i=0;i<150;i++){const th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1),R=.5+Math.random()*.4;
-  pts.push([R*Math.sin(ph)*Math.cos(th),(Math.random()*2-1)*.58,R*Math.sin(ph)*Math.sin(th)*.6,'rgba(150,170,210,AL)',.34]);}
- cloud(c,pts,{rx:.26,auto:.0045,scale:.66,drag:true});})();
+  for(let i=0;i<200;i++){const t=i/200*5.6-2.8;const r=.17+.022*Math.sin(t*9+s);
+   pts.push([Math.cos(a0+t*1.35)*r,t*.30,Math.sin(a0+t*1.35)*r,col,1]);}}
+ for(let i=0;i<170;i++){const th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1),R=.5+Math.random()*.4;
+  pts.push([R*Math.sin(ph)*Math.cos(th),(Math.random()*2-1)*.95,R*Math.sin(ph)*Math.sin(th)*.6,'rgba(150,170,210,AL)',.34]);}
+ cloud(c,pts,{rx:.22,auto:.0045,scale:.62,drag:true});})();
 
 /* 8g orbit */
 (()=>{const c=document.getElementById('orb');if(!c)return;const pts=[];
@@ -744,7 +763,7 @@ function setMuscle(frac,fin){
   im.style.filter=fin?'grayscale(.7) brightness(.75)':'none';
   im.style.transform=`scale(${(1-frac*.16).toFixed(3)})`;});
  const cap=document.getElementById('musCap');
- cap.textContent=fin?'the account is spent':CAPS[Math.min(3,Math.round(sf))];}
+ cap.textContent=fin?'most of the reserve is gone':CAPS[Math.min(3,Math.round(sf))];}
 function popDelta(){const d=document.getElementById('musDelta');d.classList.add('pop');
  clearTimeout(d._t);d._t=setTimeout(()=>d.classList.remove('pop'),1500);}
 function frame(){
@@ -1050,12 +1069,12 @@ function chipChart(cvId,chipId,cfg){
   x.setLineDash([3,5]);x.strokeStyle='#FDBA74';x.lineWidth=1.4;
   x.beginPath();x.moveTo(pL,yF);x.lineTo(W-pR,yF);x.stroke();x.setLineDash([]);
   x.fillStyle='#FDBA74';x.font='700 11px system-ui';
-  x.fillText('the ceiling of food — no diet gets past this line',pL+6,yF-7);
+  x.fillText('the most food can supply in a day',pL+6,yF-7);
   const hmbLive=hasDirect;
   x.textAlign='right';x.font='700 12.5px system-ui';
   let msg,mc;
-  if(hmbLive){msg='one serving: '+(Math.round(total/ .40*10)/10)+'\u00d7 the ceiling of food \u2014 the signal food can never send';mc='#5EEAD4';}
-  else{msg='food alone \u2014 stuck under its own ceiling';mc='#FDBA74';}
+  if(hmbLive){msg='one serving: '+(Math.round(total/ .40*10)/10)+'\u00d7 more than food can supply in a day';mc='#5EEAD4';}
+  else{msg='food alone \u2014 this is as much as it can supply';mc='#FDBA74';}
   x.fillStyle=mc;x.fillText(msg,W-pR,pT-10);}
  sync();
  new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting&&!started){started=true;anim();ob.unobserve(e.target);}}),{threshold:.25}).observe(c);
@@ -1223,10 +1242,10 @@ const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
  const c=document.getElementById('vloop');if(!c)return;
  const btn=document.getElementById('loopBtn'),cap=document.getElementById('loopCap'),nEl=document.getElementById('loopN');
  let ang=0,r=1,speed=.010,cycle=0,running=true,raf=null;
- const CAPS=['Muscle lost → glucose disposal falls → glycemia worsens → breakdown accelerates. <b>Each turn of the circle is tighter than the last.</b>',
-  '<b>Turn 1.</b> Less muscle — the glucose sink shrinks. Disposal falls.',
-  '<b>Turn 2.</b> Higher glucose and low-grade inflammation — the demolition pathway speeds up.',
-  '<b>Turn 3.</b> Weaker, slower, less active — and every step of it feeds the next turn. <b>This is why glucose control alone cannot close the circle.</b>'];
+ const CAPS=['Muscle is lost → glucose disposal falls → glycemia worsens → breakdown speeds up. <b>Each turn of the circle is tighter than the last.</b>',
+  '<b>Turn 1.</b> Less muscle means less glucose is cleared — disposal falls.',
+  '<b>Turn 2.</b> Higher glucose and low-grade inflammation speed up muscle breakdown.',
+  '<b>Turn 3.</b> Weaker and less active — and each of these feeds the next turn. <b>Glucose control alone cannot stop this circle.</b>'];
  function paint(){const [x,W,H]=fitCanvas(c);
   const cx=W/2,cy=H/2,R0=Math.min(W,H)*.38;
   x.clearRect(0,0,W,H);
@@ -1282,7 +1301,7 @@ const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
    const grad=x.createLinearGradient(0,0,W,H);grad.addColorStop(0,'#FDBA74');grad.addColorStop(1,'#F97316');
    x.beginPath();x.arc(cx,cy,R,-Math.PI/2,a);x.strokeStyle=grad;x.lineWidth=12;x.lineCap='round';
    x.shadowColor='rgba(249,115,22,.55)';x.shadowBlur=14;x.stroke();x.shadowBlur=0;
-   x.fillStyle='#F7F9FE';x.font="700 44px 'Fraunces',Georgia,serif";x.textAlign='center';x.textBaseline='middle';
+   x.fillStyle='#F7F9FE';x.font="700 44px 'Sora',system-ui,sans-serif";x.textAlign='center';x.textBaseline='middle';
    x.fillText(Math.round(val)+'%',cx,cy-2);x.textBaseline='alphabetic';}
   function run(){const step=()=>{val+=Math.max(.4,(target-val)*.06);
    if(val>=target){val=target;paint();return;}paint();raf=requestAnimationFrame(step);};

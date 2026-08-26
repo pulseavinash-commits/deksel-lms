@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The Five Ingredients — Windows of Breakdown</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Manrope:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"><style>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The Five Ingredients — Windows of Breakdown</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"><style>
 :root{
   --bg:#0A1020; --bg2:#0D1526; --surface:#131D33; --surface2:#1C2947; --line:rgba(167,186,224,.26);
   --ink:#F7F9FE; --ink2:#C8D2E6; --ink3:#98A4BD;
@@ -10,7 +10,7 @@
   --lift2:0 10px 26px rgba(0,0,0,.48),0 2px 8px rgba(0,0,0,.4);
   --lift3:0 26px 60px rgba(0,0,0,.55),0 8px 22px rgba(0,0,0,.42);
   --sheen:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.02) 42%,rgba(255,255,255,0) 70%);
-  --serif:'Fraunces',ui-serif,Georgia,'Times New Roman',serif;
+  --serif:'Sora',ui-sans-serif,system-ui,'Segoe UI',Arial,sans-serif;
   --sans:'Manrope',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
   --mono:'Space Grotesk',ui-monospace,'SF Mono',Consolas,monospace;
 }
@@ -374,13 +374,13 @@ footer p{max-width:620px;line-height:1.6}
 .picHero{border-radius:24px;overflow:hidden;border:1px solid var(--line);margin-top:40px;position:relative}
 .picHero img{width:100%;display:block}
 .picHero .cap{position:absolute;left:0;right:0;bottom:0;padding:26px 30px;background:linear-gradient(180deg,transparent,rgba(5,8,15,.92));font-family:var(--serif);font-size:clamp(1.05rem,2vw,1.45rem);color:var(--ink)}
-.homeHero{min-height:80svh;display:flex;align-items:center;overflow:hidden;padding:120px 0 30px}
-.homeHero #helix{position:absolute;top:6%;bottom:0;left:auto;right:-6%;width:60%;height:94%}
-.homeHero .heroInner{max-width:none}
+.homeHero{min-height:100svh;display:flex;align-items:center;overflow:hidden;padding:110px 0 40px}
+.homeHero #helix{position:absolute;inset:0;left:auto;right:0;width:58%;height:100%}
 .homeHero h1 .l2{color:var(--orangeHi)}
-.homeHero .heroSub{max-width:520px}
-@media(max-width:980px){.homeHero #helix{right:-18%;width:86%;opacity:.5}.homeHero .heroSub{max-width:none}}
+.homeHero .heroSub{max-width:34rem}
+@media(max-width:980px){.homeHero #helix{right:-20%;width:90%;opacity:.5}.homeHero .heroSub{max-width:none}}
 .dragHint{color:var(--ink2);background:rgba(10,16,32,.7);border:1px solid var(--line);border-radius:99px;padding:8px 15px}
+.homeHero .dragHint{bottom:86px}
 .vidWrap{margin-top:70px}
 .vidWrap h3{font-size:clamp(1.35rem,2.6vw,1.9rem)}
 .vidGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:18px;margin-top:26px}
@@ -467,6 +467,39 @@ footer p{max-width:620px;line-height:1.6}
 .nextBar a{background:linear-gradient(168deg,var(--surface2),var(--surface) 62%);box-shadow:var(--lift2)}
 .nextBar a:hover{box-shadow:var(--lift3)}
 
+/* ===== quiet bands + hook ===== */
+.band{margin-top:80px;padding-top:46px;border-top:1px solid var(--line)}
+.band .kick{font-family:var(--mono);font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--amberHi)}
+.band h3{font-size:clamp(1.3rem,2.5vw,1.85rem);margin-top:10px;line-height:1.3}
+.band h3 b{color:var(--orangeHi)}
+.band .sub{color:var(--ink2);font-size:.95rem;margin-top:10px;max-width:820px}
+.band .sub b{color:var(--ink)}
+.hook{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,54px);align-items:center;margin-top:36px}
+@media(max-width:900px){.hook{grid-template-columns:1fr}}
+.hookLine{font-size:clamp(1.02rem,1.7vw,1.22rem);color:var(--ink2);line-height:1.6}
+.hookLine b{color:var(--ink)}
+.gCard{border:1px solid var(--line);border-radius:24px;padding:clamp(20px,3vw,30px);
+ background:linear-gradient(168deg,var(--surface2),var(--surface) 60%);box-shadow:var(--lift2)}
+.gCard .guess{flex-direction:column;align-items:stretch;margin-top:0;gap:8px}
+.sawSlim{margin-top:64px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0 4px}
+.sawSlim #saw{height:180px}
+.sawCap{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;color:var(--ink3);text-transform:uppercase;text-align:center;padding:8px 4px 10px}
+.slider{position:relative}
+#slPrev,#slNext{position:absolute;top:42%;z-index:6;width:54px;height:54px;border-radius:50%;font-size:1.35rem;
+ background:rgba(19,29,51,.9);backdrop-filter:blur(10px);border:1px solid var(--line);color:var(--ink);box-shadow:var(--lift2);transition:.2s}
+#slPrev:hover,#slNext:hover{transform:translateY(-2px);border-color:rgba(94,234,212,.5)}
+#slPrev{left:-8px}#slNext{right:-8px}
+.slNav{justify-content:center}
+.pxTabs{margin-top:20px}
+.pxFlow2{margin-top:22px;display:flex;flex-direction:column;gap:12px;min-height:96px}
+.pxRow{display:none;gap:8px;align-items:center;flex-wrap:wrap}
+.pxRow.lit{display:flex;opacity:1;transform:none}
+.pxRow .st{border:0;background:none;box-shadow:none;padding:2px 0;font-size:.96rem;color:var(--ink);white-space:normal}
+.pxRow .ar{color:var(--orangeHi);font-weight:800;padding:0 2px}
+.pxRow .end{border:0;color:#FDA4AF;font-weight:700}
+.pxWrap2{display:grid;grid-template-columns:1fr auto;gap:clamp(20px,3.4vw,44px);align-items:center}
+@media(max-width:820px){.pxWrap2{grid-template-columns:1fr}}
+.pxGauges .tube{height:110px;width:28px}
 /* ===== evidence sections ===== */
 .evid{margin-top:70px;border:1px solid var(--line);border-radius:26px;overflow:hidden;position:relative;
  background:linear-gradient(165deg,var(--surface2),var(--surface) 58%);box-shadow:var(--lift3)}
@@ -509,20 +542,6 @@ footer p{max-width:620px;line-height:1.6}
 .loopCap{margin-top:14px;color:var(--ink2);font-size:.9rem;min-height:44px;max-width:460px}
 .loopCap b{color:var(--orangeHi)}
 /* paradox */
-.pxGrid{display:grid;grid-template-columns:200px 1fr 130px;gap:clamp(16px,2.6vw,30px);margin-top:26px;align-items:stretch}
-@media(max-width:920px){.pxGrid{grid-template-columns:1fr}}
-.pxDrugs{display:flex;flex-direction:column;gap:9px}
-.pxDrugs button{text-align:left;border:1px solid var(--line);border-radius:13px;padding:12px 15px;font-size:.87rem;font-weight:700;color:var(--ink2);
- background:rgba(28,41,71,.5);transition:.22s;box-shadow:var(--lift1)}
-.pxDrugs button.on{color:var(--ink);border-color:rgba(253,186,116,.7);background:linear-gradient(120deg,rgba(249,115,22,.3),rgba(28,41,71,.6))}
-.pxDrugs small{font-family:var(--mono);font-size:.58rem;letter-spacing:.22em;color:var(--ink3);text-transform:uppercase;margin:6px 0 2px}
-.pxPath{display:flex;flex-direction:column;gap:10px;justify-content:center}
-.pxRow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;opacity:.28;transform:translateX(6px);transition:.5s}
-.pxRow.lit{opacity:1;transform:none}
-.pxRow .st{border:1px solid var(--line);border-radius:11px;padding:9px 13px;font-size:.8rem;color:var(--ink);background:rgba(19,29,51,.75);box-shadow:var(--lift1);white-space:nowrap}
-.pxRow.lit .st{border-color:rgba(253,186,116,.5)}
-.pxRow .ar{color:var(--orangeHi);font-weight:800}
-.pxRow .end{border-color:rgba(251,113,133,.6);color:#FDA4AF;font-weight:700}
 .pxGauges{display:flex;gap:16px;align-items:flex-end;justify-content:center}
 .pxG{text-align:center}
 .pxG .tube{width:34px;height:150px;border-radius:99px;border:1px solid var(--line);background:rgba(10,16,32,.75);position:relative;overflow:hidden;margin:0 auto}
@@ -569,7 +588,7 @@ footer p{max-width:620px;line-height:1.6}
 </style></head><body><div id="prog"></div><div id="tip"></div><nav id="nav"><div class="wrap"><a class="navBrand" href="index.html"><b>WINDOWS</b> OF BREAKDOWN</a><ul><li><a href="index.html">Home</a></li><li><a href="diabetes.html">Diabetes</a></li><li><a href="perioperative.html">Surgery</a></li><li><a href="rheumatology.html">Rheumatology</a></li><li><a href="eight-gram.html">Threshold</a></li><li><a href="ingredients.html" class="cur">Ingredients</a></li></ul></div></nav><section class="pageTop"><div class="wrap">
 <div class="crumb"><a href="index.html">Home</a> / Chapter 03</div>
 <h2 class="chapTitle rv" style="font-size:clamp(2rem,5vw,3.5rem);margin-top:18px">The Ingredients<br><span class="alt">in depth</span></h2>
-<p class="chapLead rv d1">One shield. One trigger. Two speeds of bricks. One wiring system. <b>Five different jobs, with no overlap.</b> Each panel below carries the full pharmacology: what it does, why food cannot supply it, and its role in each therapy area.</p>
+<p class="chapLead rv d1"><b>Five ingredients, five separate jobs, no overlap.</b> Each panel below carries the full pharmacology: what it does, why food cannot supply it, and its role in each therapy area.</p>
 <div id="ingPanels"></div>
 <h3 class="rv" style="margin-top:66px;font-size:clamp(1.35rem,2.6vw,1.9rem)">Five roles across three therapy areas</h3>
 <div class="mxWrap rv d1"><table class="mx">
@@ -600,7 +619,7 @@ const LINES=[
  ['THE CLOSE','Protect the joint’s best friend — the muscle around it.']];
 
 const ING2=[
-{name:'Calcium HMB',role:'The Shield',color:'#FB923C',line:'Leucine shouts “BUILD.” HMB issues the second order: “STOP DEMOLISHING.”',
+{name:'Calcium HMB',role:'The Shield',color:'#FB923C',line:'Leucine gives the build signal. HMB gives the second, equally necessary one: stop the breakdown.',
  quick:['Attenuates the demolition pathway','Stabilizes the muscle-cell membrane','Supports mTOR','Works when the patient cannot move'],
  secs:[
  ['The pharmacology','tagging machinery · membrane · mTOR',`<p>Dietary protein → leucine → (via α-ketoisocaproate, KIC) → <b>HMB — β-hydroxy-β-methylbutyrate</b>. Supplied as the <b>calcium salt</b> for powder stability and reliable absorption.</p>
@@ -615,7 +634,7 @@ const ING2=[
  ['Role in diabetes','sealing the over-active pathway',`<p>Targets precisely the pathway diabetes over-activates — the demolition machinery runs harder than age alone would drive it, because insulin’s brake is partially lost. HMB seals the bucket so the program shows net gain, and defends the sawtooth crises — infection, admission, bed rest — on the days the patient cannot move.</p><p><b>Observable:</b> the absence of loss across months and fevers.</p>`],
  ['Role peri-operatively','the shield before the surge',`<p>Cortisol — surgery’s own hormone — is the strongest known activator of the demolition pathway, amplified by bed rest and wound inflammation. Three-phase case: <b>pre-op</b> — the shield must be up <em>before</em> the surge (protection cannot be retrofitted); <b>post-op</b> — the only agent working while the patient cannot move, through the steepest-loss window; <b>rehab</b> — a shallower trough means physiotherapy starts from a higher floor.</p><p><b>Observable:</b> day-7 grip resembling day-0; the thigh that didn’t waste.</p>`],
  ['Role in rheumatology','double-anchored',`<p>The two strongest known activators of the demolition pathway — inflammatory cytokines and glucocorticoids — are <em>both</em> permanently present in this patient’s life. Three scenarios: the <b>daily smoulder</b> (standing guard through remission’s low-grade cytokine activity), the <b>steroid course</b> (anti-catabolic cover running underneath the prescription, not against it — research models show HMB protecting muscle specifically against steroid-induced atrophy), and the <b>flare</b> (triple demolition + enforced rest).</p><p><b>Observable:</b> grip holding across steroid courses; flares without the usual step-down.</p>`]]},
-{name:'L-Leucine',role:'The Trigger',color:'#A78BFA',line:'The build command that gets through when the insulin channel is jammed — needing zero digestion and no help from the liver.',
+{name:'L-Leucine',role:'The Trigger',color:'#A78BFA',line:'The build signal that still gets through when insulin signalling is impaired — it needs no digestion and no help from the liver.',
  quick:['Fires mTOR — the master build switch','Insulin-independent route','Bypasses the liver (BCAA)','Zero digestion, guaranteed bolus'],
  secs:[
  ['The pharmacology','mTOR and the raised threshold',`<p>Leucine is one of the three branch-chain essential amino acids and the <b>signal</b> of muscle protein synthesis: rising blood leucine is sensed inside the muscle cell → <b>mTOR</b> activates → ribosomes begin assembling new protein. No leucine signal → no firing → dietary protein is burned as fuel or stored as fat. <b>Protein without the trigger is expensive calories.</b></p>
@@ -632,7 +651,7 @@ const ING2=[
  ['Role in diabetes','the last reliable build channel',`<p>The supra-threshold bolus against the chronically raised threshold; the insulin-independent route as <b>the last reliable build channel</b> in an insulin-resistant patient; the full liver dossier for the NAFLD-carrying majority; the exercise synergy as the case for treating the still-active early patient.</p><p><b>Observable:</b> responsiveness — easier stairs, firmer chair-rise as the post-meal switch finally flips.</p>`],
  ['Role peri-operatively','the guideline’s own molecule',`<p>Surgical nutrition guidance itself names a ~3 g free-leucine serving the <b>“Anabolic Trigger”</b>. Surgical stress raises the threshold acutely, exactly when protein demand peaks at 1.5 g/kg. Free-form matters doubly: zero digestion for the anesthesia-stunned, ileus-prone gut, and an insulin-independent command through stress hyperglycemia — the command that still gets through on day two. The post-op liver is busy; leucine adds anabolic benefit at near-zero additional hepatic workload.</p><p><b>Observable:</b> wounds on schedule; physio sessions converting to tissue.</p>`],
  ['Role in rheumatology','three channels down at once',`<p>The threshold is raised by the disease itself (TNF/IL-6 blunt the anabolic response); glucocorticoids suppress synthesis; and inflammation + steroids induce insulin resistance. “Eat more protein” fails by mechanism, triply. The bolus fires mTOR through the one channel still open. The methotrexate edge: this liver is a <em>monitored organ</em> — BCAAs deliver their entire anabolic benefit at near-zero hepatic workload: <b>muscle therapy that never appears on the LFT chart.</b> Rheumatology prescribes movement; leucine converts each session into tissue — while joints still permit it.</p><p><b>Observable:</b> physiotherapy that finally “takes”.</p>`]]},
-{name:'Whey Protein Isolate',role:'The Fast Bricks',color:'#2DD4BF',line:'For a normal muscle, protein speed is a detail. For an anabolic-resistant muscle, speed is the therapy.',
+{name:'Whey Protein Isolate',role:'The Fast Bricks',color:'#2DD4BF',line:'In a normal muscle, protein speed is a small detail. In an anabolic-resistant muscle, speed decides whether building fires at all.',
  quick:['Fastest protein in existence','Peak ~60–90 min — carries the trigger','Biological Value 104 · PDCAAS 1.00','Lactose-free · sugar-free'],
  secs:[
  ['The pharmacology','why the spike crosses the bar',`<p><b>Why whey is fastest:</b> it is soluble — it stays liquid in stomach acid (casein curdles into a clot that must dissolve slowly), and the isolate has the fat removed (fat slows gastric emptying). Blood amino acids rise in ~15–30 min, peak ~60–90 min. Nothing edible delivers amino acids to blood faster.</p>
@@ -646,7 +665,7 @@ const ING2=[
  ['Role in diabetes','the spike dal never makes',`<p>The spike that crosses the raised threshold where dal never will; lactose-free for the elderly gut; sugar-free substrate; and the pre-meal effect that actively softens the post-prandial spike the diabetologist is fighting. Detailing line: prescribe the protein <b>before the meal</b>.</p><p><b>Observable:</b> tolerability plus friendlier post-prandial readings with pre-meal timing.</p>`],
  ['Role peri-operatively','the protein shaped like the protocol',`<p>Early feeding demands nutrition within 24 h into a stunned, nauseated stomach, toward a ~75 g/day target. WPI is built for all three at once: <b>liquid in acid</b> so it empties fast and stays down (less nausea, lower residual and aspiration risk), <b>the sharpest spike</b> so it crosses the stress-raised threshold, and <b>BV 104</b> so every swallowed gram becomes healing. The kitchen arithmetic: 75 g/day is ten to twelve eggs’ worth, at volumes the patient cannot eat. Lactose-free where distension is painful and clinically confusing; sugar-free with stress hyperglycemia.</p><p><b>Observable:</b> early feeds kept down; targets met by day 3–4; fewer infections, earlier discharge.</p>`],
  ['Role in rheumatology','stir-a-glass nutrition',`<p>The spike against the cytokine-raised threshold. The practical fit: <b>RA hands with morning stiffness cannot cook elaborate protein meals</b> — a stirred glass is arthritis-friendly nutrition; small volume suits an appetite suppressed by chronic IL-6 (inflammation is itself an appetite suppressant); lactose-free for the gut already managing NSAIDs and methotrexate days; fat- and sugar-free for steroid glycemia and for the highest-cardiovascular-risk population in medicine. Whey’s bioactive fractions (immunoglobulins, lactoferrin) travel along as a benign bonus.</p><p><b>Observable:</b> a supplement continued — no gut protest, no cooking burden.</p>`]]},
-{name:'Soy Protein Isolate',role:'The Steady Bricks',color:'#FBBF24',line:'Whey wins the first hour. Soy defends the next several — and the years.',
+{name:'Soy Protein Isolate',role:'The Steady Bricks',color:'#FBBF24',line:'Whey covers the first hour with a fast peak. Soy covers the next several hours with a steady supply.',
  quick:['Complete plant protein — 9 EAAs, PDCAAS 1.00','3–5 h sustained plateau','Cholesterol-free · lipid-friendly','Built for years of daily use'],
  secs:[
  ['The pharmacology','the plateau and the long day',`<p>Synthesis is not a single event and the day is long. After the whey spike is spent (~hour 3), blood amino acids fall and the body drifts to net breakdown — and the elderly patient with small, spaced meals spends most of the day in these unprotected hours. <b>SPI’s plateau extends aminoacidemia</b>, shortening the daily hours the muscle runs at a net loss.</p>
@@ -658,7 +677,7 @@ const ING2=[
  ['Role in diabetes','the plateau between small meals',`<p>The plateau against the small-spaced-meal pattern; lipid-friendliness for the patient whose #1 killer is cardiovascular; satiety against the snacking that drives hidden glucose excursions; cultural and hepatic fit for years of use.</p><p><b>Observable:</b> steadier days, less snacking, lipid neutrality.</p>`],
  ['Role peri-operatively','feeding the wound at night',`<p>The wound is fed all night: collagen building and immune defence run continuously — including overnight, the longest fasting gap of the hospital day, and between the six small servings of the post-op diet (small spaced intake = maximal unprotected gaps = SPI’s exact brief). Cardiac-risk compatibility for the comorbid elective list; cultural fit for the home phase — where convalescence targets of 150% calories and 2.0–2.5 g/kg protein mean the family must sustain the nutrition for months after the discharge summary.</p><p><b>Observable:</b> overnight cover; a discharge plan the family actually continues.</p>`],
  ['Role in rheumatology','the years-long companion',`<p><b>Three briefs:</b> (1) the unprotected hours — cytokines do not observe mealtimes; an evening serving’s soy tail carries amino-acid cover into the early-morning hours when both stiffness and catabolism peak (morning-stiffness logic); (2) the accelerated heart — a years-long companion in the population whose leading killer is inflammation-accelerated atherosclerosis must be cholesterol-free and lipid-friendly — plus the steroid-weight brief: soy’s satiety resists steroid-driven snacking while the disease steals muscle (the worst body-composition trade in medicine); (3) the years — a vegetarian-friendly fit for the duration this disease demands.</p><p><b>Observable:</b> steadier days; less steroid weight creep; still being taken at year two.</p>`]]},
-{name:'Vitamin D',role:'The Wiring',color:'#5EEAD4',line:'The other four build the tissue. Vitamin D turns tissue into strength — and its other name is fall-prevention.',
+{name:'Vitamin D',role:'The Wiring',color:'#5EEAD4',line:'The other four ingredients build the tissue. Vitamin D helps that tissue work — for strength, coordination and fewer falls.',
  quick:['Muscle is a vitamin D target organ (VDR)','Type II fibre defence','Excitation–contraction coupling','Deficiency is near-default in the elderly'],
  secs:[
  ['The pharmacology','VDR · type II fibres · coupling',`<h5>Three documented actions</h5><ol>
@@ -752,11 +771,11 @@ function cloud(canvas,pts,opts){if(!canvas)return;
 (()=>{const c=document.getElementById('helix');if(!c)return;
  const pts=[];const C=['rgba(94,234,212,AL)','rgba(196,181,253,AL)','rgba(253,186,116,AL)'];
  for(let s=0;s<9;s++){const a0=s/9*Math.PI*2,col=C[s%3];
-  for(let i=0;i<150;i++){const t=i/150*4-2;const r=.17+.022*Math.sin(t*9+s);
-   pts.push([Math.cos(a0+t*1.35)*r,t*.28,Math.sin(a0+t*1.35)*r,col,1]);}}
- for(let i=0;i<150;i++){const th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1),R=.5+Math.random()*.4;
-  pts.push([R*Math.sin(ph)*Math.cos(th),(Math.random()*2-1)*.58,R*Math.sin(ph)*Math.sin(th)*.6,'rgba(150,170,210,AL)',.34]);}
- cloud(c,pts,{rx:.26,auto:.0045,scale:.66,drag:true});})();
+  for(let i=0;i<200;i++){const t=i/200*5.6-2.8;const r=.17+.022*Math.sin(t*9+s);
+   pts.push([Math.cos(a0+t*1.35)*r,t*.30,Math.sin(a0+t*1.35)*r,col,1]);}}
+ for(let i=0;i<170;i++){const th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1),R=.5+Math.random()*.4;
+  pts.push([R*Math.sin(ph)*Math.cos(th),(Math.random()*2-1)*.95,R*Math.sin(ph)*Math.sin(th)*.6,'rgba(150,170,210,AL)',.34]);}
+ cloud(c,pts,{rx:.22,auto:.0045,scale:.62,drag:true});})();
 
 /* 8g orbit */
 (()=>{const c=document.getElementById('orb');if(!c)return;const pts=[];
@@ -808,7 +827,7 @@ function setMuscle(frac,fin){
   im.style.filter=fin?'grayscale(.7) brightness(.75)':'none';
   im.style.transform=`scale(${(1-frac*.16).toFixed(3)})`;});
  const cap=document.getElementById('musCap');
- cap.textContent=fin?'the account is spent':CAPS[Math.min(3,Math.round(sf))];}
+ cap.textContent=fin?'most of the reserve is gone':CAPS[Math.min(3,Math.round(sf))];}
 function popDelta(){const d=document.getElementById('musDelta');d.classList.add('pop');
  clearTimeout(d._t);d._t=setTimeout(()=>d.classList.remove('pop'),1500);}
 function frame(){
@@ -1114,12 +1133,12 @@ function chipChart(cvId,chipId,cfg){
   x.setLineDash([3,5]);x.strokeStyle='#FDBA74';x.lineWidth=1.4;
   x.beginPath();x.moveTo(pL,yF);x.lineTo(W-pR,yF);x.stroke();x.setLineDash([]);
   x.fillStyle='#FDBA74';x.font='700 11px system-ui';
-  x.fillText('the ceiling of food — no diet gets past this line',pL+6,yF-7);
+  x.fillText('the most food can supply in a day',pL+6,yF-7);
   const hmbLive=hasDirect;
   x.textAlign='right';x.font='700 12.5px system-ui';
   let msg,mc;
-  if(hmbLive){msg='one serving: '+(Math.round(total/ .40*10)/10)+'\u00d7 the ceiling of food \u2014 the signal food can never send';mc='#5EEAD4';}
-  else{msg='food alone \u2014 stuck under its own ceiling';mc='#FDBA74';}
+  if(hmbLive){msg='one serving: '+(Math.round(total/ .40*10)/10)+'\u00d7 more than food can supply in a day';mc='#5EEAD4';}
+  else{msg='food alone \u2014 this is as much as it can supply';mc='#FDBA74';}
   x.fillStyle=mc;x.fillText(msg,W-pR,pT-10);}
  sync();
  new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting&&!started){started=true;anim();ob.unobserve(e.target);}}),{threshold:.25}).observe(c);
@@ -1287,10 +1306,10 @@ const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
  const c=document.getElementById('vloop');if(!c)return;
  const btn=document.getElementById('loopBtn'),cap=document.getElementById('loopCap'),nEl=document.getElementById('loopN');
  let ang=0,r=1,speed=.010,cycle=0,running=true,raf=null;
- const CAPS=['Muscle lost → glucose disposal falls → glycemia worsens → breakdown accelerates. <b>Each turn of the circle is tighter than the last.</b>',
-  '<b>Turn 1.</b> Less muscle — the glucose sink shrinks. Disposal falls.',
-  '<b>Turn 2.</b> Higher glucose and low-grade inflammation — the demolition pathway speeds up.',
-  '<b>Turn 3.</b> Weaker, slower, less active — and every step of it feeds the next turn. <b>This is why glucose control alone cannot close the circle.</b>'];
+ const CAPS=['Muscle is lost → glucose disposal falls → glycemia worsens → breakdown speeds up. <b>Each turn of the circle is tighter than the last.</b>',
+  '<b>Turn 1.</b> Less muscle means less glucose is cleared — disposal falls.',
+  '<b>Turn 2.</b> Higher glucose and low-grade inflammation speed up muscle breakdown.',
+  '<b>Turn 3.</b> Weaker and less active — and each of these feeds the next turn. <b>Glucose control alone cannot stop this circle.</b>'];
  function paint(){const [x,W,H]=fitCanvas(c);
   const cx=W/2,cy=H/2,R0=Math.min(W,H)*.38;
   x.clearRect(0,0,W,H);
@@ -1346,7 +1365,7 @@ const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
    const grad=x.createLinearGradient(0,0,W,H);grad.addColorStop(0,'#FDBA74');grad.addColorStop(1,'#F97316');
    x.beginPath();x.arc(cx,cy,R,-Math.PI/2,a);x.strokeStyle=grad;x.lineWidth=12;x.lineCap='round';
    x.shadowColor='rgba(249,115,22,.55)';x.shadowBlur=14;x.stroke();x.shadowBlur=0;
-   x.fillStyle='#F7F9FE';x.font="700 44px 'Fraunces',Georgia,serif";x.textAlign='center';x.textBaseline='middle';
+   x.fillStyle='#F7F9FE';x.font="700 44px 'Sora',system-ui,sans-serif";x.textAlign='center';x.textBaseline='middle';
    x.fillText(Math.round(val)+'%',cx,cy-2);x.textBaseline='alphabetic';}
   function run(){const step=()=>{val+=Math.max(.4,(target-val)*.06);
    if(val>=target){val=target;paint();return;}paint();raf=requestAnimationFrame(step);};
