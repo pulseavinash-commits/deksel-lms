@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The Two Thresholds — Windows of Breakdown</title><style>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The Raised Thresholds — Windows of Breakdown</title><style>
 :root{
   --bg:#0A1020; --bg2:#0D1526; --surface:#131D33; --surface2:#1C2947; --line:rgba(167,186,224,.26);
   --ink:#F7F9FE; --ink2:#C8D2E6; --ink3:#98A4BD;
@@ -444,8 +444,12 @@ footer p{max-width:620px;line-height:1.6}
 .axiOut .o{border:1px solid var(--line);border-radius:14px;padding:13px 17px;background:rgba(19,29,51,.6);box-shadow:var(--lift1);
  opacity:.32;transform:translateY(4px);transition:.4s cubic-bezier(.2,.7,.2,1)}
 .axiOut .o.lit{opacity:1;transform:none;border-color:rgba(94,234,212,.5);background:linear-gradient(120deg,rgba(20,184,166,.22),rgba(19,29,51,.7))}
+.axiOut .o{display:flex;gap:14px;align-items:center}
 .axiOut .o b{display:block;font-size:.92rem;color:var(--ink)}
 .axiOut .o span{font-size:.8rem;color:var(--ink2)}
+.axiOut .o .mini{flex:0 0 auto;width:13px;height:56px;border-radius:7px;background:rgba(10,16,32,.75);border:1px solid var(--line);position:relative;overflow:hidden}
+.axiOut .o .mini i{position:absolute;left:0;right:0;bottom:0;height:26%;background:linear-gradient(180deg,#5EEAD4,#14B8A6);transition:height .9s cubic-bezier(.2,.7,.2,1),background .9s}
+.axiOut .o.lit .mini i{height:88%;background:linear-gradient(180deg,#FDBA74,#F97316)}
 .axiWhy{padding:0 clamp(24px,3.6vw,40px) clamp(24px,3.6vw,38px);color:var(--ink2);font-size:.95rem;max-width:900px}
 .axiWhy b{color:var(--ink)}
 
@@ -466,25 +470,25 @@ footer p{max-width:620px;line-height:1.6}
 .chapTitle{text-shadow:0 10px 44px rgba(0,0,0,.55)}
 </style></head><body><div id="prog"></div><div id="tip"></div><nav id="nav"><div class="wrap"><a class="navBrand" href="index.html"><b>WINDOWS</b> OF BREAKDOWN</a><ul><li><a href="index.html">Home</a></li><li><a href="diabetes.html">Diabetes</a></li><li><a href="perioperative.html">Surgery</a></li><li><a href="rheumatology.html">Rheumatology</a></li><li><a href="eight-gram.html" class="cur">Threshold</a></li><li><a href="ingredients.html">Ingredients</a></li></ul></div></nav><section class="pageTop"><div class="wrap">
 <div class="crumb"><a href="index.html">Home</a> / Chapter 02</div>
-<h2 class="chapTitle rv" style="font-size:clamp(2rem,5vw,3.5rem);margin-top:18px">The Two Thresholds<br><span class="alt">one to build · one to defend</span></h2>
-<p class="chapLead rv d1">Muscle is governed by two bars, and eaten grams clear neither one on their own. The <b>leucine threshold</b> is the level blood leucine must cross before muscle building fires at all — and illness raises it. The <b>HMB threshold</b> is the daily dose needed before muscle breakdown is actively suppressed — and food cannot reach it. Between the two sits <b>how fast the amino acids arrive</b>, because a curve that rises slowly never clears a raised bar, however many grams were on the plate. Each serving answers both bars at once: <b>8 g of whey + soy isolate</b> for speed and staying power, <b>1 g of free leucine</b> to fire the building switch, <b>1 g of calcium HMB</b> to restrain the breakdown, and <b>600 IU of vitamin D3</b> for the type II fibres — at a protein load small enough to fit any prescription.</p>
+<h2 class="chapTitle rv" style="font-size:clamp(2rem,5vw,3.5rem);margin-top:18px">The Raised Thresholds<br><span class="alt">three bars · one serving</span></h2>
+<p class="chapLead rv d1">The windows you just walked through — in <a href="diabetes.html">diabetes</a>, <a href="perioperative.html">around surgery</a> and <a href="rheumatology.html">in rheumatoid disease</a> — do more than drain the account. <b>They raise the bars.</b> Every window lifts the threshold for <b>building</b> muscle, lifts the threshold for <b>stopping its breakdown</b>, and lifts the threshold for <b>normal functioning</b> — while intake falls at exactly the same time, so food gets weaker just as the bars get higher. That is why breakdown up, building down and intake down always arrive together. And it is why one serving is composed the way it is: <b>1 g of free leucine with 8 g of WPI + SPI</b> to break the building bar, <b>1 g of calcium HMB</b> to break the stopping bar, and <b>600 IU of vitamin D3</b> to hold the functioning bar down.</p>
 <div class="axi rv">
  <div class="axiTop">
-  <div class="axiHint">Pick a trigger · watch the pathway</div>
-  <h3>Whatever the trigger — cytokines, cortisol, steroids, acidosis, bed rest — the end result is the same: <b>breakdown up</b>, <i>building down</i>, intake down.</h3>
+  <div class="axiHint">Pick a trigger · watch the bars rise</div>
+  <h3>Whatever the trigger — cytokines, cortisol, steroids, acidosis, bed rest — the end result is the same: <b>breakdown up</b>, <i>building down</i>, intake down — because every trigger <b>raises the thresholds</b>.</h3>
  </div>
  <div class="axiFlow">
   <div class="axiTrig" id="axiTrig"></div>
   <div class="axiPipe"><canvas id="axiC"></canvas><span>ubiquitin–<br>proteasome<br>pathway</span></div>
   <div class="axiOut" id="axiOut">
-   <div class="o" data-k="up"><b>Breakdown up</b><span>The demolition tag goes on muscle protein.</span></div>
-   <div class="o" data-k="down"><b>Building down</b><span>The leucine threshold rises, so synthesis misfires.</span></div>
-   <div class="o" data-k="in"><b>Intake down</b><span>Appetite falls exactly when protein need is highest.</span></div>
+   <div class="o" data-k="build"><div class="mini"><i></i></div><div><b>The building bar rises</b><span>The leucine threshold climbs — an ordinary meal no longer fires synthesis. Building down.</span></div></div>
+   <div class="o" data-k="stop"><div class="mini"><i></i></div><div><b>The stopping bar rises</b><span>The demolition pathway runs harder — food's trickle of HMB cannot restrain it. Breakdown up.</span></div></div>
+   <div class="o" data-k="fn"><div class="mini"><i></i></div><div><b>The functioning bar rises</b><span>Type II fibres and nerve–muscle control weaken — the chair, the stairs, the fall. And intake drops just as every bar goes up.</span></div></div>
   </div>
  </div>
  <p class="axiWhy" id="axiWhy"><b>And the climb back is never complete.</b> The fall is steep and the recovery is flat: anabolic resistance raises the leucine threshold, the anabolic environment is impaired, and the next window opens before the last recovery has finished. Each tooth of the saw ends lower than the one before — hidden on the weighing scale, because fat quietly replaces the muscle.</p>
 </div>
-<div class="thWrap rv"><div class="thTop"><h3>The leucine threshold — same grams, different biology</h3>
+<div class="thWrap rv"><div class="thTop"><h3>Bar 01 · Building — the leucine threshold: same grams, different biology</h3>
  <div class="toggle" id="thToggle"><button class="on" data-mode="resistant">Resistant muscle</button><button data-mode="young">Young healthy muscle</button></div></div>
  <div class="chipRow" id="thChips"></div>
  <p class="chipHint">Every source is drawn to begin with. Click one to take it off the chart, click again to bring it back — the bold line is the blood leucine curve the muscle actually sees from everything you have left on.</p>
@@ -496,29 +500,36 @@ footer p{max-width:620px;line-height:1.6}
  <div class="fail rv d2"><div class="big">5%</div><h4>The HMB arithmetic</h4><p>Only ~5% of leucine converts, so the clinically studied 1.5–3 g of HMB a day would need <b>30–60 g of pure leucine</b> — kilograms of protein food. Even the 1 g given directly in a serving equals the yield of <b>about 20 g of pure leucine</b>. No meal comes close.</p></div>
  <div class="fail rv d3"><div class="big">◑</div><h4>The unprotected hours</h4><p>Once a spike is spent, the body drifts back to <b>net breakdown</b> — and a small-appetite patient spends most of the day there. The day needs a plateau as well as a peak.</p></div>
 </div>
-<div class="spWrap rv"><div class="thTop"><h3>The protein speed spectrum — why two proteins are needed</h3></div>
+<div class="spWrap rv"><div class="thTop"><h3>Bar 01 · the proof of speed — why the 8 g is split into WPI and SPI</h3></div>
 <div class="chipRow" id="spChips"></div>
 <p class="chipHint">Same rule here: every source starts on the chart. Take one off to see what its curve was doing, and leave whey isolate and soy isolate on together to see the spike and the plateau add up.</p>
 <canvas id="speed"></canvas>
 <p class="spCap">Whey is the fastest because it stays liquid in stomach acid, and the isolate has the fat removed. Its peak lands in the same window as the free-leucine bolus: trigger and all nine essential amino acids together. Soy isolate’s plateau then keeps blood amino acids up for hours, shortening the time the muscle spends at a net loss. <b>Spike plus plateau — two jobs, no overlap.</b> Whey spikes but cannot sustain; soy sustains but cannot spike; dal is slow <em>and</em> incomplete, so it does neither.</p></div>
-<div class="thWrap rv" style="margin-top:70px"><div class="thTop"><h3>The HMB threshold — the bar that food cannot clear</h3></div>
+<div class="thWrap rv" style="margin-top:70px"><div class="thTop"><h3>Bar 02 · Stopping the breakdown — the HMB threshold food cannot clear</h3></div>
 <div id="hmbChips"></div>
-<p class="chipHint">Pick the diet he actually eats — one or the other, never both. Then switch the serving’s three routes to HMB on or off, and set how many servings the day carries. The bar on the right is the whole day added up.</p>
+<p class="chipHint">Pick the diet he actually eats — one or the other, never both. Beside it stand the single serving’s three routes to HMB; switch any of them off to see what it was carrying. The bar on the right is the whole day, with one serving.</p>
 <canvas id="hmb"></canvas>
-<p class="thCap">HMB is the metabolite of leucine that does the anti-catabolic work: it slows the ubiquitin–proteasome pathway and stabilises the muscle-cell membrane. <b>Only about 5% of dietary leucine is converted to it</b> — which is why a whole day of eating yields a fraction of a gram, and why the clinically studied 1.5–3 g a day cannot be reached through food at all. It has to be given directly, and <b>a single serving is already the whole argument</b>: its 1 g of calcium HMB arrives with no conversion step — the yield of about 20 g of pure leucine — with its 8 g WPI + SPI blend and 1 g free leucine adding their trickle on top. One serving lifts the day to more than <b>three times the ceiling that any diet can ever reach</b>, and stands at the doorstep of the clinically studied 1.5–3 g. A second serving simply walks through that door. Where the leucine threshold decides whether building <em>fires</em>, the HMB threshold decides whether breakdown is <em>defended against</em> — and a patient in an open window needs both answered on the same day.</p></div>
-<div class="script rv"><small>The two sentences together</small>
-<p>“The bar is higher in this patient, so the curve has to be steeper. A <b>whey-isolate spike stacked with free leucine</b> is what crosses the raised threshold and fires building. A <b>soy-isolate plateau</b> behind it keeps amino acids available through the hours when the body would otherwise drift back into net breakdown. One protein cannot do both jobs — the spike and the plateau are different pharmacology, not a bigger and a smaller dose of the same thing.”</p></div>
+<p class="thCap">HMB is the metabolite of leucine that does the anti-catabolic work: it slows the ubiquitin–proteasome pathway and stabilises the muscle-cell membrane. <b>Only about 5% of dietary leucine is converted to it</b> — which is why a whole day of eating yields a fraction of a gram, and why the clinically studied 1.5–3 g a day cannot be reached through food at all. It has to be given directly, and <b>a single serving is the whole argument</b>: its 1 g of calcium HMB arrives with no conversion step — the yield of about 20 g of pure leucine — with its 8 g WPI + SPI blend and 1 g free leucine adding their trickle on top. One serving lifts the day to more than <b>three times the ceiling that any diet can ever reach</b> — the anti-catabolic signal food can never send, at the doorstep of the clinically studied 1.5–3 g. Where the building bar decides whether muscle is <em>added</em>, this bar decides whether muscle <em>stops being lost</em> — and one serving answers both on the same day.</p></div>
+<div class="thWrap rv" style="margin-top:70px"><div class="thTop"><h3>Bar 03 · Functioning — the bar vitamin D3 holds down</h3></div>
+<p class="thCap" style="padding-top:4px">Saved muscle still has to answer when it is called. The windows erode exactly that: steroids and disuse waste the <b>type II chair-rise fibres</b> first, and inflammation degrades the nerve–muscle control that keeps an older patient on their feet. Vitamin D acts on both sides of that wire — through the <b>VDR on the muscle fibre</b> for type II fibre function, and on <b>balance and neuromuscular coordination</b> — which is why deficiency shows up as weakness and falls before it ever shows on an X-ray. The serving carries <b>600 IU of vitamin D3</b> so the functioning bar is answered daily, at zero protein cost.</p>
+<div class="failGrid" style="margin-top:18px">
+ <div class="fail rv"><div class="big">Ⅱ</div><h4>The chair-rise fibres</h4><p>Type II fibres are the ones that push a patient off a chair and catch a stumble — and they are the first casualties of steroids, disuse and age. <b>The VDR on the fibre makes vitamin D part of their upkeep.</b></p></div>
+ <div class="fail rv d1"><div class="big">⌁</div><h4>The wiring</h4><p>Strength is nerve <em>and</em> muscle. Vitamin D supports <b>the neuromuscular junction, balance and coordination</b> — the difference between a wobble and a fall.</p></div>
+ <div class="fail rv d2"><div class="big">↯</div><h4>The fall chain</h4><p>Fall → fracture → surgery and bed rest → a new window of breakdown. <b>One prevented fall closes the loop the other windows keep opening</b> — at zero nitrogen cost, inside any prescription.</p></div>
+</div></div>
+<div class="script rv"><small>The lineup — one serving against three raised bars</small>
+<p>“Every window raises three bars, Doctor — and one serving answers all three. <b>1 g of free leucine riding the 8 g whey-isolate spike</b> crosses the raised building bar, and the <b>soy-isolate plateau</b> behind it holds the muscle out of net loss through the empty hours. <b>1 g of calcium HMB, given directly,</b> does what no diet’s 5% conversion ever can — it restrains the demolition pathway itself. And <b>600 IU of vitamin D3</b> keeps the type II fibres and their wiring answering, so the muscle we save is strength he can actually use. Three raised bars. Five ingredients. One 8-gram serving.”</p></div>
 <div class="nextBar rv"><a href="ingredients.html"><small>Next chapter</small><b>The Five Ingredients →</b></a>
 <a href="index.html"><small>Back to</small><b>All segments →</b></a></div>
 </div></section><footer><div class="wrap">
 <p>Scientific education for healthcare professionals. This site describes the physiology of muscle loss and the published pharmacology of nutritional ingredients (calcium β-hydroxy-β-methylbutyrate, L-leucine, whey protein isolate, soy protein isolate, vitamin D). The patients shown are illustrative composites, and the muscle character is a visual representation of muscle breakdown — not a measurement of any individual patient. This is not medical advice; nutritional support is an adjunct to disease-directed treatment, never a replacement.</p>
 <p style="text-align:right">Windows of Breakdown<br>Diabetes · Peri-operative · Rheumatology</p></div></footer><script>const AXI=[
-['Cytokines','TNF-α and IL-6 from infection or active rheumatoid disease switch the demolition machinery on directly.',['up','down','in']],
-['Cortisol','The surgical stress response — the strongest known activator of muscle protein breakdown.',['up','down']],
-['Steroids','Prescribed glucocorticoids drive breakdown and take the type II chair-rise fibres first.',['up','down']],
-['Acidosis','Metabolic acidosis in diabetic kidney disease switches the same pathway on at rest.',['up','in']],
-['Bed rest','Unloaded muscle becomes demolition-prone within days, and building falls off with it.',['up','down']],
-['Fasting','Nil-by-mouth: muscle is broken down to make glucose, and nothing is coming in to replace it.',['up','in']]];</script><script>/* ===== access gate ===== */
+['Cytokines','TNF-α and IL-6 switch the demolition machinery on directly, deepen anabolic resistance, and sap the fibres themselves — all three bars rise at once.',['build','stop','fn']],
+['Cortisol','The surgical stress response drives demolition hard and blunts the building signal — two bars rise before the wound is even closed.',['build','stop']],
+['Steroids','Prescribed glucocorticoids feed the demolition pathway and waste the type II chair-rise fibres first.',['stop','fn']],
+['Acidosis','Metabolic acidosis in diabetic kidney disease switches the demolition pathway on at rest — the stopping bar rises without a single symptom.',['stop']],
+['Bed rest','Unloaded muscle stops answering the building signal within days, and disuse erodes the very fibres that stand a patient up.',['build','fn']],
+['Fasting','Nil-by-mouth: muscle is broken down to make glucose, and with nothing coming in, the building bar cannot be crossed at all.',['build','stop']]];</script><script>/* ===== access gate ===== */
 (()=>{
  let pw=null,u=null;
  try{pw=sessionStorage.getItem('wob_pw');u=JSON.parse(sessionStorage.getItem('wob_user')||'null');}catch(e){}
@@ -881,34 +892,29 @@ function chipChart(cvId,chipId,cfg){
   {k:'blend',label:'WPI + SPI blend 8 g', col:'#93C5FD', g:.05},
   {k:'leu',  label:'Free L-leucine 1 g', col:'#C4B5FD', g:.05},
   {k:'hmb',  label:'Calcium HMB 1 g — direct', col:'#5EEAD4', g:1.00}];
- let diet='d60', servings=2;
+ let diet='d60';
  const on=new Set(COMP.map(x=>x.k));
- const grow={d:1}; COMP.forEach(x=>grow[x.k]=1); let sv=2;
+ const grow={d:1}; COMP.forEach(x=>grow[x.k]=1); const sv=1;
  let raf=null,started=false;
  box.innerHTML=
   '<div class="chipRow"><span class="lbl">His diet — one or the other</span>'+
    DIETS.map(d=>`<button class="chip" data-diet="${d.k}" style="--c:${d.col}"><i></i>${d.label}</button>`).join('')+'</div>'+
   '<div class="chipRow"><span class="lbl">Inside each serving</span>'+
    COMP.map(x=>`<button class="chip" data-k="${x.k}" style="--c:${x.col}"><i></i>${x.label}</button>`).join('')+
-   '<span class="lbl" style="margin-left:14px">Servings a day</span>'+
-   [1,2].map(n=>`<button class="chip" data-sv="${n}" style="--c:#F7F9FE"><i></i>× ${n}</button>`).join('')+
    '<button class="chipAll" data-all="1">Reset</button></div>';
  box.addEventListener('click',e=>{
-  if(e.target.closest('[data-all]')){diet='d60';servings=2;COMP.forEach(x=>on.add(x.k));sync();anim();return;}
+  if(e.target.closest('[data-all]')){diet='d60';COMP.forEach(x=>on.add(x.k));sync();anim();return;}
   const bd=e.target.closest('[data-diet]');if(bd){diet=bd.dataset.diet;sync();anim();return;}
-  const bs=e.target.closest('[data-sv]');if(bs){servings=+bs.dataset.sv;sync();anim();return;}
   const b=e.target.closest('.chip[data-k]');if(!b)return;
   const k=b.dataset.k; if(on.has(k)&&on.size>1)on.delete(k); else on.add(k);
   sync();anim();});
  function sync(){
   box.querySelectorAll('[data-diet]').forEach(b=>b.classList.toggle('off',b.dataset.diet!==diet));
-  box.querySelectorAll('[data-sv]').forEach(b=>b.classList.toggle('off',+b.dataset.sv!==servings));
   box.querySelectorAll('.chip[data-k]').forEach(b=>b.classList.toggle('off',!on.has(b.dataset.k)));}
  function anim(){cancelAnimationFrame(raf);
   const step=()=>{let mv=false;
    COMP.forEach(x=>{const t=on.has(x.k)?1:0,d=t-grow[x.k];
     if(Math.abs(d)>.004){grow[x.k]+=d*.14;mv=true;}else grow[x.k]=t;});
-   const dsv=servings-sv; if(Math.abs(dsv)>.01){sv+=dsv*.14;mv=true;}else sv=servings;
    paint();if(mv)raf=requestAnimationFrame(step);};step();}
  const R=v=>Math.round(v*20)/20;              /* snap to .05 steps */
  function paint(){const [x,W,H]=fitCanvas(c);
@@ -923,10 +929,10 @@ function chipChart(cvId,chipId,cfg){
   const dObj=DIETS.find(d=>d.k===diet);
   const live=COMP.filter(z=>grow[z.k]>.01);
   const bars=[{label:dObj.label,col:dObj.col,v:R(dObj.g)}];
-  live.forEach(z=>bars.push({label:z.label+(sv>1.5?' × '+Math.round(sv):''),col:z.col,v:R(z.g*grow[z.k]*sv),a:grow[z.k]}));
-  const total=R(dObj.g+live.reduce((a,z)=>a+z.g*grow[z.k],0)*sv);
+  live.forEach(z=>bars.push({label:z.label,col:z.col,v:R(z.g*grow[z.k]),a:grow[z.k]}));
+  const total=R(dObj.g+live.reduce((a,z)=>a+z.g*grow[z.k],0));
   const hasDirect=live.some(z=>z.k==='hmb'&&grow[z.k]>.6);
-  bars.push({label:'the whole day together',col:(total>=T1||hasDirect)?'#5EEAD4':'#FDBA74',v:total,sum:true});
+  bars.push({label:'the whole day — one serving',col:(total>=T1||hasDirect)?'#5EEAD4':'#FDBA74',v:total,sum:true});
   const cols=bars.length, band=(W-pL-pR)/cols, bw=Math.min(88,band*.5), base=Y(0);
   bars.forEach((b,i)=>{const cx=pL+band*(i+.5),top=Y(b.v),h=Math.max(0,base-top);
    x.save();if(b.sum){x.shadowColor=b.col;x.shadowBlur=18;}
@@ -956,9 +962,9 @@ function chipChart(cvId,chipId,cfg){
   const hmbLive=hasDirect;
   x.textAlign='right';x.font='700 12.5px system-ui';
   let msg,mc;
-  if(total>=T1){msg='inside the clinically studied range — breakdown defended';mc='#5EEAD4';}
-  else if(hmbLive){msg='one serving: '+(Math.round(total/ .40*10)/10)+'× the ceiling of food — the range is one serving away';mc='#5EEAD4';}
-  else{msg='food alone — stuck under its own ceiling';mc='#FDBA74';}
+  if(total>=T1){msg='one serving — the day reaches the clinically studied range';mc='#5EEAD4';}
+  else if(hmbLive){msg='one serving: '+(Math.round(total/ .40*10)/10)+'\u00d7 the ceiling of food \u2014 the signal food can never send';mc='#5EEAD4';}
+  else{msg='food alone \u2014 stuck under its own ceiling';mc='#FDBA74';}
   x.fillStyle=mc;x.fillText(msg,W-pR,pT-10);}
  sync();
  new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting&&!started){started=true;anim();ob.unobserve(e.target);}}),{threshold:.25}).observe(c);
