@@ -236,6 +236,7 @@ section{position:relative}
 /* speed chart */
 .spWrap{margin-top:70px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px)}
 #speed{width:100%;height:320px;display:block}
+#hmb{width:100%;height:400px;display:block}
 .spCap{font-size:.84rem;color:var(--ink3);padding:12px 4px 2px;max-width:860px}
 .spCap b{color:var(--ink2)}
 
@@ -457,7 +458,7 @@ footer p{max-width:620px;line-height:1.6}
 .fail:hover,.lock:hover{transform:translateY(-6px);box-shadow:var(--lift3)}
 .vid{background:linear-gradient(168deg,var(--surface2),var(--surface) 62%);transition:transform .3s,box-shadow .3s}
 .vid:hover{transform:translateY(-5px);box-shadow:var(--lift3)}
-.picHero,.teamHero{box-shadow:var(--lift3)}
+.picHero{box-shadow:var(--lift3)}
 .btn.primary{box-shadow:0 14px 44px rgba(20,184,166,.5),inset 0 1px 0 rgba(255,255,255,.22)}
 .nextBar a{background:linear-gradient(168deg,var(--surface2),var(--surface) 62%);box-shadow:var(--lift2)}
 .nextBar a:hover{box-shadow:var(--lift3)}
@@ -960,11 +961,78 @@ function chipChart(cvId,chipId,cfg){
     f:t=>.62*Math.pow(t/1.1,2)*Math.exp(-Math.pow(t/1.1,2))*Math.E,lx:1.15,ly:-12},
    {k:'spi',label:'Soy protein isolate — the plateau',col:'#C4B5FD',
     f:t=>.50*(1-Math.exp(-t/1.1))*Math.exp(-Math.max(0,t-4.2)/2.4),lx:3.2,ly:-12},
-   {k:'cas',label:'Casein — clots, 6–7 h trickle',col:'#FDBA74',
-    f:t=>.32*(1-Math.exp(-t/2.6))*Math.exp(-Math.max(0,t-6)/3),lx:4.6,ly:18},
-   {k:'dal',label:'Dal / plant meal — slow and incomplete',col:'#FCD34D',
+   {k:'dal',label:'Dal / plant meal — slow and incomplete',col:'#FDBA74',
     f:t=>.19*(1-Math.exp(-t/2.2))*Math.exp(-Math.max(0,t-3.5)/2.6),lx:1.4,ly:18}]
  });
+})();
+
+/* ===== HMB threshold (bar chart with chips) ===== */
+(()=>{
+ const c=document.getElementById('hmb');if(!c)return;
+ const row=document.getElementById('hmbChips');
+ const THR=3.0, VM=4.6;
+ const SRC=[
+  {k:'diet', label:'Normal diet — about 60 g protein', col:'#FDBA74', g:0.22, note:'~4.5 g leucine'},
+  {k:'hi',   label:'High-protein diet — about 100 g protein', col:'#FCD34D', g:0.40, note:'~8 g leucine'},
+  {k:'leu',  label:'Free L-leucine 10 g bolus', col:'#C4B5FD', g:0.50, note:'5% converts'},
+  {k:'hmb',  label:'Calcium HMB 3 g — given directly', col:'#5EEAD4', g:3.00, note:'no conversion needed'}];
+ const on=new Set(SRC.map(s=>s.k)); const grow={}; SRC.forEach(s=>grow[s.k]=0);
+ let raf=null,started=false;
+ row.innerHTML='<span class="lbl">HMB source</span>'+
+  SRC.map(s=>`<button class="chip" data-k="${s.k}" style="--c:${s.col}"><i></i>${s.label}</button>`).join('')+
+  '<button class="chipAll" data-all="1">Reset — show all</button>';
+ row.addEventListener('click',e=>{
+  if(e.target.closest('[data-all]')){SRC.forEach(s=>on.add(s.k));sync();anim();return;}
+  const b=e.target.closest('.chip');if(!b)return;
+  const k=b.dataset.k; if(on.has(k)&&on.size>1)on.delete(k); else on.add(k);
+  sync();anim();});
+ function sync(){row.querySelectorAll('.chip').forEach(b=>b.classList.toggle('off',!on.has(b.dataset.k)));}
+ function anim(){cancelAnimationFrame(raf);
+  const step=()=>{let moving=false;
+   SRC.forEach(s=>{const t=on.has(s.k)?1:0,d=t-grow[s.k];
+    if(Math.abs(d)>.004){grow[s.k]+=d*.14;moving=true;}else grow[s.k]=t;});
+   paint();if(moving)raf=requestAnimationFrame(step);};step();}
+ function paint(){const [x,W,H]=fitCanvas(c);
+  const pL=58,pR=20,pT=30,pB=64;
+  const Y=v=>pT+(H-pT-pB)*(1-Math.min(v,VM)/VM);
+  x.strokeStyle='rgba(167,186,224,.13)';x.lineWidth=1;x.beginPath();
+  for(let i=0;i<=4;i++){const gy=pT+(H-pT-pB)*i/4;x.moveTo(pL,gy);x.lineTo(W-pR,gy);}x.stroke();
+  x.fillStyle='rgba(200,210,230,.8)';x.font='11px system-ui';x.textAlign='right';
+  for(let i=0;i<=4;i++)x.fillText((VM*(4-i)/4).toFixed(1)+' g',pL-8,pT+(H-pT-pB)*i/4+4);
+  x.save();x.translate(15,(H-pB+pT)/2);x.rotate(-Math.PI/2);x.textAlign='center';
+  x.fillText('HMB delivered per day',0,0);x.restore();
+  const live=SRC.filter(s=>grow[s.k]>.01);
+  const total=live.reduce((a,s)=>a+s.g*grow[s.k],0);
+  const cols=live.length+1, band=(W-pL-pR)/cols, bw=Math.min(86,band*.52);
+  const bars=live.map((s,i)=>({...s,v:s.g*grow[s.k],cx:pL+band*(i+.5)}));
+  bars.push({k:'sum',label:'Everything selected',col:total>=THR?'#5EEAD4':'#FDBA74',v:total,cx:pL+band*(cols-.5),sum:true});
+  const base=Y(0);
+  bars.forEach(b=>{const top=Y(b.v),h=Math.max(0,base-top);
+   x.save();
+   if(b.sum){x.shadowColor=b.col;x.shadowBlur=18;}
+   const g=x.createLinearGradient(0,top,0,base);
+   g.addColorStop(0,b.col);g.addColorStop(1,b.col+'33');
+   x.fillStyle=g;
+   x.beginPath();x.roundRect(b.cx-bw/2,top,bw,h,[7,7,3,3]);x.fill();
+   x.restore();
+   x.fillStyle=b.col;x.font='700 12.5px system-ui';x.textAlign='center';
+   x.fillText(b.v.toFixed(2)+' g',b.cx,top-9);
+   x.fillStyle='rgba(200,210,230,.85)';x.font='11px system-ui';
+   const words=(b.sum?'combined total':b.label).split(' ');let line='',ln=0;
+   words.forEach(w=>{const t=line?line+' '+w:w;
+    if(x.measureText(t).width>band-8){x.fillText(line,b.cx,base+20+ln*13);line=w;ln++;}else line=t;});
+   x.fillText(line,b.cx,base+20+ln*13);});
+  const ty=Y(THR);
+  x.setLineDash([8,6]);x.strokeStyle='#C4B5FD';x.lineWidth=2;
+  x.beginPath();x.moveTo(pL,ty);x.lineTo(W-pR,ty);x.stroke();x.setLineDash([]);
+  x.fillStyle='#C4B5FD';x.textAlign='left';x.font='700 11.5px system-ui';
+  x.fillText('clinical HMB threshold — about 3 g a day',pL+6,ty-9);
+  x.textAlign='right';x.font='700 12.5px system-ui';
+  x.fillStyle=total>=THR?'#5EEAD4':'#FDBA74';
+  x.fillText(total>=THR?'threshold cleared — breakdown defended':'below the bar — breakdown runs on',W-pR,pT-10);}
+ sync();
+ new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting&&!started){started=true;anim();ob.unobserve(e.target);}}),{threshold:.25}).observe(c);
+ let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(paint,160)});
 })();
 
 /* ===== interactive axiom (home) ===== */
