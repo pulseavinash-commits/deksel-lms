@@ -1,11 +1,15 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The Diabetic Journey — Windows of Breakdown</title><style>
 :root{
-  --bg:#05080F; --bg2:#070B14; --surface:#0B1120; --surface2:#111A32; --line:rgba(148,163,196,.15);
-  --ink:#EDF0F7; --ink2:#A9B2C5; --ink3:#77819A;
-  --teal:#0D9488; --tealHi:#2DD4BF; --tealSoft:rgba(45,212,191,.12);
-  --orange:#EA580C; --orangeHi:#FB923C;
-  --violet:#8B5CF6; --violetHi:#A78BFA;
-  --amber:#B45309; --amberHi:#FBBF24;
+  --bg:#0A1020; --bg2:#0D1526; --surface:#131D33; --surface2:#1C2947; --line:rgba(167,186,224,.26);
+  --ink:#F7F9FE; --ink2:#C8D2E6; --ink3:#98A4BD;
+  --teal:#14B8A6; --tealHi:#5EEAD4; --tealSoft:rgba(94,234,212,.16);
+  --orange:#F97316; --orangeHi:#FDBA74;
+  --violet:#A78BFA; --violetHi:#C4B5FD;
+  --amber:#D97706; --amberHi:#FCD34D;
+  --lift1:0 2px 6px rgba(0,0,0,.42);
+  --lift2:0 10px 26px rgba(0,0,0,.48),0 2px 8px rgba(0,0,0,.4);
+  --lift3:0 26px 60px rgba(0,0,0,.55),0 8px 22px rgba(0,0,0,.42);
+  --sheen:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.02) 42%,rgba(255,255,255,0) 70%);
   --serif:ui-serif,Georgia,'Times New Roman',serif;
   --sans:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
   --mono:ui-monospace,'SF Mono',Consolas,monospace;
@@ -24,15 +28,18 @@ section{position:relative}
 
 /* nav */
 #nav{position:fixed;top:3px;left:0;right:0;z-index:60;border-bottom:1px solid transparent;transition:.3s}
-#nav.solid{background:rgba(5,8,15,.85);backdrop-filter:blur(14px);border-color:var(--line)}
-#nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
-.navBrand{font-family:var(--mono);font-size:.78rem;letter-spacing:.2em;color:var(--ink2)}
-.navBrand b{color:var(--tealHi)}
-#nav ul{display:flex;gap:8px;list-style:none}
-#nav ul a{color:var(--ink3);font-size:.83rem;padding:8px 14px;border-radius:99px;border:1px solid transparent;transition:.2s}
-#nav ul a:hover{color:var(--ink);border-color:var(--line)}
+#nav.solid{background:rgba(10,16,32,.82);backdrop-filter:blur(18px) saturate(1.3);border-color:var(--line);box-shadow:0 10px 40px rgba(0,0,0,.5)}
+#nav .wrap{display:flex;align-items:center;justify-content:space-between;height:82px;gap:20px}
+.navBrand{font-family:var(--mono);font-size:.9rem;letter-spacing:.22em;color:var(--ink2);white-space:nowrap}
+.navBrand b{color:var(--tealHi);text-shadow:0 0 18px rgba(94,234,212,.6)}
+#nav ul{display:flex;gap:8px;list-style:none;padding:5px;border-radius:99px;border:1px solid var(--line);
+ background:linear-gradient(180deg,rgba(28,41,71,.78),rgba(19,29,51,.7));backdrop-filter:blur(14px);box-shadow:var(--lift2),inset 0 1px 0 rgba(255,255,255,.08)}
+#nav ul a{display:block;color:var(--ink2);font-size:1rem;font-weight:600;letter-spacing:.01em;padding:11px 20px;border-radius:99px;border:1px solid transparent;transition:.22s}
+#nav ul a:hover{color:var(--ink);background:rgba(255,255,255,.07)}
+#nav ul a.cur{color:#04140F;background:linear-gradient(135deg,#5EEAD4,#14B8A6);box-shadow:0 6px 22px rgba(20,184,166,.5);border-color:rgba(94,234,212,.6)}
 #nav ul a b{color:var(--amberHi);font-family:var(--mono);font-weight:600;margin-right:6px}
-@media(max-width:820px){#nav ul{display:none}}
+@media(max-width:1080px){#nav ul a{font-size:.86rem;padding:9px 13px}.navBrand{font-size:.76rem}}
+@media(max-width:820px){#nav .wrap{height:66px}#nav ul{overflow-x:auto;max-width:60vw;scrollbar-width:none}#nav ul::-webkit-scrollbar{display:none}}
 
 /* reveal */
 .rv{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.2,.75,.3,1),transform .9s cubic-bezier(.2,.75,.3,1)}
@@ -52,9 +59,10 @@ section{position:relative}
 #hero{min-height:100svh;display:flex;align-items:center;overflow:hidden;padding:90px 0 40px}
 #helix{position:absolute;inset:0;width:100%;height:100%}
 .heroGrad{position:absolute;inset:0;background:
- radial-gradient(50% 60% at 78% 30%,rgba(139,92,246,.16),transparent 65%),
- radial-gradient(55% 60% at 15% 75%,rgba(13,148,136,.14),transparent 60%),
- linear-gradient(180deg,rgba(5,8,15,.1),rgba(5,8,15,.72) 75%,var(--bg))}
+ radial-gradient(46% 56% at 76% 24%,rgba(167,139,250,.34),transparent 66%),
+ radial-gradient(52% 58% at 14% 70%,rgba(20,184,166,.30),transparent 62%),
+ radial-gradient(40% 44% at 50% 108%,rgba(249,115,22,.20),transparent 70%),
+ linear-gradient(180deg,rgba(10,16,32,.05),rgba(10,16,32,.55) 78%,var(--bg))}
 .heroInner{position:relative;z-index:2;width:100%}
 .eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.34em;color:var(--tealHi);text-transform:uppercase}
 #hero h1{font-size:clamp(2.7rem,8vw,6rem);line-height:.98;margin:24px 0 0;letter-spacing:-.015em;text-transform:uppercase;font-weight:700}
@@ -283,13 +291,13 @@ footer p{max-width:620px;line-height:1.6}
 .corWin{position:absolute;left:50%;top:44%;width:min(46vw,520px);transform-style:preserve-3d;will-change:transform,opacity,filter}
 @media(max-width:880px){.corWin{width:min(82vw,440px);top:38%}}
 .winFrame{position:relative;border-radius:200px 200px 14px 14px;padding:14px;
- background:linear-gradient(160deg,#2A3A57,#131E33 60%,#0C1424);
+ background:linear-gradient(160deg,#3B4E72,#1B2942 58%,#131D33);
  box-shadow:0 30px 80px rgba(0,0,0,.65), inset 0 2px 3px rgba(255,255,255,.14), inset 0 -3px 8px rgba(0,0,0,.6);
  border:1px solid rgba(148,163,196,.25);transition:box-shadow .5s}
 .winFrame::after{content:"";position:absolute;left:-6%;right:-6%;bottom:-20px;height:20px;border-radius:6px;
  background:linear-gradient(180deg,#2A3A57,#0C1424);box-shadow:0 12px 30px rgba(0,0,0,.55);border:1px solid rgba(148,163,196,.2)}
 .winGlass{position:relative;border-radius:190px 190px 6px 6px;overflow:hidden;background:#0B1120}
-.winGlass img{width:100%;display:block;transform:scale(1.04);transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.winGlass img{width:100%;display:block;transform:scale(1.04);filter:brightness(1.08) saturate(1.10);transition:transform 1.2s cubic-bezier(.2,.7,.2,1),filter .8s}
 .winGlass::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
  background:
   linear-gradient(90deg,transparent calc(50% - 3px),rgba(19,30,51,.96) calc(50% - 3px) calc(50% + 3px),transparent calc(50% + 3px)),
@@ -297,16 +305,16 @@ footer p{max-width:620px;line-height:1.6}
  opacity:1;transition:opacity .8s}
 .winGlass::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
  background:linear-gradient(115deg,rgba(255,255,255,.14) 0%,transparent 28%,transparent 68%,rgba(255,255,255,.05) 100%)}
-.corWin.lit .winFrame{box-shadow:0 34px 100px rgba(0,0,0,.7),0 0 70px rgba(251,191,36,.22), inset 0 2px 3px rgba(255,255,255,.18)}
+.corWin.lit .winFrame{border-color:rgba(252,211,77,.5);box-shadow:0 34px 100px rgba(0,0,0,.7),0 0 120px rgba(252,211,77,.42),0 0 44px rgba(252,211,77,.3), inset 0 2px 3px rgba(255,255,255,.26)}
 .corWin.lit .winGlass::before{opacity:0}
-.corWin.lit .winGlass img{transform:scale(1.0)}
+.corWin.lit .winGlass img{transform:scale(1.0);filter:brightness(1.28) contrast(1.06) saturate(1.18)}
 .winPlq{position:absolute;left:50%;bottom:-64px;transform:translateX(-50%);white-space:nowrap;
  font-family:var(--mono);font-size:.66rem;letter-spacing:.34em;color:var(--amberHi);text-transform:uppercase;
  background:rgba(11,17,32,.75);border:1px solid rgba(251,191,36,.35);border-radius:99px;padding:8px 18px;backdrop-filter:blur(6px)}
 
 /* narration card */
 .corCard{position:absolute;left:clamp(16px,4vw,64px);bottom:clamp(18px,4vh,44px);z-index:2000;max-width:min(480px,62vw);
- background:rgba(9,14,26,.78);backdrop-filter:blur(14px);border:1px solid var(--line);border-left:3px solid var(--amberHi);
+ background:linear-gradient(168deg,rgba(28,41,71,.9),rgba(11,17,32,.88));backdrop-filter:blur(18px);border:1px solid var(--line);border-left:3px solid var(--amberHi);box-shadow:var(--lift3);
  border-radius:18px;padding:22px 26px;transition:opacity .45s,transform .45s}
 .corCard.swap{opacity:0;transform:translateY(14px)}
 .corCard .cTag{font-family:var(--mono);font-size:.62rem;letter-spacing:.3em;color:var(--amberHi);text-transform:uppercase}
@@ -318,10 +326,10 @@ footer p{max-width:620px;line-height:1.6}
 
 /* muscle HUD */
 .musHud{position:absolute;right:clamp(14px,3vw,50px);top:50%;transform:translateY(-50%);z-index:2000;text-align:center;
- background:rgba(9,14,26,.78);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:20px;padding:18px 18px 16px;width:172px}
+ background:linear-gradient(168deg,rgba(28,41,71,.86),rgba(13,21,38,.86));backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:20px;padding:18px 18px 16px;width:184px;box-shadow:var(--lift3)}
 .musHud .mTag{font-family:var(--mono);font-size:.6rem;letter-spacing:.26em;color:var(--ink3);text-transform:uppercase}
 .musStack{position:relative;width:134px;height:184px;margin:10px auto 0}
-.musStack img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .6s,filter .6s}
+.musStack img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .6s,filter .6s;filter:drop-shadow(0 10px 26px rgba(0,0,0,.6))}
 .musPct{font-family:var(--serif);font-size:2rem;font-weight:700;line-height:1;margin-top:10px;transition:color .5s}
 .musCap{font-size:.62rem;color:var(--ink3);letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
 .musBar{height:5px;border-radius:3px;background:var(--surface2);margin-top:10px;overflow:hidden}
@@ -336,14 +344,20 @@ footer p{max-width:620px;line-height:1.6}
 .corRail i{width:9px;height:9px;border-radius:50%;background:rgba(148,163,196,.25);border:1px solid transparent;cursor:pointer;transition:.3s}
 .corRail i.on{background:var(--amberHi);box-shadow:0 0 12px rgba(251,191,36,.6)}
 @media(max-width:880px){.corRail{display:none}}
-.corVin{position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(3,5,10,.55) 100%)}
+.corVin{position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(130% 96% at 50% 45%,transparent 62%,rgba(4,7,16,.42) 100%)}
 
-.pageTop{padding-top:104px}
-.segGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-top:50px}
-.seg{border:1px solid var(--line);border-radius:22px;overflow:hidden;background:var(--surface);display:block;transition:transform .3s,border-color .3s}
-.seg:hover{transform:translateY(-5px);border-color:rgba(45,212,191,.5)}
-.seg .ph{height:186px;overflow:hidden}
-.seg img{width:100%;height:100%;object-fit:cover;display:block}
+.pageTop{padding-top:124px}
+.segGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:22px;margin-top:50px;perspective:1400px}
+.seg{position:relative;border:1px solid var(--line);border-radius:24px;overflow:hidden;display:block;
+ background:linear-gradient(168deg,var(--surface2),var(--surface) 60%);box-shadow:var(--lift2);
+ transform-style:preserve-3d;transition:box-shadow .35s,border-color .35s;will-change:transform}
+.seg::after{content:"";position:absolute;inset:0;background:var(--sheen);pointer-events:none;opacity:.55;transition:opacity .35s}
+.seg:hover{border-color:rgba(94,234,212,.65);box-shadow:var(--lift3),0 0 0 1px rgba(94,234,212,.18),0 18px 60px rgba(20,184,166,.22)}
+.seg:hover::after{opacity:1}
+.seg .ph{height:196px;overflow:hidden;position:relative}
+.seg .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(19,29,51,.85))}
+.seg img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.seg:hover img{transform:scale(1.07)}
 .seg .sb{padding:20px 22px 24px}
 .seg small{font-family:var(--mono);font-size:.62rem;letter-spacing:.26em;color:var(--amberHi);text-transform:uppercase}
 .seg h3{font-family:var(--serif);font-size:1.28rem;margin:8px 0 6px;color:var(--ink)}
@@ -359,8 +373,13 @@ footer p{max-width:620px;line-height:1.6}
 .picHero{border-radius:24px;overflow:hidden;border:1px solid var(--line);margin-top:40px;position:relative}
 .picHero img{width:100%;display:block}
 .picHero .cap{position:absolute;left:0;right:0;bottom:0;padding:26px 30px;background:linear-gradient(180deg,transparent,rgba(5,8,15,.92));font-family:var(--serif);font-size:clamp(1.05rem,2vw,1.45rem);color:var(--ink)}
-.homeHero{min-height:88svh;display:flex;align-items:center;overflow:hidden;padding:100px 0 40px}
-@media(max-width:880px){#nav ul{display:flex;gap:2px;overflow-x:auto;max-width:58vw}#nav ul a{padding:6px 9px;font-size:.7rem}}
+.homeHero{min-height:80svh;display:flex;align-items:center;overflow:hidden;padding:120px 0 30px}
+.homeHero #helix{position:absolute;top:6%;bottom:0;left:auto;right:-6%;width:60%;height:94%}
+.homeHero .heroInner{max-width:none}
+.homeHero h1 .l2{color:var(--orangeHi)}
+.homeHero .heroSub{max-width:520px}
+@media(max-width:980px){.homeHero #helix{right:-18%;width:86%;opacity:.5}.homeHero .heroSub{max-width:none}}
+.dragHint{color:var(--ink2);background:rgba(10,16,32,.7);border:1px solid var(--line);border-radius:99px;padding:8px 15px}
 .vidWrap{margin-top:70px}
 .vidWrap h3{font-size:clamp(1.35rem,2.6vw,1.9rem)}
 .vidGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:18px;margin-top:26px}
@@ -387,7 +406,64 @@ footer p{max-width:620px;line-height:1.6}
 .whoAmI{position:fixed;right:14px;bottom:14px;z-index:90;background:rgba(9,14,26,.86);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:99px;padding:8px 14px;font-size:.72rem;color:var(--ink3)}
 .whoAmI b{color:var(--ink2)}
 .whoAmI a{margin-left:10px;color:var(--orangeHi);cursor:pointer}
-</style></head><body><div id="prog"></div><div id="tip"></div><nav id="nav"><div class="wrap"><a class="navBrand" href="index.html"><b>WINDOWS</b> OF BREAKDOWN</a><ul><li><a href="index.html">Home</a></li><li><a href="diabetes.html" style="color:var(--ink);border-color:var(--line)">Diabetes</a></li><li><a href="perioperative.html">Surgery</a></li><li><a href="rheumatology.html">Rheumatology</a></li><li><a href="eight-gram.html">Threshold</a></li><li><a href="ingredients.html">Ingredients</a></li></ul></div></nav><section class="pageTop"><div class="wrap">
+
+/* ===== ingredient chips on charts ===== */
+.chipRow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:18px 0 6px}
+.chipRow .lbl{font-family:var(--mono);font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--ink3);margin-right:4px}
+.chip{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:99px;
+ padding:10px 17px;font-size:.86rem;font-weight:600;color:var(--ink);cursor:pointer;
+ background:linear-gradient(170deg,var(--surface2),var(--surface));box-shadow:var(--lift1);transition:.22s}
+.chip i{width:11px;height:11px;border-radius:50%;background:var(--c);box-shadow:0 0 12px var(--c);transition:.22s}
+.chip:hover{transform:translateY(-2px);box-shadow:var(--lift2)}
+.chip.off{color:var(--ink3);background:transparent;box-shadow:none;border-color:rgba(167,186,224,.16)}
+.chip.off i{background:transparent;border:1px solid var(--ink3);box-shadow:none}
+.chipAll{margin-left:auto;background:transparent;border:1px solid var(--line);border-radius:99px;padding:9px 16px;font-size:.78rem;color:var(--ink2);transition:.2s}
+.chipAll:hover{color:var(--ink);border-color:rgba(94,234,212,.5)}
+.chipHint{font-size:.78rem;color:var(--ink3);padding:2px 4px 0}
+
+/* ===== interactive axiom ===== */
+.axi{margin:74px 0 0;border:1px solid var(--line);border-radius:28px;overflow:hidden;
+ background:linear-gradient(150deg,rgba(167,139,250,.14),rgba(19,29,51,.9) 45%,rgba(249,115,22,.12));box-shadow:var(--lift3)}
+.axiTop{padding:clamp(24px,3.6vw,40px) clamp(24px,3.6vw,40px) 0}
+.axiTop h3{font-size:clamp(1.25rem,2.3vw,1.75rem);line-height:1.32}
+.axiTop h3 b{color:var(--orangeHi)}.axiTop h3 i{color:var(--tealHi)}
+.axiHint{font-family:var(--mono);font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--amberHi);margin-bottom:12px}
+.axiFlow{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(14px,2.4vw,28px);align-items:center;padding:clamp(22px,3.4vw,38px)}
+@media(max-width:880px){.axiFlow{grid-template-columns:1fr}}
+.axiTrig{display:flex;flex-direction:column;gap:9px}
+.axiTrig button{text-align:left;border:1px solid var(--line);border-radius:14px;padding:13px 17px;font-size:.9rem;font-weight:600;
+ color:var(--ink2);background:rgba(28,41,71,.5);transition:.22s;box-shadow:var(--lift1)}
+.axiTrig button:hover{color:var(--ink);transform:translateX(3px)}
+.axiTrig button.on{color:var(--ink);border-color:rgba(253,186,116,.7);background:linear-gradient(120deg,rgba(249,115,22,.32),rgba(28,41,71,.6));box-shadow:0 10px 30px rgba(249,115,22,.3)}
+.axiPipe{position:relative;min-width:120px;min-height:150px;display:flex;align-items:center;justify-content:center}
+.axiPipe canvas{position:absolute;inset:0;width:100%;height:100%}
+.axiPipe span{position:relative;z-index:2;font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+ color:var(--violetHi);background:rgba(10,16,32,.8);border:1px solid rgba(196,181,253,.4);border-radius:99px;padding:7px 13px;text-align:center;line-height:1.5}
+.axiOut{display:flex;flex-direction:column;gap:9px}
+.axiOut .o{border:1px solid var(--line);border-radius:14px;padding:13px 17px;background:rgba(19,29,51,.6);box-shadow:var(--lift1);
+ opacity:.32;transform:translateY(4px);transition:.4s cubic-bezier(.2,.7,.2,1)}
+.axiOut .o.lit{opacity:1;transform:none;border-color:rgba(94,234,212,.5);background:linear-gradient(120deg,rgba(20,184,166,.22),rgba(19,29,51,.7))}
+.axiOut .o b{display:block;font-size:.92rem;color:var(--ink)}
+.axiOut .o span{font-size:.8rem;color:var(--ink2)}
+.axiWhy{padding:0 clamp(24px,3.6vw,40px) clamp(24px,3.6vw,38px);color:var(--ink2);font-size:.95rem;max-width:900px}
+.axiWhy b{color:var(--ink)}
+
+/* ===== premium depth ===== */
+.sawWrap,.thWrap,.spWrap,.mxWrap,.lock,.fail,.vid,.wCard,.ingPanel,.script{box-shadow:var(--lift2)}
+.thWrap,.spWrap,.sawWrap{background:linear-gradient(168deg,var(--surface2),var(--surface) 62%);position:relative;overflow:hidden}
+.thWrap::before,.spWrap::before,.sawWrap::before{content:"";position:absolute;inset:0;background:var(--sheen);pointer-events:none}
+.thWrap>*,.spWrap>*,.sawWrap>*{position:relative;z-index:1}
+.fail,.lock{background:linear-gradient(168deg,var(--surface2),var(--surface) 65%);transition:transform .3s,box-shadow .3s,border-color .3s}
+.fail:hover,.lock:hover{transform:translateY(-6px);box-shadow:var(--lift3)}
+.vid{background:linear-gradient(168deg,var(--surface2),var(--surface) 62%);transition:transform .3s,box-shadow .3s}
+.vid:hover{transform:translateY(-5px);box-shadow:var(--lift3)}
+.picHero,.teamHero{box-shadow:var(--lift3)}
+.btn.primary{box-shadow:0 14px 44px rgba(20,184,166,.5),inset 0 1px 0 rgba(255,255,255,.22)}
+.nextBar a{background:linear-gradient(168deg,var(--surface2),var(--surface) 62%);box-shadow:var(--lift2)}
+.nextBar a:hover{box-shadow:var(--lift3)}
+#hero h1,.homeHero h1{text-shadow:0 8px 40px rgba(0,0,0,.6)}
+.chapTitle{text-shadow:0 10px 44px rgba(0,0,0,.55)}
+</style></head><body><div id="prog"></div><div id="tip"></div><nav id="nav"><div class="wrap"><a class="navBrand" href="index.html"><b>WINDOWS</b> OF BREAKDOWN</a><ul><li><a href="index.html">Home</a></li><li><a href="diabetes.html" class="cur">Diabetes</a></li><li><a href="perioperative.html">Surgery</a></li><li><a href="rheumatology.html">Rheumatology</a></li><li><a href="eight-gram.html">Threshold</a></li><li><a href="ingredients.html">Ingredients</a></li></ul></div></nav><section class="pageTop"><div class="wrap">
  <div class="crumb"><a href="index.html">Home</a> / The windows of breakdown · journey 1 of 3</div>
  <h2 class="chapTitle rv" style="font-size:clamp(2rem,5vw,3.5rem);margin-top:18px">One life with diabetes.<br><span class="alt">Six windows.</span></h2>
  <p class="chapLead rv d1">A diabetic enters every window already handicapped: insulin normally restrains the muscle-breakdown machinery, and insulin-resistant muscle has partly lost that brake. <b>The same crisis takes more muscle from a diabetic than from anyone else.</b> Walk through Ramesh’s journey — and watch his muscle on the right.</p>
@@ -567,8 +643,6 @@ $$('.rv').forEach(el=>io.observe(el));
 addEventListener('scroll',()=>{const n=$('#nav');if(n)n.classList.toggle('solid',scrollY>40);
   const p=$('#prog');if(p){const h=document.documentElement;p.style.width=(scrollY/(h.scrollHeight-innerHeight)*100)+'%';}},{passive:true});
 
-/* marquee */
-if(typeof LINES!=='undefined'){$$('.mq').forEach(mq=>{const h=LINES.map(l=>`<span><b>${l[0]}</b>${l[1]}</span>`).join('');mq.innerHTML=h+h;});}
 
 /* 3D point cloud */
 function cloud(canvas,pts,opts){if(!canvas)return;
@@ -584,11 +658,12 @@ function cloud(canvas,pts,opts){if(!canvas)return;
       let X1=X*cr+Z*sr, Z1=-X*sr+Z*cr;
       let Y1=Y*cyy-Z1*sy, Z2=Y*sy+Z1*cyy;
       const f=o.persp/(o.persp+Z2*s);
-      proj.push([cx+X1*s*f,cy+Y1*s*f,f,p[3],Z2]);}
+      proj.push([cx+X1*s*f,cy+Y1*s*f,f,p[3],Z2,p[4]]);}
     proj.sort((a,b)=>b[4]-a[4]);
-    for(const q of proj){const [px,py,f,col]=q;
-      x.beginPath();x.arc(px,py,Math.max(.6,2.6*f*f),0,7);
-      x.fillStyle=col.replace('AL',(.22+.6*Math.max(0,f-.55)).toFixed(2));x.fill();}
+    for(const q of proj){const [px,py,f,col,,sz]=q;
+      const r=Math.min(3.4,Math.max(.5,2.4*f*f*(sz||1)));
+      x.beginPath();x.arc(px,py,r,0,7);
+      x.fillStyle=col.replace('AL',Math.min(.95,(.26+.7*Math.max(0,f-.5))*(sz||1)).toFixed(2));x.fill();}
     requestAnimationFrame(frame);}
   new IntersectionObserver(es=>es.forEach(e=>{const was=run;run=e.isIntersecting;if(run&&!was){setup();frame();}}),{threshold:.05}).observe(canvas);
   addEventListener('resize',()=>{if(run)setup()});
@@ -600,13 +675,13 @@ function cloud(canvas,pts,opts){if(!canvas)return;
 
 /* hero helix */
 (()=>{const c=document.getElementById('helix');if(!c)return;
- const pts=[];const C=['rgba(45,212,191,AL)','rgba(167,139,250,AL)','rgba(251,146,60,AL)'];
- for(let s=0;s<7;s++){const a0=s/7*Math.PI*2,col=C[s%3];
-  for(let i=0;i<130;i++){const t=i/130*4-2;const r=.16+.02*Math.sin(t*9+s);
-   pts.push([Math.cos(a0+t*1.35)*r,t*.28,Math.sin(a0+t*1.35)*r,col]);}}
- for(let i=0;i<180;i++){const th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1),R=.55+Math.random()*.45;
-  pts.push([R*Math.sin(ph)*Math.cos(th),(Math.random()*2-1)*.62,R*Math.sin(ph)*Math.sin(th)*.6,'rgba(148,163,196,AL)']);}
- cloud(c,pts,{rx:.28,auto:.0045,scale:.62,drag:true});})();
+ const pts=[];const C=['rgba(94,234,212,AL)','rgba(196,181,253,AL)','rgba(253,186,116,AL)'];
+ for(let s=0;s<9;s++){const a0=s/9*Math.PI*2,col=C[s%3];
+  for(let i=0;i<150;i++){const t=i/150*4-2;const r=.17+.022*Math.sin(t*9+s);
+   pts.push([Math.cos(a0+t*1.35)*r,t*.28,Math.sin(a0+t*1.35)*r,col,1]);}}
+ for(let i=0;i<150;i++){const th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1),R=.5+Math.random()*.4;
+  pts.push([R*Math.sin(ph)*Math.cos(th),(Math.random()*2-1)*.58,R*Math.sin(ph)*Math.sin(th)*.6,'rgba(150,170,210,AL)',.34]);}
+ cloud(c,pts,{rx:.26,auto:.0045,scale:.66,drag:true});})();
 
 /* 8g orbit */
 (()=>{const c=document.getElementById('orb');if(!c)return;const pts=[];
@@ -762,76 +837,178 @@ new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting){drawSaw(tr
 let rzT;addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>drawSaw(false),160)});
 })();
 
-/* ===== threshold chart ===== */
+/* ===== selectable-series chart engine ===== */
+function chipChart(cvId,chipId,cfg){
+ const c=document.getElementById(cvId);if(!c)return null;
+ const row=document.getElementById(chipId);
+ const on=new Set(cfg.series.map(s=>s.k));
+ const grow=Object.fromEntries(cfg.series.map(s=>[s.k,0]));
+ let raf=null,started=false;
+ if(row){
+  row.innerHTML='<span class="lbl">'+(cfg.chipLabel||'Sources')+'</span>'+
+   cfg.series.map(s=>`<button class="chip" data-k="${s.k}" style="--c:${s.col}"><i></i>${s.label}</button>`).join('')+
+   '<button class="chipAll" data-all="1">Reset — show all</button>';
+  row.addEventListener('click',e=>{
+   const all=e.target.closest('[data-all]');
+   if(all){cfg.series.forEach(s=>on.add(s.k));sync();anim();return;}
+   const b=e.target.closest('.chip');if(!b)return;
+   const k=b.dataset.k;
+   if(on.has(k)&&on.size>1)on.delete(k);else on.add(k);
+   sync();anim();});
+ }
+ function sync(){if(!row)return;row.querySelectorAll('.chip').forEach(b=>b.classList.toggle('off',!on.has(b.dataset.k)));}
+ function anim(){cancelAnimationFrame(raf);
+  const step=()=>{let moving=false;
+   cfg.series.forEach(s=>{const t=on.has(s.k)?1:0;const d=t-grow[s.k];
+    if(Math.abs(d)>.004){grow[s.k]+=d*.16;moving=true;}else grow[s.k]=t;});
+   paint();if(moving)raf=requestAnimationFrame(step);};step();}
+ function paint(){const [x,W,H]=fitCanvas(c);
+  const pL=54,pR=18,pT=26,pB=38, hrs=cfg.hours;
+  const vM=cfg.vMax||1;
+  const X=t=>pL+(W-pL-pR)*t/hrs, Y=v=>pT+(H-pT-pB)*(1-Math.min(v,vM)/vM);
+  /* grid */
+  x.strokeStyle='rgba(167,186,224,.13)';x.lineWidth=1;x.beginPath();
+  for(let i=0;i<=4;i++){const gy=pT+(H-pT-pB)*i/4;x.moveTo(pL,gy);x.lineTo(W-pR,gy);}x.stroke();
+  x.fillStyle='rgba(200,210,230,.8)';x.font='11px system-ui';x.textAlign='center';
+  for(let t=0;t<=hrs;t++)x.fillText(t+'h',X(t),H-pB+18);
+  x.save();x.translate(15,(H-pB+pT)/2);x.rotate(-Math.PI/2);x.textAlign='center';x.fillText(cfg.yLabel,0,0);x.restore();
+  const live=cfg.series.filter(s=>grow[s.k]>.01);
+  const total=t=>live.reduce((a,s)=>a+s.f(t)*grow[s.k],0);
+  /* threshold line + fired region */
+  if(cfg.threshold!=null){
+   const ty=Y(cfg.threshold());
+   x.beginPath();let open=false;
+   for(let t=0;t<=hrs;t+=.02){const v=total(t);
+    if(v>cfg.threshold()){const px=X(t),py=Y(v);if(!open){x.moveTo(px,ty);open=true;}x.lineTo(px,py);}
+    else if(open){x.lineTo(X(t),ty);}}
+   if(open){x.closePath();x.fillStyle='rgba(94,234,212,.20)';x.fill();}
+   x.setLineDash([7,6]);x.strokeStyle='#C4B5FD';x.lineWidth=2;
+   x.beginPath();x.moveTo(pL,ty);x.lineTo(W-pR,ty);x.stroke();x.setLineDash([]);
+   x.fillStyle='#C4B5FD';x.textAlign='left';x.font='600 11.5px system-ui';
+   x.fillText(cfg.thresholdLabel(),pL+6,ty-9);
+  }
+  /* individual curves */
+  live.forEach(s=>{const a=grow[s.k];
+   x.globalAlpha=a*(live.length>1?.62:1);
+   x.beginPath();
+   for(let t=0;t<=hrs;t+=.03){const px=X(t),py=Y(s.f(t)*a);t===0?x.moveTo(px,py):x.lineTo(px,py);}
+   x.strokeStyle=s.col;x.lineWidth=2.2;x.lineCap='round';
+   if(live.length>1)x.setLineDash([5,5]);x.stroke();x.setLineDash([]);x.globalAlpha=1;});
+  /* combined curve */
+  if(live.length>1){
+   x.beginPath();
+   for(let t=0;t<=hrs;t+=.02){const px=X(t),py=Y(total(t));t===0?x.moveTo(px,py):x.lineTo(px,py);}
+   x.strokeStyle=cfg.sumCol;x.lineWidth=3.4;x.lineCap='round';
+   x.shadowColor=cfg.sumCol;x.shadowBlur=14;x.stroke();x.shadowBlur=0;}
+  /* labels */
+  x.font='600 11.5px system-ui';x.textAlign='left';
+  live.forEach(s=>{if(grow[s.k]<.7)return;
+   const t=s.lx,py=Y(s.f(t))+(s.ly||-11);
+   x.fillStyle=s.col;x.globalAlpha=grow[s.k];
+   x.fillText(s.label,Math.min(X(t),W-pR-x.measureText(s.label).width-4),py);x.globalAlpha=1;});
+  if(live.length>1){x.fillStyle=cfg.sumCol;
+   const t=cfg.sumLx,v=total(t);
+   x.fillText(cfg.sumLabel,Math.min(X(t),W-pR-x.measureText(cfg.sumLabel).width-4),Y(v)-14);}
+  if(cfg.after)cfg.after(x,X,Y,total,live);}
+ sync();
+ new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting&&!started){started=true;anim();ob.unobserve(e.target);}}),{threshold:.25}).observe(c);
+ let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(paint,160)});
+ return {repaint:anim};
+}
+
+/* ===== leucine threshold ===== */
 (()=>{
-const c=document.getElementById('thres');if(!c)return;
-let thMode='resistant',thAnim=1,thRAF=null;
-document.getElementById('thToggle').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
- thMode=b.dataset.mode;$$('#thToggle button').forEach(x=>x.classList.toggle('on',x===b));
- document.getElementById('thCap').innerHTML=thMode==='resistant'
-  ?'In anabolic-resistant muscle the threshold is raised. Slow mixed-meal protein gives a low flat leucine curve that never crosses the bar, so synthesis never fires even though the grams were eaten. A whey-isolate spike stacked with a free-leucine bolus crosses it.'
-  :'Young healthy muscle fires on a normal meal (~1.5–2 g leucine): the threshold sits low, so even the slow curve reaches it. Ordinary diet protects the young — and the same advice fails the aged, insulin-resistant, inflamed or post-surgical patient because of the raised threshold, not because of non-compliance.';
- draw(true);});
-function draw(a){cancelAnimationFrame(thRAF);thAnim=a?0:1;
- const step=()=>{thAnim=Math.min(1,thAnim+.03);paint();if(thAnim<1)thRAF=requestAnimationFrame(step);};step();}
-function paint(){const [x,W,H]=fitCanvas(c);
- const pL=52,pR=16,pT=24,pB=36;
- const X=t=>pL+(W-pL-pR)*t/6, Y=v=>pT+(H-pT-pB)*(1-v);
- const thr=thMode==='resistant'?.62:.34;
- const slow=t=>.30*Math.exp(-Math.pow((t-2.4)/1.9,2));
- const spike=t=>.92*Math.pow(t/.9,2.2)*Math.exp(-Math.pow(t/.9,2.2))*2.718;
- x.strokeStyle='rgba(148,163,196,.10)';x.lineWidth=1;x.beginPath();
- for(let i=0;i<=4;i++){const gy=pT+(H-pT-pB)*i/4;x.moveTo(pL,gy);x.lineTo(W-pR,gy);}x.stroke();
- x.fillStyle='rgba(167,176,195,.75)';x.font='11px system-ui';x.textAlign='center';
- for(let t=0;t<=6;t++)x.fillText(t+'h',X(t),H-pB+18);
- x.save();x.translate(14,(H-pB+pT)/2);x.rotate(-Math.PI/2);x.textAlign='center';x.fillText('blood leucine',0,0);x.restore();
- const ty=Y(thr);x.setLineDash([7,6]);x.strokeStyle='#A78BFA';x.lineWidth=2;
- x.beginPath();x.moveTo(pL,ty);x.lineTo(pL+(W-pL-pR)*thAnim,ty);x.stroke();x.setLineDash([]);
- x.fillStyle='#A78BFA';x.textAlign='left';x.font='600 11px system-ui';
- x.fillText(thMode==='resistant'?'mTOR firing threshold — RAISED':'mTOR firing threshold — normal',pL+6,ty-8);
- x.beginPath();let started=false;
- for(let t=0;t<=6*thAnim;t+=.03){const v=spike(t);if(v>thr){const px=X(t),py=Y(v);
-  if(!started){x.moveTo(px,ty);started=true;}x.lineTo(px,py);}else if(started){x.lineTo(X(t),ty);}}
- if(started){x.closePath();x.fillStyle='rgba(45,212,191,.18)';x.fill();}
- const dc=(f,col)=>{x.beginPath();
-  for(let t=0;t<=6*thAnim;t+=.03){const px=X(t),py=Y(f(t));t===0?x.moveTo(px,py):x.lineTo(px,py);}
-  x.strokeStyle=col;x.lineWidth=2.5;x.lineCap='round';x.stroke();};
- dc(slow,'#EA580C');dc(spike,'#0D9488');
- if(thAnim>=1){x.font='600 11.5px system-ui';
-  x.fillStyle='#EA580C';x.fillText('slow mixed-meal protein — the soft knock',X(2.35),Y(slow(2.4))-12);
-  x.fillStyle='#0D9488';x.fillText('whey spike + free-leucine bolus',X(1.35)+10,Y(spike(1.35))-4);
-  if(spike(0.9)>thr){x.fillStyle='#2DD4BF';x.textAlign='right';x.fillText('→ synthesis fires',X(0.62)-4,Y(.8));x.textAlign='left';}
-  if(thMode==='resistant'){x.fillStyle='rgba(237,240,247,.65)';
-   x.fillText('grams eaten — nothing built',X(4.35),Y(slow(4.35))-14);}}}
-new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting){draw(true);ob.unobserve(e.target);}}),{threshold:.3}).observe(c);
-let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>paint(),160)});
+ if(!document.getElementById('thres'))return;
+ let mode='resistant';
+ const bell=(amp,mu,sd)=>t=>amp*Math.exp(-Math.pow((t-mu)/sd,2));
+ const rise=(amp,tp,sh)=>t=>amp*Math.pow(t/tp,sh)*Math.exp(-Math.pow(t/tp,sh))*Math.E;
+ const ch=chipChart('thres','thChips',{
+  hours:6, vMax:1.45, yLabel:'blood leucine', chipLabel:'Leucine source',
+  sumCol:'#5EEAD4', sumLabel:'combined blood leucine', sumLx:1.15,
+  threshold:()=>mode==='resistant'?.62:.26,
+  thresholdLabel:()=>mode==='resistant'?'mTOR firing threshold — RAISED by illness':'mTOR firing threshold — normal',
+  series:[
+   {k:'meal',label:'Mixed meal protein',col:'#FDBA74',f:bell(.30,2.5,1.9),lx:3.15,ly:22},
+   {k:'spi', label:'Soy protein isolate',col:'#C4B5FD',f:bell(.38,1.9,1.35),lx:2.15,ly:-14},
+   {k:'wpi', label:'Whey protein isolate',col:'#5EEAD4',f:rise(.52,1.0,2.2),lx:1.28,ly:-26},
+   {k:'leu', label:'Free L-leucine bolus',col:'#FCD34D',f:rise(.46,.6,2.6),lx:.2,ly:-14}],
+  after:(x,X,Y,total)=>{
+   const thr=mode==='resistant'?.62:.26;let peak=0;
+   for(let t=0;t<=6;t+=.02)peak=Math.max(peak,total(t));
+   x.font='700 12.5px system-ui';x.textAlign='right';
+   const lx=X(6)-6, ly=Y(1.40);
+   if(peak>thr){x.fillStyle='#5EEAD4';x.fillText('threshold crossed — synthesis fires',lx,ly);}
+   else{x.fillStyle='#FDBA74';x.fillText('grams eaten — nothing built',lx,ly);}
+   x.textAlign='left';}
+ });
+ document.getElementById('thToggle').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;mode=b.dataset.mode;
+  $$('#thToggle button').forEach(z=>z.classList.toggle('on',z===b));
+  document.getElementById('thCap').innerHTML=mode==='resistant'
+   ?'In anabolic-resistant muscle the threshold is raised. Slow mixed-meal protein gives a low flat leucine curve that never crosses the bar, so synthesis never fires even though the grams were eaten. Neither the whey spike nor the free-leucine bolus clears the bar on its own — <b>stacked together they do</b>.'
+   :'Young healthy muscle fires on a normal meal (~1.5–2 g leucine): the threshold sits low, so even the slow curve reaches it. Ordinary diet protects the young — and the same advice fails the aged, insulin-resistant, inflamed or post-surgical patient because of the raised threshold, not because of non-compliance.';
+  ch&&ch.repaint();});
 })();
 
-/* ===== speed chart ===== */
+/* ===== protein speed spectrum ===== */
 (()=>{
-const c=document.getElementById('speed');if(!c)return;
-function paint(){const [x,W,H]=fitCanvas(c);
- const pL=52,pR=16,pT=18,pB=36;
- const X=t=>pL+(W-pL-pR)*t/7, Y=v=>pT+(H-pT-pB)*(1-v);
- const wpi=t=>.95*Math.pow(t/1.1,2)*Math.exp(-Math.pow(t/1.1,2))*2.718*.68;
- const spi=t=>.52*(1-Math.exp(-t/1.1))*Math.exp(-Math.max(0,t-4.2)/2.4);
- const cas=t=>.34*(1-Math.exp(-t/2.6))*Math.exp(-Math.max(0,t-6)/3);
- const dal=t=>.20*(1-Math.exp(-t/2.2))*Math.exp(-Math.max(0,t-3.5)/2.6);
- x.strokeStyle='rgba(148,163,196,.10)';x.lineWidth=1;x.beginPath();
- for(let i=0;i<=4;i++){const gy=pT+(H-pT-pB)*i/4;x.moveTo(pL,gy);x.lineTo(W-pR,gy);}x.stroke();
- x.fillStyle='rgba(167,176,195,.75)';x.font='11px system-ui';x.textAlign='center';
- for(let t=0;t<=7;t++)x.fillText(t+'h',X(t),H-pB+18);
- x.save();x.translate(14,(H-pB+pT)/2);x.rotate(-Math.PI/2);x.textAlign='center';x.fillText('blood amino acids',0,0);x.restore();
- const dc=(f,col,w)=>{x.beginPath();for(let t=0;t<=7;t+=.04){const px=X(t),py=Y(f(t));t===0?x.moveTo(px,py):x.lineTo(px,py);}
-  x.strokeStyle=col;x.lineWidth=w||2.5;x.lineCap='round';x.stroke();};
- dc(dal,'#B45309',2);dc(cas,'#EA580C',2);dc(spi,'#8B5CF6',2.5);dc(wpi,'#0D9488',2.5);
- x.font='600 11.5px system-ui';
- x.fillStyle='#0D9488';x.fillText('Whey Protein Isolate — the spike',X(1.2),Y(wpi(1.1))-10);
- x.fillStyle='#8B5CF6';x.fillText('Soy Protein Isolate — the plateau',X(3.3),Y(spi(3.3))-10);
- x.fillStyle='#EA580C';x.fillText('casein — clots, 6–7 h trickle',X(4.75),Y(cas(4.75))+18);
- x.fillStyle='#B45309';x.fillText('dal / plant meal — slow + incomplete',X(1.5),Y(dal(1.5))+18);}
-new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting){paint();ob.unobserve(e.target);}}),{threshold:.3}).observe(c);
-let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>paint(),160)});
+ if(!document.getElementById('speed'))return;
+ chipChart('speed','spChips',{
+  hours:7, vMax:1.3, yLabel:'blood amino acids', chipLabel:'Protein source',
+  sumCol:'#5EEAD4', sumLabel:'spike + plateau together', sumLx:1.5,
+  threshold:null, thresholdLabel:()=>'',
+  series:[
+   {k:'wpi',label:'Whey protein isolate — the spike',col:'#5EEAD4',
+    f:t=>.62*Math.pow(t/1.1,2)*Math.exp(-Math.pow(t/1.1,2))*Math.E,lx:1.15,ly:-12},
+   {k:'spi',label:'Soy protein isolate — the plateau',col:'#C4B5FD',
+    f:t=>.50*(1-Math.exp(-t/1.1))*Math.exp(-Math.max(0,t-4.2)/2.4),lx:3.2,ly:-12},
+   {k:'cas',label:'Casein — clots, 6–7 h trickle',col:'#FDBA74',
+    f:t=>.32*(1-Math.exp(-t/2.6))*Math.exp(-Math.max(0,t-6)/3),lx:4.6,ly:18},
+   {k:'dal',label:'Dal / plant meal — slow and incomplete',col:'#FCD34D',
+    f:t=>.19*(1-Math.exp(-t/2.2))*Math.exp(-Math.max(0,t-3.5)/2.6),lx:1.4,ly:18}]
+ });
+})();
+
+/* ===== interactive axiom (home) ===== */
+(()=>{
+ const wrap=document.getElementById('axiTrig');if(!wrap||typeof AXI==='undefined')return;
+ const outs=[...document.querySelectorAll('#axiOut .o')];
+ const why=document.getElementById('axiWhy'), base=why.innerHTML;
+ const cv=document.getElementById('axiC');
+ wrap.innerHTML=AXI.map((a,i)=>`<button data-i="${i}">${a[0]}</button>`).join('');
+ let cur=0,flow=0,raf=null;
+ function pick(i){cur=i;
+  [...wrap.children].forEach((b,j)=>b.classList.toggle('on',j===i));
+  const a=AXI[i];
+  outs.forEach(o=>o.classList.toggle('lit',a[2].includes(o.dataset.k)));
+  why.innerHTML='<b>'+a[0]+'.</b> '+a[1]+' '+base;
+  flow=0;run();}
+ function run(){cancelAnimationFrame(raf);
+  const step=()=>{flow+=.012;draw();if(flow<1.6)raf=requestAnimationFrame(step);};step();}
+ function draw(){const [x,W,H]=fitCanvas(cv);
+  x.clearRect(0,0,W,H);
+  x.strokeStyle='rgba(167,186,224,.22)';x.lineWidth=2;
+  x.beginPath();x.moveTo(4,H/2);x.lineTo(W-4,H/2);x.stroke();
+  for(let k=0;k<3;k++){const f=(flow-k*.18)%1.1;if(f<0||f>1)continue;
+   const px=4+(W-8)*f;
+   const g=x.createRadialGradient(px,H/2,0,px,H/2,16);
+   g.addColorStop(0,'rgba(196,181,253,.95)');g.addColorStop(1,'rgba(196,181,253,0)');
+   x.fillStyle=g;x.beginPath();x.arc(px,H/2,16,0,7);x.fill();}}
+ wrap.addEventListener('click',e=>{const b=e.target.closest('button');if(b)pick(+b.dataset.i);});
+ new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting){pick(0);ob.unobserve(e.target);}}),{threshold:.3}).observe(wrap);
+ addEventListener('resize',draw);
+})();
+
+/* ===== 3D tilt on segment cards ===== */
+(()=>{
+ const cards=$$('.seg');if(!cards.length)return;
+ if(matchMedia('(hover:none)').matches)return;
+ cards.forEach(el=>{
+  el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();
+   const dx=(e.clientX-r.left)/r.width-.5, dy=(e.clientY-r.top)/r.height-.5;
+   el.style.transform=`translateY(-7px) rotateX(${(-dy*7).toFixed(2)}deg) rotateY(${(dx*9).toFixed(2)}deg)`;});
+  el.addEventListener('pointerleave',()=>{el.style.transform='';});
+ });
 })();
 
 /* ===== budget bar ===== */
