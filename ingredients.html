@@ -361,6 +361,32 @@ footer p{max-width:620px;line-height:1.6}
 .picHero .cap{position:absolute;left:0;right:0;bottom:0;padding:26px 30px;background:linear-gradient(180deg,transparent,rgba(5,8,15,.92));font-family:var(--serif);font-size:clamp(1.05rem,2vw,1.45rem);color:var(--ink)}
 .homeHero{min-height:88svh;display:flex;align-items:center;overflow:hidden;padding:100px 0 40px}
 @media(max-width:880px){#nav ul{display:flex;gap:2px;overflow-x:auto;max-width:58vw}#nav ul a{padding:6px 9px;font-size:.7rem}}
+.vidWrap{margin-top:70px}
+.vidWrap h3{font-size:clamp(1.35rem,2.6vw,1.9rem)}
+.vidGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:18px;margin-top:26px}
+.vid{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--surface)}
+.vid .fr{padding:56.25% 0 0 0;position:relative;background:#05080F}
+.vid iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.vid .vb{padding:14px 18px 18px}
+.vid small{font-family:var(--mono);font-size:.58rem;letter-spacing:.24em;color:var(--amberHi);text-transform:uppercase}
+.vid b{display:block;font-family:var(--serif);font-size:1.02rem;color:var(--ink);margin-top:6px;font-weight:600}
+/* gate */
+.gate{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:80px 18px 40px}
+.gateCard{width:100%;max-width:440px;background:linear-gradient(170deg,var(--surface2),var(--surface));border:1px solid var(--line);border-radius:26px;padding:clamp(26px,4vw,40px);box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.gateCard .gk{font-family:var(--mono);font-size:.62rem;letter-spacing:.34em;color:var(--tealHi);text-transform:uppercase}
+.gateCard h1{font-family:var(--serif);font-size:clamp(1.6rem,3.4vw,2.1rem);margin:14px 0 6px;line-height:1.15}
+.gateCard p.sub{color:var(--ink3);font-size:.9rem}
+.fld{margin-top:18px}
+.fld label{display:block;font-size:.78rem;color:var(--ink2);margin-bottom:7px;letter-spacing:.04em}
+.fld input{width:100%;background:#070C18;border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:var(--ink);font-size:.95rem;font-family:inherit;transition:border-color .2s}
+.fld input:focus{outline:none;border-color:rgba(45,212,191,.6)}
+.gBtn{width:100%;margin-top:24px;border:0;border-radius:13px;padding:15px;font-size:.98rem;font-weight:700;color:#04140F;background:linear-gradient(135deg,#2DD4BF,#0D9488);cursor:pointer;transition:transform .2s,box-shadow .2s}
+.gBtn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(13,148,136,.4)}
+.gErr{margin-top:14px;color:#FB7185;font-size:.85rem;min-height:20px}
+.gNote{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink3);font-size:.76rem;line-height:1.55}
+.whoAmI{position:fixed;right:14px;bottom:14px;z-index:90;background:rgba(9,14,26,.86);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:99px;padding:8px 14px;font-size:.72rem;color:var(--ink3)}
+.whoAmI b{color:var(--ink2)}
+.whoAmI a{margin-left:10px;color:var(--orangeHi);cursor:pointer}
 </style></head><body><div id="prog"></div><div id="tip"></div><nav id="nav"><div class="wrap"><a class="navBrand" href="index.html"><b>WINDOWS</b> OF BREAKDOWN</a><ul><li><a href="index.html">Home</a></li><li><a href="diabetes.html">Diabetes</a></li><li><a href="perioperative.html">Surgery</a></li><li><a href="rheumatology.html">Rheumatology</a></li><li><a href="eight-gram.html">8-Gram</a></li><li><a href="ingredients.html" style="color:var(--ink);border-color:var(--line)">Ingredients</a></li></ul></div></nav><section class="pageTop"><div class="wrap">
 <div class="crumb"><a href="index.html">Home</a> / Chapter 03</div>
 <h2 class="chapTitle rv" style="font-size:clamp(2rem,5vw,3.5rem);margin-top:18px">The Ingredients<br><span class="alt">in depth</span></h2>
@@ -490,7 +516,19 @@ const MX=[
  'Fall-prevention physiology in the clinic’s highest fall-risk population — nerve side already failing, muscle side defended.',
  'Powers day-one standing (a type II fibre event); ward fall-prevention; in bone surgery, serves the fusion and the muscle moving it at once.',
  'Both sides of the fall–fracture equation: the bone the steroids thin, and the muscle and balance that keep it from ever being tested.']];
-</script><script>/* ===== shared engine: runs only where mounts exist ===== */
+</script><script>/* ===== access gate ===== */
+(()=>{
+ let pw=null,u=null;
+ try{pw=sessionStorage.getItem('wob_pw');u=JSON.parse(sessionStorage.getItem('wob_user')||'null');}catch(e){}
+ if(pw!=='1'){location.replace('login.html?next='+encodeURIComponent(location.pathname.split('/').pop()||'index.html'));return;}
+ if(!u){location.replace('register.html');return;}
+ const b=document.createElement('div');b.className='whoAmI';
+ b.innerHTML='<b>'+u.name+'</b> · '+u.designation+' · '+u.hq+'<a id="wobOut">sign out</a>';
+ document.body.appendChild(b);
+ b.querySelector('#wobOut').onclick=()=>{try{sessionStorage.removeItem('wob_pw');sessionStorage.removeItem('wob_user');}catch(e){}location.href='login.html';};
+})();
+
+/* ===== shared engine: runs only where mounts exist ===== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const tip=document.getElementById('tip');
 function showTip(x,y,html){if(!tip)return;tip.innerHTML=html;tip.classList.add('show');
