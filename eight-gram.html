@@ -166,6 +166,7 @@ section{position:relative}
 .spWrap{margin-top:70px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px)}
 #speed{width:100%;height:320px;display:block}
 #hmb{width:100%;height:400px;display:block}
+#combo{width:100%;height:420px;display:block}
 .spCap{font-size:.84rem;color:var(--ink3);padding:12px 4px 2px;max-width:860px}
 .spCap b{color:var(--ink2)}
 
@@ -553,6 +554,11 @@ footer p{max-width:620px;line-height:1.6}
  <div class="fail rv d1"><div class="big">⌁</div><h4>The wiring</h4><p>Strength is nerve <em>and</em> muscle. Vitamin D supports <b>the neuromuscular junction, balance and coordination</b> — the difference between a wobble and a fall.</p></div>
  <div class="fail rv d2"><div class="big">↯</div><h4>The fall chain</h4><p>Fall → fracture → surgery and bed rest → a new window of breakdown. <b>One prevented fall closes the loop the other windows keep opening</b> — at zero nitrogen cost, inside any prescription.</p></div>
 </div></div>
+<div class="thWrap rv" style="margin-top:70px"><div class="thTop"><h3>The complete answer — why all five are needed together</h3></div>
+<div class="chipRow" id="cmbChips"></div>
+<p class="chipHint">All five start switched on. Take any one away and watch the two bars — the day either clears both thresholds or it does not.</p>
+<canvas id="combo"></canvas>
+<p class="thCap" id="cmbCap"></p></div>
 <div class="script rv"><small>The lineup — one serving against three raised thresholds</small>
 <p>“Every window raises three thresholds, Doctor — and one serving answers all three. <b>1 g of free leucine with the 8 g whey-isolate spike</b> crosses the raised building threshold, and the <b>soy-isolate plateau</b> keeps amino acids available through the hours that follow. <b>1 g of calcium HMB, given directly,</b> slows the breakdown pathway itself — the 5% conversion from food can never supply it. And <b>600 IU of vitamin D3</b> supports the type II fibres and coordination, so the muscle that is kept is muscle he can use. Three thresholds. Five ingredients. One 8-gram serving.”</p></div>
 <div class="nextBar rv"><a href="ingredients.html"><small>Next chapter</small><b>The Five Ingredients →</b></a>
@@ -1289,4 +1295,118 @@ const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
   setTimeout(()=>figs[1].classList.add('lit'),700);
   ob.unobserve(e.target);}),{threshold:.4}).observe(w);})();
 
+/* ===== the complete answer: two thresholds, five ingredients ===== */
+(()=>{
+ const c=document.getElementById('combo');if(!c)return;
+ const row=document.getElementById('cmbChips'),cap=document.getElementById('cmbCap');
+ const THR=100, VM=132;
+ const ING=[
+  {k:'meal',label:'Mixed meal protein',col:'#FDBA74',b:30,r:8,
+   why:'the baseline substrate the diet already supplies'},
+  {k:'wpi', label:'Whey protein isolate',col:'#5EEAD4',b:34,r:8,
+   why:'the fast spike that carries leucine over the raised bar'},
+  {k:'spi', label:'Soy protein isolate',col:'#C4B5FD',b:14,r:8,
+   why:'the plateau that holds amino acids up through the hours after'},
+  {k:'leu', label:'Free L-leucine 1 g',col:'#FCD34D',b:30,r:4,
+   why:'the trigger dose that fires mTOR'},
+  {k:'hmb', label:'Calcium HMB 1 g',col:'#93C5FD',b:0,r:78,
+   why:'the only one that restrains the breakdown pathway itself'}];
+ const on=new Set(ING.map(i=>i.k)); const grow={}; ING.forEach(i=>grow[i.k]=0);
+ let raf=null,started=false,parts=null,shat=0,shatT=0;
+ row.innerHTML='<span class="lbl">One serving</span>'+
+  ING.map(i=>`<button class="chip" data-k="${i.k}" style="--c:${i.col}"><i></i>${i.label}</button>`).join('')+
+  '<button class="chipAll" data-all="1">Reset — all five</button>';
+ row.addEventListener('click',e=>{
+  if(e.target.closest('[data-all]')){ING.forEach(i=>on.add(i.k));sync();anim();return;}
+  const b=e.target.closest('.chip');if(!b)return;
+  const k=b.dataset.k; if(on.has(k))on.delete(k); else on.add(k);
+  sync();anim();});
+ function sync(){row.querySelectorAll('.chip').forEach(b=>b.classList.toggle('off',!on.has(b.dataset.k)));}
+ function anim(){cancelAnimationFrame(raf);
+  const step=()=>{let mv=false;
+   ING.forEach(i=>{const t=on.has(i.k)?1:0,d=t-grow[i.k];
+    if(Math.abs(d)>.004){grow[i.k]+=d*.15;mv=true;}else grow[i.k]=t;});
+   shatT=(tally('b')>=THR&&tally('r')>=THR)?1:0;
+   const ds=shatT-shat;
+   if(Math.abs(ds)>.003){shat+=ds*(ds>0?.055:.10);mv=true;}else shat=shatT;
+   paint();if(mv)raf=requestAnimationFrame(step);};step();}
+ function tally(f){return ING.reduce((a,i)=>a+i[f]*grow[i.k],0);}
+ function paint(){const [x,W,H]=fitCanvas(c);
+  const pL=132,pR=20,pT=44,pB=74;
+  const Y=v=>pT+(H-pT-pB)*(1-Math.min(v,VM)/VM), base=Y(0);
+  x.strokeStyle='rgba(167,186,224,.13)';x.lineWidth=1;x.beginPath();
+  for(let i=0;i<=4;i++){const gy=pT+(H-pT-pB)*i/4;x.moveTo(pL,gy);x.lineTo(W-pR,gy);}x.stroke();
+  const B=tally('b'), R=tally('r'), NET=Math.min(B,R), okB=B>=THR, okR=R>=THR, ok=okB&&okR;
+  const cols=[{t:'Building signal',sub:'does MPS fire?',f:'b',v:B,okv:okB},
+              {t:'Breakdown restraint',sub:'is the leak sealed?',f:'r',v:R,okv:okR},
+              {t:'Net muscle',sub:'the limiting side',net:true,v:NET,okv:ok}];
+  const band=(W-pL-pR)/3, bw=Math.min(120,band*.46);
+  cols.forEach((col,ci)=>{const cx=pL+band*(ci+.5);
+   if(col.net){
+    const top=Y(col.v),h=Math.max(0,base-top);
+    x.save();x.shadowColor=ok?'#5EEAD4':'#FDA4AF';x.shadowBlur=20;
+    const g=x.createLinearGradient(0,top,0,base);
+    g.addColorStop(0,ok?'#5EEAD4':'#FDA4AF');g.addColorStop(1,ok?'rgba(94,234,212,.15)':'rgba(253,164,175,.15)');
+    x.fillStyle=g;x.beginPath();x.roundRect(cx-bw/2,top,bw,h,[8,8,3,3]);x.fill();x.restore();
+    x.fillStyle=ok?'#5EEAD4':'#FDA4AF';x.font='700 13px system-ui';x.textAlign='center';
+    x.fillText(ok?'muscle is built':'the leak stays open',cx,top-12);
+   } else {
+    let acc=0;
+    ING.forEach(i=>{const val=i[col.f]*grow[i.k];if(val<.3)return;
+     const y1=Y(acc),y2=Y(acc+val);
+     x.fillStyle=i.col;x.globalAlpha=.88;
+     x.beginPath();x.roundRect(cx-bw/2,y2,bw,Math.max(1,y1-y2),3);x.fill();x.globalAlpha=1;
+     if(val>9){x.fillStyle='rgba(10,16,32,.85)';x.font='700 10.5px system-ui';x.textAlign='center';
+      x.fillText(Math.round(val),cx,(y1+y2)/2+4);}
+     acc+=val;});
+    x.fillStyle=col.okv?'#5EEAD4':'#FDA4AF';x.font='700 13px system-ui';x.textAlign='center';
+    x.fillText(col.okv?'✓ crossed':'✕ short',cx,Y(acc)-12);
+   }
+   x.fillStyle='rgba(247,249,254,.95)';x.font='700 12.5px system-ui';x.textAlign='center';
+   x.fillText(col.t,cx,base+24);
+   x.fillStyle='rgba(152,164,189,.9)';x.font='11px system-ui';
+   x.fillText(col.sub,cx,base+41);});
+  const ty=Y(THR);
+  /* faint reference line always readable */
+  x.save();x.globalAlpha=.20;x.setLineDash([6,7]);x.strokeStyle='#C4B5FD';x.lineWidth=1.2;
+  x.beginPath();x.moveTo(pL,ty);x.lineTo(W-pR,ty);x.stroke();x.setLineDash([]);x.restore();
+  /* the barrier itself — it shatters when both sides clear it, and rebuilds when they do not */
+  if(!parts){const n=Math.max(20,Math.round((W-pL-pR)/24)),sw=(W-pL-pR)/n;parts=[];
+   for(let i=0;i<n;i++){const f=(i+.5)/n-.5;
+    parts.push({x:pL+sw*(i+.5),w:sw*.8,
+     vx:f*3.1+(Math.random()-.5)*.9, vy:-(.7+Math.random()*1.5),
+     rot:(Math.random()-.5)*2.2, d:.68+Math.random()*.62});}}
+  const heal=1-shat;
+  parts.forEach(p=>{const tt=Math.min(1.35,shat*p.d);
+   const a=Math.max(0,1-tt*1.18); if(a<=0.01)return;
+   const dx=p.vx*64*tt, dy=p.vy*58*tt+150*tt*tt;
+   x.save();x.globalAlpha=a;
+   x.translate(p.x+dx,ty+dy);x.rotate(p.rot*tt*2.6);
+   x.fillStyle='#C4B5FD';
+   if(heal>.15){x.shadowColor='#C4B5FD';x.shadowBlur=16*heal;}
+   x.fillRect(-p.w/2,-2.6,p.w,5.2);x.restore();});
+  x.textAlign='right';
+  if(shat>.55){x.fillStyle='#5EEAD4';x.font='700 12px system-ui';
+   x.fillText('THRESHOLD',pL-14,ty-3);
+   x.fillStyle='rgba(94,234,212,.85)';x.font='10.5px system-ui';
+   x.fillText('broken through',pL-14,ty+13);}
+  else{x.fillStyle='#C4B5FD';x.font='700 12px system-ui';
+   x.fillText('THRESHOLD',pL-14,ty-3);
+   x.fillStyle='rgba(196,181,253,.75)';x.font='10.5px system-ui';
+   x.fillText('holding',pL-14,ty+13);}
+  x.textAlign='right';x.font='700 13px system-ui';
+  x.fillStyle=ok?'#5EEAD4':'#FDA4AF';
+  x.fillText(ok?'all five present — the day is complete':'incomplete — one job is unanswered',W-pR,pT-18);}
+ function caption(){
+  const miss=ING.filter(i=>!on.has(i.k));
+  if(!miss.length){cap.innerHTML='<b>All five together, and only all five.</b> The mixed meal supplies the baseline substrate; the <b>whey-isolate spike stacked with 1 g of free leucine</b> lifts blood leucine over the raised building threshold so MPS actually fires; the <b>soy-isolate plateau</b> holds amino acids up through the hours that follow, when the body would otherwise drift back into net breakdown; and <b>1 g of calcium HMB</b> — the only one of the five that acts on the breakdown pathway — restrains proteolysis so the building is not simply undone. Net muscle = building − breakdown, so <b>the day is limited by whichever side fails</b>. Both sides clear their threshold only when every job is covered.';return;}
+  const names=miss.map(m=>m.label).join(', ');
+  const B=tally('b'),R=tally('r');
+  const fails=[]; if(B<THR)fails.push('the building threshold is not reached, so MPS never fires'); if(R<THR)fails.push('breakdown runs on unrestrained');
+  cap.innerHTML='<b>Without '+names+', the day is incomplete.</b> That leaves out '+miss.map(m=>m.why).join(', and ')+' — so '+fails.join(', and ')+'. Net muscle is limited by the weaker side, so covering four of the five jobs still leaves the account draining. <b>There is no substitution between them: each answers a different step.</b>';}
+ const _p=paint; paint=function(){_p();caption();};
+ sync();
+ new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting&&!started){started=true;anim();ob.unobserve(e.target);}}),{threshold:.25}).observe(c);
+ let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{parts=null;paint();},160)});
+})();
 </script></body></html>
