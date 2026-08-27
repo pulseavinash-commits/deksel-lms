@@ -166,7 +166,7 @@ section{position:relative}
 .spWrap{margin-top:70px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px)}
 #speed{width:100%;height:320px;display:block}
 #hmb{width:100%;height:400px;display:block}
-#combo{width:100%;height:420px;display:block}
+#combo{width:100%;height:452px;display:block}
 .spCap{font-size:.84rem;color:var(--ink3);padding:12px 4px 2px;max-width:860px}
 .spCap b{color:var(--ink2)}
 
@@ -1299,20 +1299,20 @@ const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
 (()=>{
  const c=document.getElementById('combo');if(!c)return;
  const row=document.getElementById('cmbChips'),cap=document.getElementById('cmbCap');
- const THR=100, VM=132;
+ const THR=100, VM=134;
  const ING=[
-  {k:'meal',label:'Mixed meal protein',col:'#FDBA74',b:30,r:8,
+  {k:'meal',label:'Mixed meal protein',col:'#FDBA74',hi:'#FED7AA',lo:'#C2410C',b:30,r:8,
    why:'the baseline substrate the diet already supplies'},
-  {k:'wpi', label:'Whey protein isolate',col:'#5EEAD4',b:34,r:8,
+  {k:'wpi', label:'Whey protein isolate',col:'#5EEAD4',hi:'#A7F3E4',lo:'#0F766E',b:34,r:8,
    why:'the fast spike that carries leucine over the raised bar'},
-  {k:'spi', label:'Soy protein isolate',col:'#C4B5FD',b:14,r:8,
+  {k:'spi', label:'Soy protein isolate',col:'#C4B5FD',hi:'#E4DBFF',lo:'#6D5FB0',b:14,r:8,
    why:'the plateau that holds amino acids up through the hours after'},
-  {k:'leu', label:'Free L-leucine 1 g',col:'#FCD34D',b:30,r:4,
+  {k:'leu', label:'Free L-leucine 1 g',col:'#FCD34D',hi:'#FDE9A8',lo:'#B45309',b:30,r:4,
    why:'the trigger dose that fires mTOR'},
-  {k:'hmb', label:'Calcium HMB 1 g',col:'#93C5FD',b:0,r:78,
-   why:'the only one that restrains the breakdown pathway itself'}];
+  {k:'hmb', label:'Calcium HMB 1 g',col:'#93C5FD',hi:'#CFE3FF',lo:'#2563A8',b:0,r:78,
+   why:'the only one that acts on the breakdown pathway itself'}];
  const on=new Set(ING.map(i=>i.k)); const grow={}; ING.forEach(i=>grow[i.k]=0);
- let raf=null,started=false,parts=null,shat=0,shatT=0;
+ let raf=null,started=false,shards=null,sparks=null,shat=0,shatT=0,geom=null;
  row.innerHTML='<span class="lbl">One serving</span>'+
   ING.map(i=>`<button class="chip" data-k="${i.k}" style="--c:${i.col}"><i></i>${i.label}</button>`).join('')+
   '<button class="chipAll" data-all="1">Reset — all five</button>';
@@ -1322,91 +1322,151 @@ const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const k=b.dataset.k; if(on.has(k))on.delete(k); else on.add(k);
   sync();anim();});
  function sync(){row.querySelectorAll('.chip').forEach(b=>b.classList.toggle('off',!on.has(b.dataset.k)));}
+ function tally(f){return ING.reduce((a,i)=>a+i[f]*grow[i.k],0);}
  function anim(){cancelAnimationFrame(raf);
   const step=()=>{let mv=false;
    ING.forEach(i=>{const t=on.has(i.k)?1:0,d=t-grow[i.k];
     if(Math.abs(d)>.004){grow[i.k]+=d*.15;mv=true;}else grow[i.k]=t;});
    shatT=(tally('b')>=THR&&tally('r')>=THR)?1:0;
    const ds=shatT-shat;
-   if(Math.abs(ds)>.003){shat+=ds*(ds>0?.055:.10);mv=true;}else shat=shatT;
+   if(Math.abs(ds)>.002){shat+=ds*(ds>0?.032:.075);mv=true;}else shat=shatT;
    paint();if(mv)raf=requestAnimationFrame(step);};step();}
- function tally(f){return ING.reduce((a,i)=>a+i[f]*grow[i.k],0);}
+
+ /* ---------- 3D shard barrier ---------- */
+ function rnd(i,o){const v=Math.sin(i*127.1+o*311.7)*43758.5453;return v-Math.floor(v);}
+ function makeBarrier(pL,split){
+  const n=Math.max(13,Math.round((split-pL)/30)),sw=(split-pL)/n;
+  shards=[];
+  for(let i=0;i<n;i++){const f=(i+.5)/n-.5;
+   shards.push({x:pL+sw*(i+.5),w:sw*.88,h:11,
+    vx:f*3.6+(rnd(i,1)-.5)*1.2, vy:-(.9+rnd(i,2)*1.8), vz:(rnd(i,3)-.4)*1.4,
+    sy:(rnd(i,4)-.5)*4.6, sz:(rnd(i,5)-.5)*2.8, d:.66+rnd(i,6)*.66});}
+  sparks=[];
+  for(let i=0;i<54;i++)sparks.push({x:pL+rnd(i,7)*(split-pL),
+    vx:(rnd(i,8)-.5)*6, vy:-(rnd(i,9)*3.4+.5), d:.45+rnd(i,10)*1.05, r:.9+rnd(i,11)*2.2});
+ }
+ function slab(x,cx,cy,w,h,ay,az,z,col,hi,lo,alpha){
+  const fx=Math.max(.10,Math.abs(Math.cos(ay)));
+  const dep=(2.6+Math.abs(Math.sin(ay))*8)*z;
+  x.save();x.globalAlpha=alpha;x.translate(cx,cy);x.rotate(az);x.scale(fx,1);
+  const W2=w*z/2,H2=h*z/2;
+  x.fillStyle=lo;                                     /* side face */
+  x.beginPath();x.moveTo(W2,-H2);x.lineTo(W2+dep,-H2-dep*.6);
+  x.lineTo(W2+dep,H2-dep*.6);x.lineTo(W2,H2);x.closePath();x.fill();
+  x.fillStyle=hi;                                     /* top face */
+  x.beginPath();x.moveTo(-W2,-H2);x.lineTo(-W2+dep,-H2-dep*.6);
+  x.lineTo(W2+dep,-H2-dep*.6);x.lineTo(W2,-H2);x.closePath();x.fill();
+  const g=x.createLinearGradient(0,-H2,0,H2);         /* front face */
+  g.addColorStop(0,hi);g.addColorStop(.42,col);g.addColorStop(1,lo);
+  x.fillStyle=g;x.fillRect(-W2,-H2,W2*2,H2*2);
+  x.restore();}
+ function barrier(x,pL,split,ty){
+  if(!shards)makeBarrier(pL,split);
+  const t=shat, CR=.22;
+  if(t<CR){                                           /* intact → cracking */
+   const cr=t/CR, shake=Math.sin(t*150)*3.4*cr;
+   x.save();
+   if(cr<.6){x.shadowColor='#C4B5FD';x.shadowBlur=20*(1-cr);}
+   shards.forEach((p,i)=>{const j=cr>.15?(rnd(i,12)-.5)*shake:0;
+    slab(x,p.x+j,ty+j*.4,p.w+ (cr>.15?0:2),p.h,0,0,1,'#C4B5FD','#E9E2FF','#6D5FB0',1);});
+   x.restore();
+   if(cr>.12){x.save();x.globalAlpha=cr;x.strokeStyle='#0A1020';x.lineWidth=1.6;
+    shards.forEach((p,i)=>{if(rnd(i,13)<.4)return;const gx=p.x+p.w/2;
+     x.beginPath();x.moveTo(gx,ty-6);x.lineTo(gx+(rnd(i,14)-.5)*5,ty);x.lineTo(gx+(rnd(i,15)-.5)*5,ty+6);x.stroke();});
+    x.restore();}
+   return;}
+  const u=(t-CR)/(1-CR);
+  if(u<.30){                                          /* shockwave at the break */
+   const k=u/.30;x.save();x.globalAlpha=(1-k)*.55;
+   x.strokeStyle='#DDD3FF';x.lineWidth=3*(1-k);
+   x.beginPath();x.ellipse((pL+split)/2,ty,(split-pL)*.16+ (split-pL)*.5*k,14+70*k,0,0,7);x.stroke();x.restore();}
+  sparks.forEach(p=>{const tt=u*p.d;const a=Math.max(0,1-tt*1.5);if(a<=.01)return;
+   x.save();x.globalAlpha=a;x.fillStyle='#E9E2FF';
+   x.beginPath();x.arc(p.x+p.vx*90*tt,ty+p.vy*80*tt+220*tt*tt,p.r*(1-tt*.5),0,7);x.fill();x.restore();});
+  shards.forEach(p=>{const tt=Math.min(1.45,u*p.d);const a=Math.max(0,1-tt*1.02);if(a<=.01)return;
+   slab(x,p.x+p.vx*76*tt, ty+p.vy*72*tt+185*tt*tt, p.w,p.h,
+        p.sy*tt*2.3, p.sz*tt*2.0, 1+p.vz*.5*tt, '#C4B5FD','#E9E2FF','#6D5FB0', a);});
+ }
+
  function paint(){const [x,W,H]=fitCanvas(c);
-  const pL=132,pR=20,pT=44,pB=74;
-  const Y=v=>pT+(H-pT-pB)*(1-Math.min(v,VM)/VM), base=Y(0);
-  x.strokeStyle='rgba(167,186,224,.13)';x.lineWidth=1;x.beginPath();
-  for(let i=0;i<=4;i++){const gy=pT+(H-pT-pB)*i/4;x.moveTo(pL,gy);x.lineTo(W-pR,gy);}x.stroke();
-  const B=tally('b'), R=tally('r'), NET=Math.min(B,R), okB=B>=THR, okR=R>=THR, ok=okB&&okR;
-  const cols=[{t:'Building signal',sub:'does MPS fire?',f:'b',v:B,okv:okB},
-              {t:'Breakdown restraint',sub:'is the leak sealed?',f:'r',v:R,okv:okR},
-              {t:'Net muscle',sub:'the limiting side',net:true,v:NET,okv:ok}];
-  const band=(W-pL-pR)/3, bw=Math.min(120,band*.46);
-  cols.forEach((col,ci)=>{const cx=pL+band*(ci+.5);
-   if(col.net){
-    const top=Y(col.v),h=Math.max(0,base-top);
-    x.save();x.shadowColor=ok?'#5EEAD4':'#FDA4AF';x.shadowBlur=20;
-    const g=x.createLinearGradient(0,top,0,base);
-    g.addColorStop(0,ok?'#5EEAD4':'#FDA4AF');g.addColorStop(1,ok?'rgba(94,234,212,.15)':'rgba(253,164,175,.15)');
-    x.fillStyle=g;x.beginPath();x.roundRect(cx-bw/2,top,bw,h,[8,8,3,3]);x.fill();x.restore();
-    x.fillStyle=ok?'#5EEAD4':'#FDA4AF';x.font='700 13px system-ui';x.textAlign='center';
-    x.fillText(ok?'muscle is built':'the leak stays open',cx,top-12);
-   } else {
-    let acc=0;
-    ING.forEach(i=>{const val=i[col.f]*grow[i.k];if(val<.3)return;
-     const y1=Y(acc),y2=Y(acc+val);
-     x.fillStyle=i.col;x.globalAlpha=.88;
-     x.beginPath();x.roundRect(cx-bw/2,y2,bw,Math.max(1,y1-y2),3);x.fill();x.globalAlpha=1;
-     if(val>9){x.fillStyle='rgba(10,16,32,.85)';x.font='700 10.5px system-ui';x.textAlign='center';
-      x.fillText(Math.round(val),cx,(y1+y2)/2+4);}
-     acc+=val;});
-    x.fillStyle=col.okv?'#5EEAD4':'#FDA4AF';x.font='700 13px system-ui';x.textAlign='center';
-    x.fillText(col.okv?'✓ crossed':'✕ short',cx,Y(acc)-12);
-   }
-   x.fillStyle='rgba(247,249,254,.95)';x.font='700 12.5px system-ui';x.textAlign='center';
+  const pL=132,pR=18,pT=58,pB=76;
+  const plotW=W-pL-pR, split=pL+plotW*.60, resW=W-pR-split;
+  const Y=v=>pT+(H-pT-pB)*(1-Math.min(v,VM)/VM), base=Y(0), ty=Y(THR);
+  if(!geom||geom.pL!==pL||geom.split!==split){shards=null;geom={pL,split};}
+  x.strokeStyle='rgba(167,186,224,.12)';x.lineWidth=1;x.beginPath();
+  for(let i=0;i<=4;i++){const gy=pT+(H-pT-pB)*i/4;x.moveTo(pL,gy);x.lineTo(split-14,gy);}x.stroke();
+  const B=tally('b'), R=tally('r'), okB=B>=THR, okR=R>=THR, ok=okB&&okR;
+  /* ---- the two threshold columns ---- */
+  const band=(split-14-pL)/2, bw=Math.min(118,band*.5);
+  [{t:'Building signal',sub:'does MPS fire?',f:'b',v:B,okv:okB},
+   {t:'Breakdown restraint',sub:'is the leak sealed?',f:'r',v:R,okv:okR}].forEach((col,ci)=>{
+   const cx=pL+band*(ci+.5); let acc=0;
+   ING.forEach(i=>{const val=i[col.f]*grow[i.k];if(val<.3)return;
+    const y1=Y(acc),y2=Y(acc+val),h=Math.max(1,y1-y2);
+    const g=x.createLinearGradient(cx-bw/2,0,cx+bw/2,0);
+    g.addColorStop(0,i.lo);g.addColorStop(.34,i.col);g.addColorStop(.62,i.hi);g.addColorStop(1,i.col);
+    x.fillStyle=g;x.beginPath();x.roundRect(cx-bw/2,y2,bw,h,3);x.fill();
+    x.fillStyle='rgba(255,255,255,.30)';x.fillRect(cx-bw/2,y2,bw,1.4);
+    if(val>9){x.fillStyle='rgba(10,16,32,.9)';x.font='700 11px system-ui';x.textAlign='center';
+     x.fillText(Math.round(val),cx,(y1+y2)/2+4);}
+    acc+=val;});
+   x.fillStyle=col.okv?'#5EEAD4':'#FDA4AF';x.font='700 13px system-ui';x.textAlign='center';
+   x.fillText(col.okv?'✓ crossed':'✕ short',cx,Y(acc)-13);
+   x.fillStyle='rgba(247,249,254,.95)';x.font='700 12.5px system-ui';
    x.fillText(col.t,cx,base+24);
    x.fillStyle='rgba(152,164,189,.9)';x.font='11px system-ui';
    x.fillText(col.sub,cx,base+41);});
-  const ty=Y(THR);
-  /* faint reference line always readable */
-  x.save();x.globalAlpha=.20;x.setLineDash([6,7]);x.strokeStyle='#C4B5FD';x.lineWidth=1.2;
-  x.beginPath();x.moveTo(pL,ty);x.lineTo(W-pR,ty);x.stroke();x.setLineDash([]);x.restore();
-  /* the barrier itself — it shatters when both sides clear it, and rebuilds when they do not */
-  if(!parts){const n=Math.max(20,Math.round((W-pL-pR)/24)),sw=(W-pL-pR)/n;parts=[];
-   for(let i=0;i<n;i++){const f=(i+.5)/n-.5;
-    parts.push({x:pL+sw*(i+.5),w:sw*.8,
-     vx:f*3.1+(Math.random()-.5)*.9, vy:-(.7+Math.random()*1.5),
-     rot:(Math.random()-.5)*2.2, d:.68+Math.random()*.62});}}
-  const heal=1-shat;
-  parts.forEach(p=>{const tt=Math.min(1.35,shat*p.d);
-   const a=Math.max(0,1-tt*1.18); if(a<=0.01)return;
-   const dx=p.vx*64*tt, dy=p.vy*58*tt+150*tt*tt;
-   x.save();x.globalAlpha=a;
-   x.translate(p.x+dx,ty+dy);x.rotate(p.rot*tt*2.6);
-   x.fillStyle='#C4B5FD';
-   if(heal>.15){x.shadowColor='#C4B5FD';x.shadowBlur=16*heal;}
-   x.fillRect(-p.w/2,-2.6,p.w,5.2);x.restore();});
+  /* ---- the barrier, spanning only the two threshold columns ---- */
+  x.save();x.globalAlpha=.18;x.setLineDash([6,7]);x.strokeStyle='#C4B5FD';x.lineWidth=1.2;
+  x.beginPath();x.moveTo(pL,ty);x.lineTo(split-14,ty);x.stroke();x.setLineDash([]);x.restore();
+  barrier(x,pL,split-14,ty);
   x.textAlign='right';
-  if(shat>.55){x.fillStyle='#5EEAD4';x.font='700 12px system-ui';
-   x.fillText('THRESHOLD',pL-14,ty-3);
-   x.fillStyle='rgba(94,234,212,.85)';x.font='10.5px system-ui';
-   x.fillText('broken through',pL-14,ty+13);}
-  else{x.fillStyle='#C4B5FD';x.font='700 12px system-ui';
-   x.fillText('THRESHOLD',pL-14,ty-3);
-   x.fillStyle='rgba(196,181,253,.75)';x.font='10.5px system-ui';
-   x.fillText('holding',pL-14,ty+13);}
-  x.textAlign='right';x.font='700 13px system-ui';
+  const brk=shat>.55;
+  x.fillStyle=brk?'#5EEAD4':'#C4B5FD';x.font='700 12px system-ui';
+  x.fillText('THRESHOLD',pL-14,ty-3);
+  x.fillStyle=brk?'rgba(94,234,212,.85)':'rgba(196,181,253,.75)';x.font='10.5px system-ui';
+  x.fillText(brk?'broken through':'holding',pL-14,ty+13);
+  x.textAlign='left';x.font='700 12.5px system-ui';
   x.fillStyle=ok?'#5EEAD4':'#FDA4AF';
-  x.fillText(ok?'all five present — the day is complete':'incomplete — one job is unanswered',W-pR,pT-18);}
+  x.fillText(ok?'all five present — every job answered':'incomplete — one job unanswered',pL,pT-26);
+  /* ---- divider ---- */
+  x.save();x.globalAlpha=.5;x.strokeStyle='var';x.strokeStyle='rgba(167,186,224,.3)';
+  x.setLineDash([3,6]);x.lineWidth=1;x.beginPath();x.moveTo(split+8,pT-42);x.lineTo(split+8,base+46);x.stroke();
+  x.setLineDash([]);x.restore();
+  /* ---- the result — outside the threshold entirely ---- */
+  const rx=split+8+resW/2, midY=(pT+base)/2;
+  x.textAlign='center';
+  x.fillStyle='rgba(152,164,189,.9)';x.font='700 10.5px system-ui';
+  x.fillText('T H E   R E S U L T',rx,pT-26);
+  const bw2=Math.min(250,resW-26), bh=176;
+  const gg=x.createLinearGradient(0,midY-bh/2,0,midY+bh/2);
+  if(ok){gg.addColorStop(0,'rgba(94,234,212,.26)');gg.addColorStop(1,'rgba(20,184,166,.05)');}
+  else{gg.addColorStop(0,'rgba(253,164,175,.24)');gg.addColorStop(1,'rgba(244,63,94,.04)');}
+  x.save();x.shadowColor=ok?'rgba(94,234,212,.45)':'rgba(253,164,175,.4)';x.shadowBlur=28;
+  x.fillStyle=gg;x.beginPath();x.roundRect(rx-bw2/2,midY-bh/2,bw2,bh,20);x.fill();x.restore();
+  x.strokeStyle=ok?'rgba(94,234,212,.6)':'rgba(253,164,175,.55)';x.lineWidth=1.4;
+  x.beginPath();x.roundRect(rx-bw2/2,midY-bh/2,bw2,bh,20);x.stroke();
+  const ar=ok?'▲':'▼';
+  x.fillStyle=ok?'#5EEAD4':'#FDA4AF';x.font='700 34px system-ui';
+  x.fillText(ar,rx,midY-30);
+  x.font='700 17px system-ui';
+  x.fillText(ok?'Muscle is built':'Muscle keeps draining',rx,midY+12);
+  x.fillStyle='rgba(200,210,230,.85)';x.font='11.5px system-ui';
+  x.fillText(ok?'both sides answered on the same day':'the weaker side caps the day',rx,midY+34);
+  x.fillStyle='rgba(152,164,189,.75)';x.font='11px system-ui';
+  x.fillText('net muscle = building − breakdown',rx,base+24);}
+
  function caption(){
   const miss=ING.filter(i=>!on.has(i.k));
-  if(!miss.length){cap.innerHTML='<b>All five together, and only all five.</b> The mixed meal supplies the baseline substrate; the <b>whey-isolate spike stacked with 1 g of free leucine</b> lifts blood leucine over the raised building threshold so MPS actually fires; the <b>soy-isolate plateau</b> holds amino acids up through the hours that follow, when the body would otherwise drift back into net breakdown; and <b>1 g of calcium HMB</b> — the only one of the five that acts on the breakdown pathway — restrains proteolysis so the building is not simply undone. Net muscle = building − breakdown, so <b>the day is limited by whichever side fails</b>. Both sides clear their threshold only when every job is covered.';return;}
+  if(!miss.length){cap.innerHTML='<b>All five together, and only all five.</b> The mixed meal supplies the baseline substrate; the <b>whey-isolate spike stacked with 1 g of free leucine</b> lifts blood leucine over the raised building threshold so MPS actually fires; the <b>soy-isolate plateau</b> holds amino acids up through the hours that follow, when the body would otherwise drift back into net breakdown; and <b>1 g of calcium HMB</b> — the only one of the five acting on the breakdown pathway — restrains proteolysis so what is built is not simply undone. Net muscle is the <em>result</em> of the two, and it is limited by whichever side fails.';return;}
   const names=miss.map(m=>m.label).join(', ');
-  const B=tally('b'),R=tally('r');
-  const fails=[]; if(B<THR)fails.push('the building threshold is not reached, so MPS never fires'); if(R<THR)fails.push('breakdown runs on unrestrained');
-  cap.innerHTML='<b>Without '+names+', the day is incomplete.</b> That leaves out '+miss.map(m=>m.why).join(', and ')+' — so '+fails.join(', and ')+'. Net muscle is limited by the weaker side, so covering four of the five jobs still leaves the account draining. <b>There is no substitution between them: each answers a different step.</b>';}
+  const B=tally('b'),R=tally('r');const fails=[];
+  if(B<THR)fails.push('the building threshold is never reached, so MPS does not fire');
+  if(R<THR)fails.push('breakdown runs on unrestrained');
+  cap.innerHTML='<b>Without '+names+', the day is incomplete.</b> That removes '+miss.map(m=>m.why).join(', and ')+' — so '+fails.join(', and ')+'. Covering four of the five jobs still leaves the account draining, because net muscle is capped by the weaker side. <b>There is no substitution between them: each answers a different step.</b>';}
  const _p=paint; paint=function(){_p();caption();};
  sync();
  new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting&&!started){started=true;anim();ob.unobserve(e.target);}}),{threshold:.25}).observe(c);
- let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{parts=null;paint();},160)});
+ let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{shards=null;geom=null;paint();},160)});
 })();
 </script></body></html>
